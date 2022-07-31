@@ -1,0 +1,9 @@
+.idea
+*.log
+*.pot
+*.py[cod]
+*$py.class
+__pycache__
+db.sqlite3
+media
+secrets.json
