@@ -1,3 +1,17 @@
 from django.db import models
 
-# Create your models here.
+
+class Site(models.Model):
+    pass
+
+
+class Location(models.Model):
+    pass
+
+
+class Organization(models.Model):
+    pass
+
+
+class ContactInfo(models.Model):
+    pass
