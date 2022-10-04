@@ -23,7 +23,10 @@ class Site(models.Model):
 
 
 class Location(models.Model):
-    parent = models.ForeignKey('Location', on_delete=models.PROTECT)
+    """
+
+    """
+    parent = models.ForeignKey('Location', on_delete=models.PROTECT, blank=True, null=True)
     site = models.ForeignKey(Site, on_delete=models.PROTECT)
     name = models.CharField(max_length=255, blank=True)
     description = models.TextField(blank=True)

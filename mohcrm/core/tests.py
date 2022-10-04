@@ -31,7 +31,9 @@ class LocationTests(TestCase):
         self.assertIsNotNone(site.__doc__)
 
     def test_location_creation(self):
-        location = Location()
+        site = Site()
+        site.save()
+        location = Location(site=site)
         location.save()
         self.assertIsInstance(location, Location)
 
