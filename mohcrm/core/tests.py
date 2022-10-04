@@ -7,15 +7,9 @@ from .models import Site, Location, Organization, ContactInfo, Note
 class UtilsTests(TestCase):
 
     def test_geocoder(self):
-        address = geocode_address('501 N 3rd St, Harrisburg, PA 17120')
-        print(dir(address))
-        address_components = {
-            'number': '501', 'street': '3rd', 'suffix': 'St',
-            'formatted_street': '3rd St', 'city': 'Harrisburg',
-            'county': 'Dauphin County', 'state': 'PA', 'zip': '17113',
-            'country': 'US'
-        }
-        self.assertEquals(address['results'][0], address_components)
+        input_address = '10 N 2nd St, Harrisburg, PA 17101'
+        output_address = geocode_address(input_address)
+        self.assertEquals(output_address['results'][0]['formatted_address'], input_address)
 
 
 class SiteTests(TestCase):
