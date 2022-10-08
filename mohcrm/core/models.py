@@ -63,6 +63,6 @@ class ContactInfo(models.Model):
 
 class Note(models.Model):
     """
-
+    Notes are text records that can be added to many other objects.
     """
     pass
