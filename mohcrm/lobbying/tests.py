@@ -13,8 +13,13 @@ class GoverningBodyTests(TestCase):
 class PoliticalSubdivisionTests(TestCase):
 
     def test_political_subdivision_creation(self):
+        governing_body = GoverningBody(name='Example Body')
+        governing_body.save()
+
         political_subdivision = PoliticalSubdivision()
         political_subdivision.save()
+
+        self.assertEquals(political_subdivision.seats, 1)
 
     def test_seat_assignments(self):
         """
@@ -32,6 +37,7 @@ class PoliticalSubdivisionTests(TestCase):
         official2.save()
 
         self.fail()
+
 
 class PublicOfficialTests(TestCase):
 
