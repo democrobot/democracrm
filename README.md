@@ -1,4 +1,4 @@
-# Mohcrm
+# DemocraCRM
 
 Internal MoH CRM prototype
 
