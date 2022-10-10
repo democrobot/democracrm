@@ -42,7 +42,7 @@ sentry_sdk.init(
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRETS = json.load(open('mohcrm/secrets.json'))
+SECRETS = json.load(open('democracrm/secrets.json'))
 SECRET_KEY = SECRETS['DJANGO_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -75,7 +75,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'mohcrm.urls'
+ROOT_URLCONF = 'democracrm.urls'
 
 TEMPLATES = [
     {
@@ -93,7 +93,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'mohcrm.wsgi.application'
+WSGI_APPLICATION = 'democracrm.wsgi.application'
 
 
 # Database
@@ -101,8 +101,12 @@ WSGI_APPLICATION = 'mohcrm.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'HOST': '192.168.1.5',
+        'PORT': '5432',
+        'NAME': 'democracrm',
+        'USER': 'democracrm',
+        'PASSWORD': SECRETS['POSTGRESQL']
     }
 }
 
