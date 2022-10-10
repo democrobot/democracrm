@@ -57,7 +57,7 @@ class ContactInfo(models.Model):
     work_email = models.CharField(max_length=255, blank=True)
     description = models.TextField(blank=True)
 
-    # If an address is needed, create a site
+    # If an address is needed, create and attach to a site
     site = models.ForeignKey(Site, on_delete=models.CASCADE, blank=True, null=True)
 
 

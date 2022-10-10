@@ -23,6 +23,7 @@ class PoliticalSubdivision(models.Model):
     """
 
     name = models.CharField(null=False, max_length=255)
+    district = models.IntegerField(null=True, blank=True)
     seats = models.IntegerField(default=1)
     # Needs geom field
 
