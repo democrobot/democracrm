@@ -1,7 +1,7 @@
 from django.test import TestCase
 
 from .utils import geocode_address
-from .models import Site, Location, Organization, ContactInfo, Note
+from .models import Site, Location, Organization, ContactInfo, Note, Voter
 
 
 class UtilsTests(TestCase):
