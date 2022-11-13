@@ -2,6 +2,8 @@ import uuid
 from django.db import models
 from django.utils.html import format_html
 
+from core.models import GeographicArea
+
 
 class SocialMediaAccount(models.Model):
     """
@@ -67,7 +69,7 @@ class Voter(models.Model):
     An individual voter record.
     """
 
-    #uuid = models.UUIDField('UUID', default=uuid.uuid4)
+    uuid = models.UUIDField('UUID', default=uuid.uuid4)
     party = models.ForeignKey(PoliticalParty, on_delete=models.RESTRICT)
     first_name = models.CharField('First Name', null=True, blank=True, max_length=255)
     middle_name = models.CharField('Middle Name', null=True, blank=True, max_length=255)
@@ -96,6 +98,7 @@ class Voter(models.Model):
         else:
             return 'N/A'
 
+
 class GoverningBody(models.Model):
     """
     A governing body is a level of government responsible for legislative,
@@ -105,8 +108,45 @@ class GoverningBody(models.Model):
     Examples include federal, state, county, and municipal governments, each
     with specific governmental branches and/or offices.
     """
+
     name = models.CharField(null=False, max_length=255)
+    TYPE_CHOICES = (
+        ('legislative', 'Legislative'),
+        ('executive', 'Executive'),
+        ('judicial', 'Judicial'),
+    )
+    type = models.CharField(max_length=255, null=True, blank=True, choices=TYPE_CHOICES)
+    LEVEL_CHOICES = (
+        ('federal', 'Federal'),
+        ('state', 'State'),
+        ('county', 'County'),
+        ('municipal', 'Municipal'),
+    )
+    level = models.CharField(max_length=255, choices=LEVEL_CHOICES)
+    geographic_area = models.ForeignKey(GeographicArea, on_delete=models.RESTRICT)
     # geom
+
+    class Meta:
+        ordering = ['name']
+        verbose_name_plural = "Governing Bodies"
+
+    def __str__(self):
+        return self.name
+
+
+class PublicOffice(models.Model):
+    """
+    Represents the office that public officials serve within.
+    """
+
+    governing_body = models.ForeignKey(GoverningBody, null=False, on_delete=models.RESTRICT)
+    name = models.CharField(null=False, blank=False, max_length=255)
+
+    class Meta:
+        verbose_name_plural = 'Public Offices'
+
+    def __str__(self):
+        return self.name
 
 
 class PoliticalSubdivision(models.Model):
@@ -117,10 +157,18 @@ class PoliticalSubdivision(models.Model):
     seats included in that district.
     """
 
+    office = models.ForeignKey(PublicOffice, null=True, on_delete=models.RESTRICT)
     name = models.CharField(null=False, max_length=255)
     district = models.IntegerField(null=True, blank=True)
     seats = models.IntegerField(default=1)
     # Needs geom field
+
+    class Meta:
+        ordering = ['name']
+        verbose_name_plural = "Political Subdivisions"
+
+    def __str__(self):
+        return self.name
 
 
 class PublicOfficial(models.Model):
@@ -137,5 +185,6 @@ class PublicOfficial(models.Model):
     official_type = models.CharField(null=False, max_length=100, default='Legislator')
     subdivision = models.ForeignKey(PoliticalSubdivision, on_delete=models.RESTRICT, null=True)
 
-
+    class Meta:
+        verbose_name_plural = "Public Officials"
 

@@ -1,6 +1,26 @@
 from django.db import models  # TODO: Migrate to GeoDjango models
 
 
+class GeographicArea(models.Model):
+    """
+    A Geographic Area is a polygon-based geospatial record that can be associated
+    with a variety of other spatial overlays, such as governing bodies and
+    political subdivisions.
+    """
+
+    parent = models.ForeignKey('GeographicArea', null=True, blank=True, on_delete=models.RESTRICT)
+    name = models.CharField(max_length=255)
+
+    class Meta:
+        verbose_name_plural = "Geographic Areas"
+
+    def __repr__(self):
+        return self.name
+
+    def __str__(self):
+        return self.name
+
+
 class Site(models.Model):
     """
     A Site is a point-based geospatial record.
