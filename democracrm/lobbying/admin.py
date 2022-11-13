@@ -16,6 +16,6 @@ class PoliticalPartyAdmin(admin.ModelAdmin):
 
 @admin.register(Voter)
 class VoterAdmin(admin.ModelAdmin):
-    list_display = ['full_name', 'first_name', 'last_name', 'party', 'uuid']
-    readonly_fields = ('uuid',)
+    list_display = ['full_name', 'first_name', 'last_name', 'party']
+    #readonly_fields = ('uuid',)
 

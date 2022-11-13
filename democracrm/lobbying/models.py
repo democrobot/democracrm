@@ -15,6 +15,7 @@ class SocialMediaAccount(models.Model):
     )
     platform = models.CharField(null=False, max_length=255, choices=PLATFORMS)
     handle = models.CharField(null=False, blank=False, max_length=255)
+    voter = models.ForeignKey('Voter', null=True, blank=True, on_delete=models.RESTRICT)
 
     class Meta:
         verbose_name_plural = "Social Media Accounts"
@@ -28,7 +29,15 @@ class SocialMediaAccount(models.Model):
     def url(self):
         if self.platform == 'twitter':
             url_text = f'https://www.twitter.com/{self.handle}'
-
+            return format_html('<a href="{url}">{url}</a>', url=url_text)
+        elif self.platform == 'instagram':
+            url_text = f'https://www.instagram.com/{self.handle}'
+            return format_html('<a href="{url}">{url}</a>', url=url_text)
+        elif self.platform == 'facebook':
+            url_text = f'https://www.facebook.com/{self.handle}'
+            return format_html('<a href="{url}">{url}</a>', url=url_text)
+        elif self.platform == 'linkedin':
+            url_text = f'https://www.linkedin.com/in/{self.handle}'
             return format_html('<a href="{url}">{url}</a>', url=url_text)
         else:
             return 'N/A'
@@ -58,7 +67,7 @@ class Voter(models.Model):
     An individual voter record.
     """
 
-    uuid = models.UUIDField('UUID', primary_key=True, default=uuid.uuid4)
+    #uuid = models.UUIDField('UUID', default=uuid.uuid4)
     party = models.ForeignKey(PoliticalParty, on_delete=models.RESTRICT)
     first_name = models.CharField('First Name', null=True, blank=True, max_length=255)
     middle_name = models.CharField('Middle Name', null=True, blank=True, max_length=255)
