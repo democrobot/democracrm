@@ -3,12 +3,12 @@ from django.contrib import admin
 
 from .models import (Organization, SocialMediaAccount, PoliticalParty, Voter,
                      GoverningBody, PoliticalSubdivision, PublicOfficial,
-                     PublicOffice, Legislation, Platform, PlatformCategory,
-                     Campaign)
+                     PublicOffice, Committee, Legislation, Platform, Session,
+                     PlatformCategory, Campaign)
 
 
 @admin.register(Organization)
-class SiteAdmin(admin.ModelAdmin):
+class OrganizationAdmin(admin.ModelAdmin):
     list_display = ['name', 'relationship', 'url']
 
 
@@ -46,6 +46,16 @@ class PoliticalSubdivisionAdmin(admin.ModelAdmin):
 @admin.register(PublicOfficial)
 class PublicOfficialAdmin(admin.ModelAdmin):
     list_display = ['full_name', 'title', 'is_elected', 'role', 'office', 'subdivision']
+
+
+@admin.register(Committee)
+class CommitteeAdmin(admin.ModelAdmin):
+    list_display = ['name', 'body', 'office']
+
+
+@admin.register(Session)
+class SessionAdmin(admin.ModelAdmin):
+    list_display = ['name', 'body', 'start_date', 'end_date']
 
 
 @admin.register(Legislation)

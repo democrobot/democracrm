@@ -242,6 +242,20 @@ class PublicOfficial(models.Model):
         return f'{self.first_name} {self.last_name}'
 
 
+class Committee(models.Model):
+    """
+    Represents committees, commissions, or other bodies that review legislation
+    before releasing it for final passage.
+    """
+
+    name = models.CharField(max_length=255)
+    body = models.ForeignKey(GoverningBody, null=True, blank=True, on_delete=models.RESTRICT)
+    office = models.ForeignKey(PublicOffice, on_delete=models.RESTRICT)
+
+    def __str__(self):
+        return self.name
+
+
 class Session(models.Model):
     """
     Represents legislative sessions, within which bills exist and must be enacted
@@ -257,16 +271,6 @@ class Session(models.Model):
     end_date = models.DateField(null=True, blank=True)
 
 
-class Committee(models.Model):
-    """
-    Represents committees, commissions, or other bodies that review legislation
-    before releasing it for final passage.
-    """
-
-    name = models.CharField(max_length=255)
-    office = models.ForeignKey(PublicOffice, on_delete=models.RESTRICT)
-
-
 class Legislation(models.Model):
     """
     Represents proposed or existing legislation related to campaigns.
@@ -275,7 +279,7 @@ class Legislation(models.Model):
     name = models.CharField(max_length=255)
     body = models.ForeignKey(GoverningBody, on_delete=models.RESTRICT)
     committee = models.ForeignKey(Committee, null=True, blank=True, on_delete=models.RESTRICT)
-    #session = models.ForeignKey(Session, null=True, blank=True, on_delete=models.RESTRICT)
+    session = models.ForeignKey(Session, null=True, blank=True, on_delete=models.RESTRICT)
     number = models.CharField(null=True, blank=True, max_length=255)
     description = models.TextField(null=True, blank=True)
     url = models.URLField(null=True, blank=True)
@@ -295,6 +299,9 @@ class Legislation(models.Model):
 
     def __str__(self):
         return self.name
+
+
+# OfficialVotingRecord
 
 
 class Platform(models.Model):
