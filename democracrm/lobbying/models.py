@@ -2,7 +2,33 @@ import uuid
 from django.db import models
 from django.utils.html import format_html
 
-from core.models import GeographicArea
+from core.models import GeographicArea, OrganizationAccount
+
+
+class Organization(models.Model):
+    """
+    External organizations can be represented this way to track activity at an
+    organizational level. If the real-life organization joins the platform, it
+    can be associated with the existing object has a proxy for interaction.
+    """
+
+    # TODO: Identify how we can track both allies and opponents
+    # TODO: Provide org. groups?
+
+    name = models.CharField(max_length=255)
+    RELATIONSHIP_CHOICES = (
+        ('ally', 'Ally'),
+        ('opponent', 'Opponent'),
+        ('unknown', 'Unknown'),
+    )
+    relationship = models.CharField(null=True, blank=True, max_length=255, choices=RELATIONSHIP_CHOICES)
+    url = models.URLField(null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
+    notes = models.TextField(null=True, blank=True)
+    # Sites, contacts, and social media accounts can be linked to partners
+
+    def __str__(self):
+        return self.name
 
 
 class SocialMediaAccount(models.Model):
@@ -148,6 +174,9 @@ class PublicOffice(models.Model):
     def __str__(self):
         return self.name
 
+    def officials_count(self):
+        return len(self.publicofficial_set.all())
+
 
 class PoliticalSubdivision(models.Model):
     """
@@ -167,8 +196,14 @@ class PoliticalSubdivision(models.Model):
         ordering = ['name']
         verbose_name_plural = "Political Subdivisions"
 
+    def __repr__(self):
+        return f'{self.name} ({self.office.governing_body})'
+
     def __str__(self):
-        return self.name
+        return f'{self.name} ({self.office.governing_body})'
+
+    def governing_body(self):
+        return self.office.governing_body
 
 
 class PublicOfficial(models.Model):
@@ -176,15 +211,159 @@ class PublicOfficial(models.Model):
     Represents elected or appointed public officials that are lobbying targets.
     """
 
+    office = models.ForeignKey(PublicOffice, on_delete=models.RESTRICT)
+    title = models.CharField(null=False, blank=False, max_length=255)
     prefix_name = models.CharField(null=True, blank=True, max_length=50)
     first_name = models.CharField(null=False, max_length=100)
     middle_name = models.CharField(null=True, blank=True, max_length=100)
     last_name = models.CharField(null=False, max_length=100)
     suffix_name = models.CharField(null=True, blank=True, max_length=50)
     is_elected = models.BooleanField(default=True)
-    official_type = models.CharField(null=False, max_length=100, default='Legislator')
+    service_start = models.DateField(null=True, blank=True)
+    service_end = models.DateField(null=True, blank=True)
+    ROLE_CHOICES = (
+        ('legislative', 'Legislative'),
+        ('executive', 'Executive'),
+        ('judicial', 'Judicial'),
+        ('administrative', 'Administrative'),
+        ('clerical', 'Clerical'),
+    )
+    role = models.CharField(null=False, max_length=100, choices=ROLE_CHOICES, default='Legislator')
     subdivision = models.ForeignKey(PoliticalSubdivision, on_delete=models.RESTRICT, null=True)
+    notes = models.TextField(null=True, blank=True)
 
     class Meta:
         verbose_name_plural = "Public Officials"
 
+    def __str__(self):
+        return self.full_name()
+
+    def full_name(self):
+        return f'{self.first_name} {self.last_name}'
+
+
+class Session(models.Model):
+    """
+    Represents legislative sessions, within which bills exist and must be enacted
+    before the session ends and the legislative process restarts.
+    """
+
+    # TODO: Can this be automated for each defined governing body's
+    #  legislative branch?
+
+    body = models.ForeignKey(GoverningBody, on_delete=models.RESTRICT)
+    name = models.CharField(null=True, blank=True, max_length=255) # TODO: Set based on duration field
+    start_date = models.DateField(null=True, blank=True)
+    end_date = models.DateField(null=True, blank=True)
+
+
+class Committee(models.Model):
+    """
+    Represents committees, commissions, or other bodies that review legislation
+    before releasing it for final passage.
+    """
+
+    name = models.CharField(max_length=255)
+    office = models.ForeignKey(PublicOffice, on_delete=models.RESTRICT)
+
+
+class Legislation(models.Model):
+    """
+    Represents proposed or existing legislation related to campaigns.
+    """
+
+    name = models.CharField(max_length=255)
+    body = models.ForeignKey(GoverningBody, on_delete=models.RESTRICT)
+    committee = models.ForeignKey(Committee, null=True, blank=True, on_delete=models.RESTRICT)
+    #session = models.ForeignKey(Session, null=True, blank=True, on_delete=models.RESTRICT)
+    number = models.CharField(null=True, blank=True, max_length=255)
+    description = models.TextField(null=True, blank=True)
+    url = models.URLField(null=True, blank=True)
+    STATUS_CHOICES = (
+        ('proposed', 'Proposed'),
+        ('in-committee', 'In Committee'),
+        ('in-debate', 'In Debate'),
+        ('voting-on', 'Voting On'),
+        ('adopted', 'Adopted'),
+        ('rejected', 'Rejected'),
+    )
+    status = models.CharField(null=True, blank=True, max_length=255, choices=STATUS_CHOICES)
+    campaign = models.ForeignKey('Campaign', on_delete=models.RESTRICT)
+
+    class Meta:
+        verbose_name_plural = 'Legislation'
+
+    def __str__(self):
+        return self.name
+
+
+class Platform(models.Model):
+    """
+    The platform is the full collection of campaigns that an organization is
+    lobbying for, and it used to display, manage, and strategize lobbying efforts.
+    """
+
+    # TODO: Should be a singleton instance for the install, created on account
+    # initialization
+
+    organization = models.ForeignKey(OrganizationAccount, on_delete=models.RESTRICT)
+    title = models.CharField(null=True, blank=True, max_length=255)
+    description = models.TextField()
+    categories_enabled = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f'{self.organization} Platform'
+
+
+class PlatformCategory(models.Model):
+    """
+    Platform categories can be used to optionally organize campaigns. Must be
+    enabled in the platform settings before using.
+    """
+
+    platform = models.ForeignKey(Platform, on_delete=models.RESTRICT)
+    name = models.CharField(null=False, blank=False, max_length=255)
+    order = models.IntegerField()
+
+    class Meta:
+        ordering = ['order']
+        verbose_name_plural = "Platform Categories"
+
+    def __str__(self):
+        return self.name
+
+
+class Campaign(models.Model):
+    """
+    Campaigns are used to define, organize, and track specific lobbying efforts.
+    """
+
+    name = models.CharField(null=True, blank=True, max_length=255)
+    description = models.TextField()
+    category = models.ForeignKey(PlatformCategory, null=True, blank=True, on_delete=models.RESTRICT)
+    PRIORITY_CHOICES = (
+        (5, 'Top'),
+        (4, 'High'),
+        (3, 'Medium'),
+        (2, 'Low'),
+        (1, 'None')
+    )
+    priority = models.IntegerField(default=3, choices=PRIORITY_CHOICES)
+    STATUS_CHOICES = (
+        ('brainstorming', 'Brainstorming'),
+        ('planned', 'Planned'),
+        ('deferred', 'Deferred'),
+        ('in-progress', 'In-Progress'),
+        ('decision-time', 'Decision Time'),
+        ('victory', 'Victory'),
+        ('lost', 'Lost'),
+    )
+    status = models.CharField(null=True, blank=True, max_length=255, choices=STATUS_CHOICES)
+    # TODO: Add ballot title, legislation view, election date, and other details
+    is_public = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['category', '-priority', 'name']
+
+    def __str__(self):
+        return self.name

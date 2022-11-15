@@ -19,10 +19,14 @@ from sentry_sdk.integrations.django import DjangoIntegration
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRETS = json.load(open('democracrm/secrets.json'))
+SECRET_KEY = SECRETS['DJANGO_KEY']
+
 # Sentry setup
 
 sentry_sdk.init(
-    dsn="https://42e4446e789640e99ad455400f1c43a2@o1342630.ingest.sentry.io/6616879",
+    dsn=SECRETS['SENTRY_DSN'],
     integrations=[
         DjangoIntegration(),
     ],
@@ -41,9 +45,6 @@ sentry_sdk.init(
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRETS = json.load(open('democracrm/secrets.json'))
-SECRET_KEY = SECRETS['DJANGO_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True

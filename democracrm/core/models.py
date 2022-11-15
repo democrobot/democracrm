@@ -5,11 +5,23 @@ class GeographicArea(models.Model):
     """
     A Geographic Area is a polygon-based geospatial record that can be associated
     with a variety of other spatial overlays, such as governing bodies and
-    political subdivisions.
+    political subdivisions. Areas should be those that are generally addressable.
     """
+
+    # TODO: Define "root" of reform effort area, such as the state, and use that
+    # to generate the base map. Only one record can be the root!
 
     parent = models.ForeignKey('GeographicArea', null=True, blank=True, on_delete=models.RESTRICT)
     name = models.CharField(max_length=255)
+    # Defined areas based off of this: https://www2.census.gov/geo/pdfs/reference/geodiagram.pdf
+    # The focus is on areas with jurisdiction over elections
+    LEVEL_CHOICES = (
+        ('nation', 'Nation'),
+        ('state', 'State'),
+        ('county', 'County'),
+        ('municipality', 'Municipality'),
+    )
+    level = models.CharField(null=True, blank=True, max_length=255, choices=LEVEL_CHOICES)
 
     class Meta:
         verbose_name_plural = "Geographic Areas"
@@ -52,12 +64,35 @@ class Location(models.Model):
     description = models.TextField(blank=True)
 
 
-class Organization(models.Model):
+class OrganizationAccount(models.Model):
     """
-
+    Organizations represent the organizational account within the system; all
+    management is based on this context by users. Organizations can choose to
+    collaborate with others, share data, and track progress, but otherwise each
+    organization's data is isolated to their own account.
     """
     name = models.CharField(max_length=255, blank=True)
     description = models.TextField(blank=True)
+
+    class Meta:
+        verbose_name_plural = 'Organization Accounts'
+
+    def __str__(self):
+        return self.name
+
+
+class ContactRole(models.Model):
+    """
+
+    """
+
+    name = models.CharField(max_length=255)
+
+    class Meta:
+        verbose_name_plural = "Contact Roles"
+
+    def __str__(self):
+        return self.name
 
 
 class ContactInfo(models.Model):
@@ -76,13 +111,27 @@ class ContactInfo(models.Model):
     personal_email = models.CharField(max_length=255, blank=True)
     work_email = models.CharField(max_length=255, blank=True)
     description = models.TextField(blank=True)
+    role = models.ForeignKey(ContactRole, null=True, blank=True, on_delete=models.RESTRICT)
 
     # If an address is needed, create and attach to a site
     site = models.ForeignKey(Site, on_delete=models.CASCADE, blank=True, null=True)
 
+    class Meta:
+        verbose_name_plural = "Contact Info"
 
-class Note(models.Model):
+    def __str__(self):
+        return self.full_name()
+
+    def full_name(self):
+        return f'{self.first_name} {self.last_name}'
+
+
+# TODO: Contact Groups?
+
+
+class Comment(models.Model):
     """
-    Notes are text records that can be added to many other objects.
+    Comments are text records that can be added to many other objects.
     """
-    pass
+    text = models.TextField()
+
