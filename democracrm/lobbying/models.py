@@ -346,7 +346,7 @@ class Campaign(models.Model):
     """
 
     name = models.CharField(null=True, blank=True, max_length=255)
-    description = models.TextField()
+    description = models.TextField(null=True, blank=True)
     category = models.ForeignKey(PlatformCategory, null=True, blank=True, on_delete=models.RESTRICT)
     PRIORITY_CHOICES = (
         (5, 'Top'),
