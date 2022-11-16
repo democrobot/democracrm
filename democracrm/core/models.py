@@ -1,7 +1,44 @@
+import uuid
+
+from django.contrib.auth.models import AbstractUser
 from django.db import models  # TODO: Migrate to GeoDjango models
 
+from .managers import UserManager
 
-class GeographicArea(models.Model):
+
+class CRMBase(models.Model):
+    """
+    Base model for all CRM models.
+    """
+
+    uuid = models.UUIDField(primary_key=False, default=uuid.uuid4, editable=False)
+    created_on = models.DateTimeField(auto_now_add=True)
+    updated_on = models.DateTimeField(auto_now=True)
+
+    def update(self, update_dict=None, **kwargs):
+        """ Helper method to update objects """
+        if not update_dict:
+            update_dict = kwargs
+        update_fields = {"updated_on"}
+        for k, v in update_dict.items():
+            setattr(self, k, v)
+            update_fields.add(k)
+        self.save(update_fields=update_fields)
+
+    class Meta:
+        abstract = True
+
+
+class User(AbstractUser, CRMBase):
+    email = models.EmailField(unique=True)
+    username = None  # disable the AbstractUser.username field
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = []
+
+    objects = UserManager()
+
+
+class GeographicArea(CRMBase):
     """
     A Geographic Area is a polygon-based geospatial record that can be associated
     with a variety of other spatial overlays, such as governing bodies and
@@ -33,7 +70,7 @@ class GeographicArea(models.Model):
         return self.name
 
 
-class Site(models.Model):
+class Site(CRMBase):
     """
     A Site is a point-based geospatial record.
     """
@@ -54,7 +91,7 @@ class Site(models.Model):
     longitude = models.FloatField(null=True, blank=True)
 
 
-class Location(models.Model):
+class Location(CRMBase):
     """
 
     """
@@ -64,7 +101,7 @@ class Location(models.Model):
     description = models.TextField(blank=True)
 
 
-class OrganizationAccount(models.Model):
+class OrganizationAccount(CRMBase):
     """
     Organizations represent the organizational account within the system; all
     management is based on this context by users. Organizations can choose to
@@ -81,7 +118,7 @@ class OrganizationAccount(models.Model):
         return self.name
 
 
-class ContactRole(models.Model):
+class ContactRole(CRMBase):
     """
 
     """
@@ -95,7 +132,7 @@ class ContactRole(models.Model):
         return self.name
 
 
-class ContactInfo(models.Model):
+class ContactInfo(CRMBase):
     """
     Contact info can be attached to a number of other models.
     """
@@ -129,7 +166,7 @@ class ContactInfo(models.Model):
 # TODO: Contact Groups?
 
 
-class Comment(models.Model):
+class Comment(CRMBase):
     """
     Comments are text records that can be added to many other objects.
     """

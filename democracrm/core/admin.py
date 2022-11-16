@@ -1,7 +1,7 @@
 from django.contrib import admin
 
-from .models import (GeographicArea, OrganizationAccount, Site, Location, ContactRole,
-                     ContactInfo, Comment)
+from .models import (User, GeographicArea, OrganizationAccount, Site, Location,
+                     ContactRole, ContactInfo, Comment)
 
 
 # class MyAdminSite(admin.AdminSite):
@@ -10,6 +10,11 @@ from .models import (GeographicArea, OrganizationAccount, Site, Location, Contac
 #
 # admin_site = MyAdminSite(name='myadmin')
 # #admin_site.register(MyModel)
+
+@admin.register(User)
+class UserAdmin(admin.ModelAdmin):
+    list_display = ['email', 'get_full_name', 'is_active', 'is_staff', 'is_superuser']
+
 
 @admin.register(GeographicArea)
 class GeographicAreaAdmin(admin.ModelAdmin):
@@ -43,4 +48,4 @@ class ContactInfoAdmin(admin.ModelAdmin):
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ['text']
+    list_display = ['text', 'created_on', 'updated_on']
