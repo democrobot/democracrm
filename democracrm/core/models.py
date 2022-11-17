@@ -1,9 +1,6 @@
 import uuid
 
-from django.contrib.auth.models import AbstractUser
 from django.db import models  # TODO: Migrate to GeoDjango models
-
-from .managers import UserManager
 
 
 class CRMBase(models.Model):
@@ -27,15 +24,6 @@ class CRMBase(models.Model):
 
     class Meta:
         abstract = True
-
-
-class User(AbstractUser, CRMBase):
-    email = models.EmailField(unique=True)
-    username = None  # disable the AbstractUser.username field
-    USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = []
-
-    objects = UserManager()
 
 
 class GeographicArea(CRMBase):
@@ -99,23 +87,6 @@ class Location(CRMBase):
     site = models.ForeignKey(Site, on_delete=models.PROTECT)
     name = models.CharField(max_length=255, blank=True)
     description = models.TextField(blank=True)
-
-
-class OrganizationAccount(CRMBase):
-    """
-    Organizations represent the organizational account within the system; all
-    management is based on this context by users. Organizations can choose to
-    collaborate with others, share data, and track progress, but otherwise each
-    organization's data is isolated to their own account.
-    """
-    name = models.CharField(max_length=255, blank=True)
-    description = models.TextField(blank=True)
-
-    class Meta:
-        verbose_name_plural = 'Organization Accounts'
-
-    def __str__(self):
-        return self.name
 
 
 class ContactRole(CRMBase):

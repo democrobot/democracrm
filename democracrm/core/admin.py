@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import (User, GeographicArea, OrganizationAccount, Site, Location,
+from .models import (GeographicArea, Site, Location,
                      ContactRole, ContactInfo, Comment)
 
 
@@ -10,10 +10,6 @@ from .models import (User, GeographicArea, OrganizationAccount, Site, Location,
 #
 # admin_site = MyAdminSite(name='myadmin')
 # #admin_site.register(MyModel)
-
-@admin.register(User)
-class UserAdmin(admin.ModelAdmin):
-    list_display = ['email', 'get_full_name', 'is_active', 'is_staff', 'is_superuser']
 
 
 @admin.register(GeographicArea)
@@ -28,11 +24,6 @@ class SiteAdmin(admin.ModelAdmin):
 
 @admin.register(Location)
 class LocationAdmin(admin.ModelAdmin):
-    list_display = ['name']
-
-
-@admin.register(OrganizationAccount)
-class SiteAdmin(admin.ModelAdmin):
     list_display = ['name']
 
 

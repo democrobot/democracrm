@@ -2,8 +2,6 @@ import uuid
 from django.db import models
 from django.utils.html import format_html
 
-from core.models import GeographicArea, OrganizationAccount
-
 
 class Organization(models.Model):
     """
@@ -149,7 +147,7 @@ class GoverningBody(models.Model):
         ('municipal', 'Municipal'),
     )
     level = models.CharField(max_length=255, choices=LEVEL_CHOICES)
-    geographic_area = models.ForeignKey(GeographicArea, on_delete=models.RESTRICT)
+    geographic_area = models.ForeignKey('core.GeographicArea', on_delete=models.RESTRICT)
     # geom
 
     class Meta:
@@ -313,7 +311,7 @@ class Platform(models.Model):
     # TODO: Should be a singleton instance for the install, created on account
     # initialization
 
-    organization = models.ForeignKey(OrganizationAccount, on_delete=models.RESTRICT)
+    organization = models.ForeignKey('accounts.Organization', on_delete=models.RESTRICT)
     title = models.CharField(null=True, blank=True, max_length=255)
     description = models.TextField()
     categories_enabled = models.BooleanField(default=False)
