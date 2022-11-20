@@ -1,19 +1,31 @@
 from django.test import TestCase
 
-from .models import GoverningBody, PoliticalSubdivision, PublicOfficial
+from core.models import GeographicBoundary
+from .models import (
+    Organization,
+    GoverningBody,
+    PoliticalSubdivision,
+    PublicOfficial,
+)
 
 
 class GoverningBodyTests(TestCase):
 
     def test_create_governing_body(self):
-        governing_body = GoverningBody(name='Example Body')
+        boundary = GeographicBoundary(name='Pennsylvania')
+        boundary.save()
+        governing_body = GoverningBody(name='Example Body', boundary=boundary)
         governing_body.save()
+
+        self.assertIsInstance(governing_body, GoverningBody)
 
 
 class PoliticalSubdivisionTests(TestCase):
 
     def test_political_subdivision_creation(self):
-        governing_body = GoverningBody(name='Example Body')
+        boundary = GeographicBoundary(name='Pennsylvania')
+        boundary.save()
+        governing_body = GoverningBody(name='Pennsylvania State Government', boundary=boundary)
         governing_body.save()
 
         political_subdivision = PoliticalSubdivision()
@@ -36,15 +48,13 @@ class PoliticalSubdivisionTests(TestCase):
                                    subdivision=political_subdivision)
         official2.save()
 
-        self.fail()
-
 
 class PublicOfficialTests(TestCase):
 
     def test_public_official_creation(self):
         official = PublicOfficial(first_name='Jane', last_name='Doe')
         official.save()
-        self.assertEquals(official.official_type, 'Legislator')
+        self.assertEquals(official.role, 'Legislator')
 
     def test_subdivision_assignment(self):
         political_subdivision = PoliticalSubdivision(name='Example District')

@@ -13,8 +13,11 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 import json
 from pathlib import Path
 
-import sentry_sdk
-from sentry_sdk.integrations.django import DjangoIntegration
+try:
+    import sentry_sdk
+    from sentry_sdk.integrations.django import DjangoIntegration
+except ImportError:
+    sentry_sdk = None
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,23 +26,23 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRETS = json.load(open('democracrm/secrets.json'))
 SECRET_KEY = SECRETS['DJANGO_KEY']
 
-# Sentry setup
+# Sentry setup (optional, but will be used for hosted service)
+if sentry_sdk and SECRETS['SENTRY_DSN']:
+    sentry_sdk.init(
+        dsn=SECRETS['SENTRY_DSN'],
+        integrations=[
+            DjangoIntegration(),
+        ],
 
-sentry_sdk.init(
-    dsn=SECRETS['SENTRY_DSN'],
-    integrations=[
-        DjangoIntegration(),
-    ],
+        # Set traces_sample_rate to 1.0 to capture 100%
+        # of transactions for performance monitoring.
+        # We recommend adjusting this value in production.
+        traces_sample_rate=1.0,
 
-    # Set traces_sample_rate to 1.0 to capture 100%
-    # of transactions for performance monitoring.
-    # We recommend adjusting this value in production.
-    traces_sample_rate=1.0,
-
-    # If you wish to associate users to errors (assuming you are using
-    # django.contrib.auth) you may enable sending PII data.
-    send_default_pii=True
-)
+        # If you wish to associate users to errors (assuming you are using
+        # django.contrib.auth) you may enable sending PII data.
+        send_default_pii=True
+    )
 
 
 # Quick-start development settings - unsuitable for production
@@ -47,9 +50,11 @@ sentry_sdk.init(
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
+# TODO: Create partitioned config for things like this
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '192.168.1.166']
+# TODO: Modify appropriately for upcoming external testing
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 
 # Application definition
@@ -64,7 +69,7 @@ INSTALLED_APPS = [
     'accounts',
     'core',
     'lobbying',
-    'members',
+    'organizing',
 ]
 
 MIDDLEWARE = [

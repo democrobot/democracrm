@@ -1,20 +1,10 @@
 from django.contrib import admin
 
 
-from .models import (Organization, SocialMediaAccount, PoliticalParty, Voter,
+from .models import (PoliticalParty, Voter,
                      GoverningBody, PoliticalSubdivision, PublicOfficial,
-                     PublicOffice, Committee, Legislation, Platform, Session,
-                     PlatformCategory, Campaign)
-
-
-@admin.register(Organization)
-class OrganizationAdmin(admin.ModelAdmin):
-    list_display = ['name', 'relationship', 'url']
-
-
-@admin.register(SocialMediaAccount)
-class SocialMediaAccountAdmin(admin.ModelAdmin):
-    list_display = ['handle', 'platform', 'url']
+                     PublicOffice, Committee, Legislation, Session,
+                     )
 
 
 @admin.register(PoliticalParty)
@@ -61,20 +51,5 @@ class SessionAdmin(admin.ModelAdmin):
 @admin.register(Legislation)
 class LegislationAdmin(admin.ModelAdmin):
     list_display = ['name', 'number', 'url', 'status', 'campaign']
-
-
-@admin.register(Platform)
-class PlatformAdmin(admin.ModelAdmin):
-    list_display = ['title']
-
-
-@admin.register(PlatformCategory)
-class PlatformCategoryAdmin(admin.ModelAdmin):
-    list_display = ['name', 'platform', 'order']
-
-
-@admin.register(Campaign)
-class CampaignAdmin(admin.ModelAdmin):
-    list_display = ['name', 'category', 'priority', 'status']
 
 
