@@ -55,7 +55,7 @@ class PlatformCategory(CRMBase):
 
     platform = models.ForeignKey(Platform, on_delete=models.PROTECT)
     name = models.CharField(null=False, blank=False, max_length=255)
-    order = models.IntegerField()
+    order = models.IntegerField(default=1)
 
     class Meta:
         ordering = ['order']
@@ -70,7 +70,8 @@ class Campaign(CRMBase):
     Campaigns are used to define, organize, and track specific lobbying efforts.
     """
 
-    name = models.CharField(null=True, blank=True, max_length=255)
+    platform = models.ForeignKey(Platform, on_delete=models.PROTECT)
+    name = models.CharField(max_length=255)
     description = models.TextField(null=True, blank=True)
     category = models.ForeignKey(PlatformCategory, null=True, blank=True, on_delete=models.PROTECT)
     PRIORITY_CHOICES = (
@@ -90,7 +91,7 @@ class Campaign(CRMBase):
         ('victory', 'Victory'),
         ('lost', 'Lost'),
     )
-    status = models.CharField(null=True, blank=True, max_length=255, choices=STATUS_CHOICES)
+    status = models.CharField(default='brainstorming', max_length=255, choices=STATUS_CHOICES)
     # TODO: Add ballot title, legislation view, election date, and other details
     is_public = models.BooleanField(default=False)
 

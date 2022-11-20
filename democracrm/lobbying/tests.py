@@ -1,8 +1,9 @@
 from django.test import TestCase
 
 from core.models import GeographicBoundary
+from organizing.models import Organization
+
 from .models import (
-    Organization,
     GoverningBody,
     PoliticalSubdivision,
     PublicOfficial,
