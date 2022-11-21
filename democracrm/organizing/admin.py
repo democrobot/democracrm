@@ -2,7 +2,7 @@ from django.contrib import admin
 
 from .models import (
     Organization,
-    Member,
+    Person,
     Chapter,
     Platform,
     PlatformCategory,
@@ -30,8 +30,8 @@ class CampaignAdmin(admin.ModelAdmin):
     list_display = ['name', 'category', 'priority', 'status']
 
 
-@admin.register(Member)
-class MemberAdmin(admin.ModelAdmin):
+@admin.register(Person)
+class PersonAdmin(admin.ModelAdmin):
     list_display = ['user', 'last_name', 'first_name', 'organization']
 
 

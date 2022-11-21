@@ -25,7 +25,7 @@ class GoverningBodyAdmin(admin.ModelAdmin):
 
 @admin.register(PublicOffice)
 class PublicOfficeAdmin(admin.ModelAdmin):
-    list_display = ['name', 'governing_body', 'officials_count']
+    list_display = ['name', 'governing_body', 'seats', 'officials_count']
 
 
 @admin.register(PoliticalSubdivision)
@@ -51,5 +51,3 @@ class SessionAdmin(admin.ModelAdmin):
 @admin.register(Legislation)
 class LegislationAdmin(admin.ModelAdmin):
     list_display = ['name', 'number', 'url', 'status', 'campaign']
-
-

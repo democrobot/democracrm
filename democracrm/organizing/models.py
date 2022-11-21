@@ -23,6 +23,7 @@ class Organization(CRMBase):
     url = models.URLField(null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     notes = models.TextField(null=True, blank=True)
+    # Endorsement?
     # Sites, contacts, and social media accounts can be linked to partners
 
     def __str__(self):
@@ -55,6 +56,7 @@ class PlatformCategory(CRMBase):
 
     platform = models.ForeignKey(Platform, on_delete=models.PROTECT)
     name = models.CharField(null=False, blank=False, max_length=255)
+    # TODO: The order field currently is not significant
     order = models.IntegerField(default=1)
 
     class Meta:
@@ -102,9 +104,10 @@ class Campaign(CRMBase):
         return self.name
 
 
-class Member(CRMBase):
+class Person(CRMBase):
     """
-    Member record, linking to many key objects in the CRM.
+    Provides a record for each person an organization interacts with, linking
+    to many other key objects in the CRM.
     """
 
     user = models.ForeignKey('accounts.User', null=True, blank=True, on_delete=models.PROTECT)
@@ -115,6 +118,9 @@ class Member(CRMBase):
     notes = models.TextField(null=True, blank=True)
     # TODO: board member? other role tracking?
 
+    class Meta:
+        verbose_name_plural = 'People'
+
     def first_name(self):
         return self.user.first_name
 
@@ -123,9 +129,6 @@ class Member(CRMBase):
 
     def __str__(self):
         return self.user.get_full_name()
-
-
-# TODO: Model volunteers? What's really the difference?
 
 
 class Chapter(CRMBase):

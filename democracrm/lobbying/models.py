@@ -100,6 +100,7 @@ class PublicOffice(models.Model):
     type = models.CharField(default='legislative', max_length=255, choices=TYPE_CHOICES)
     governing_body = models.ForeignKey(GoverningBody, on_delete=models.PROTECT)
     name = models.CharField(max_length=255)
+    seats = models.IntegerField(default=1)
 
     class Meta:
         verbose_name_plural = 'Public Offices'
@@ -113,13 +114,13 @@ class PublicOffice(models.Model):
 
 class PoliticalSubdivision(models.Model):
     """
-    A political subdivision is a specific part of a governing body, again with a
-    defined geographic area coterminous or as a subset of the enclosing governing
-    body. It is generally used to represent specific political districts and the
+    A political subdivision is a defined subset of a public office, again with a
+    defined geographic area coterminous or as a subset of the public office.
+    It is generally used to represent specific political districts and the
     seats included in that district.
     """
 
-    office = models.ForeignKey(PublicOffice, null=True, on_delete=models.RESTRICT)
+    office = models.ForeignKey(PublicOffice, null=True, on_delete=models.PROTECT)
     name = models.CharField(null=False, max_length=255)
     district = models.IntegerField(null=True, blank=True)
     seats = models.IntegerField(default=1)
