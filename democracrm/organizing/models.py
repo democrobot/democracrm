@@ -40,6 +40,7 @@ class Platform(CRMBase):
     # initialization
 
     organization = models.ForeignKey('accounts.Organization', on_delete=models.PROTECT)
+    # TODO: Change title to name
     title = models.CharField(null=True, blank=True, max_length=255)
     description = models.TextField()
     categories_enabled = models.BooleanField(default=False)

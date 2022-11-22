@@ -87,3 +87,19 @@ def init_organization():
     organization.save()
 
     return organization
+
+
+def init_platform():
+    organization = init_organization()
+    platform = Platform(title='Test Platform', organization=organization)
+    platform.save()
+
+    return platform
+
+
+def init_campaign():
+    platform = init_platform()
+    campaign = Campaign(name='Test Campaign', platform=platform)
+    campaign.save()
+
+    return campaign

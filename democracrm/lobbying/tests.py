@@ -2,11 +2,13 @@ from django.test import TestCase
 
 from core.models import GeographicBoundary
 from organizing.models import Organization
+from organizing.tests import init_campaign
 
 from .models import (
     GoverningBody,
     PoliticalSubdivision,
     PublicOfficial,
+    SupportLevel,
 )
 
 
@@ -64,3 +66,20 @@ class PublicOfficialTests(TestCase):
         official.save()
 
         self.assertEquals(official.subdivision, political_subdivision)
+
+
+class SupportLevelTests(TestCase):
+
+    def test_support_level_creation(self):
+        campaign = init_campaign()
+        official = init_public_official()
+        support_level = SupportLevel(campaign=campaign, official=official)
+        support_level.save()
+        self.assertIsInstance(support_level, SupportLevel)
+
+
+def init_public_official():
+    official = PublicOfficial(first_name='Jane', last_name='Doe')
+    official.save()
+
+    return official

@@ -3,7 +3,7 @@ from django.contrib import admin
 
 from .models import (PoliticalParty, Voter,
                      GoverningBody, PoliticalSubdivision, PublicOfficial,
-                     PublicOffice, Committee, Legislation, Session,
+                     PublicOffice, Committee, Legislation, Session, SupportLevel,
                      )
 
 
@@ -51,3 +51,8 @@ class SessionAdmin(admin.ModelAdmin):
 @admin.register(Legislation)
 class LegislationAdmin(admin.ModelAdmin):
     list_display = ['name', 'number', 'url', 'status', 'campaign']
+
+
+@admin.register(SupportLevel)
+class SupportLevelAdmin(admin.ModelAdmin):
+    list_display = ['official', 'campaign', 'campaign_support', 'legislation', 'legislation_support']

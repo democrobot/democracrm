@@ -1,6 +1,7 @@
 import uuid
 from django.db import models
 
+from core.models import CRMBase
 from organizing.models import Campaign
 
 class PoliticalParty(models.Model):
@@ -235,4 +236,26 @@ class Legislation(models.Model):
         return self.name
 
 
-# OfficialVotingRecord
+class SupportLevel(CRMBase):
+    """
+
+    """
+
+    official = models.ForeignKey(PublicOfficial, on_delete=models.PROTECT)
+    SUPPORT_LEVEL_CHOICES = (
+        ('strongly_supports', 'Strongly Supports'),
+        ('supports', 'Supports'),
+        ('undecided', 'Undecided'),
+        ('opposes', 'Opposes'),
+        ('strongly_opposed', 'Strongly Opposed'),
+    )
+    campaign = models.ForeignKey(Campaign, on_delete=models.PROTECT)
+    campaign_support = models.CharField(max_length=255, choices=SUPPORT_LEVEL_CHOICES)
+    legislation = models.ForeignKey(Legislation, null=True, blank=True, on_delete=models.PROTECT)
+    legislation_support = models.CharField(max_length=255, choices=SUPPORT_LEVEL_CHOICES)
+
+    class Meta:
+        verbose_name_plural = 'Support Levels'
+
+    def __str__(self):
+        return f'{self.official} on {self.campaign}'
