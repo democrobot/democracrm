@@ -10,6 +10,6 @@ class UserAdmin(admin.ModelAdmin):
 
 @admin.register(Organization)
 class OrganizationAdmin(admin.ModelAdmin):
-    list_display = ['name', 'territory']
+    list_display = ['name', 'slug', 'territory']
 
 

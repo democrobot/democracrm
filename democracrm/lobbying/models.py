@@ -147,13 +147,16 @@ class PublicOfficial(models.Model):
     """
 
     office = models.ForeignKey(PublicOffice, null=True, blank=True, on_delete=models.RESTRICT)
-    title = models.CharField(null=False, blank=False, max_length=255)
+    is_elected = models.BooleanField(default=True)
+    title = models.CharField(default='Legislator', max_length=255)
+    is_leadership = models.BooleanField(default=False)
+    leadership_title = models.CharField(null=True, blank=True, max_length=255)
     prefix_name = models.CharField(null=True, blank=True, max_length=50)
     first_name = models.CharField(null=False, max_length=100)
     middle_name = models.CharField(null=True, blank=True, max_length=100)
     last_name = models.CharField(null=False, max_length=100)
     suffix_name = models.CharField(null=True, blank=True, max_length=50)
-    is_elected = models.BooleanField(default=True)
+    party = models.ForeignKey(PoliticalParty, null=True, blank=True, on_delete=models.PROTECT)
     service_start = models.DateField(null=True, blank=True)
     service_end = models.DateField(null=True, blank=True)
     ROLE_CHOICES = (
@@ -238,7 +241,8 @@ class Legislation(models.Model):
 
 class SupportLevel(CRMBase):
     """
-
+    SupportLevel models the level of support of an individual public official for
+    a special campaign and associated legislation.
     """
 
     official = models.ForeignKey(PublicOfficial, on_delete=models.PROTECT)
@@ -247,7 +251,7 @@ class SupportLevel(CRMBase):
         ('supports', 'Supports'),
         ('undecided', 'Undecided'),
         ('opposes', 'Opposes'),
-        ('strongly_opposed', 'Strongly Opposed'),
+        ('strongly_opposes', 'Strongly Opposes'),
     )
     campaign = models.ForeignKey(Campaign, on_delete=models.PROTECT)
     campaign_support = models.CharField(max_length=255, choices=SUPPORT_LEVEL_CHOICES)

@@ -35,7 +35,7 @@ class PoliticalSubdivisionAdmin(admin.ModelAdmin):
 
 @admin.register(PublicOfficial)
 class PublicOfficialAdmin(admin.ModelAdmin):
-    list_display = ['full_name', 'title', 'is_elected', 'role', 'office', 'subdivision']
+    list_display = ['full_name', 'title', 'is_elected', 'is_leadership', 'party', 'role', 'subdivision']
 
 
 @admin.register(Committee)

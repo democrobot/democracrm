@@ -3,7 +3,7 @@ import uuid
 from django.db import models  # TODO: Migrate to GeoDjango models
 from django.utils.html import format_html
 
-#from accounts.models import User
+import accounts.models
 
 
 class CRMBase(models.Model):
@@ -79,12 +79,11 @@ class GeographicBoundary(CRMBase):
 
 class GeographicRegion(CRMBase):
     """
-    User-defined regions
+    User-defined regions for use in organizations.
     """
 
-    name = models.CharField(
-        max_length=255
-    )
+    organization = models.ForeignKey('accounts.Organization', on_delete=models.PROTECT)
+    name = models.CharField(max_length=255)
     boundaries = models.ManyToManyField(GeographicBoundary)
 
     def __str__(self):
@@ -191,7 +190,8 @@ class Location(CRMBase):
 
     parent = models.ForeignKey('Location', on_delete=models.PROTECT, blank=True, null=True)
     site = models.ForeignKey(Site, on_delete=models.PROTECT)
-    name = models.CharField(max_length=255, blank=True)
+    name = models.CharField(max_length=255)
+    unit = models.CharField(null=True, blank=True, max_length=255)
     description = models.TextField(blank=True)
 
     def __str__(self):
@@ -226,6 +226,8 @@ class ContactInfo(CRMBase):
     personal_phone = models.CharField(null=True, blank=True, max_length=255)
     work_phone = models.CharField(null=True, blank=True, max_length=255)
     mobile_phone = models.CharField(null=True, blank=True, max_length=255)
+    personal_fax = models.CharField(null=True, blank=True, max_length=255)
+    work_fax = models.CharField(null=True, blank=True, max_length=255)
     personal_email = models.CharField(null=True, blank=True, max_length=255)
     work_email = models.CharField(null=True, blank=True, max_length=255)
     description = models.TextField(null=True, blank=True)

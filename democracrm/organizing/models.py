@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Q
 
 from core.models import CRMBase
 
@@ -100,6 +101,18 @@ class Campaign(CRMBase):
 
     class Meta:
         ordering = ['category', '-priority', 'name']
+
+    def target_supporters(self):
+        return self.supportlevel_set.filter(
+            Q(campaign_support='supports') | Q(campaign_support='strongly_supports')).count()
+
+    def target_undecided(self):
+        return self.supportlevel_set.filter(campaign_support='undecided').count()
+
+    def target_opposers(self):
+        return self.supportlevel_set.filter(
+            Q(campaign_support='opposes') | Q(campaign_support='strongly_opposes')).count()
+
 
     def __str__(self):
         return self.name

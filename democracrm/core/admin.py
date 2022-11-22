@@ -29,7 +29,7 @@ class SiteAdmin(admin.ModelAdmin):
 
 @admin.register(Location)
 class LocationAdmin(admin.ModelAdmin):
-    list_display = ['name']
+    list_display = ['name', 'parent', 'site']
 
 
 @admin.register(ContactRole)

@@ -27,7 +27,7 @@ class PlatformCategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Campaign)
 class CampaignAdmin(admin.ModelAdmin):
-    list_display = ['name', 'category', 'priority', 'status']
+    list_display = ['name', 'category', 'priority', 'status', 'target_supporters', 'target_undecided', 'target_opposers']
 
 
 @admin.register(Person)
