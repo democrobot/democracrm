@@ -242,16 +242,19 @@ class Legislation(models.Model):
 class SupportLevel(CRMBase):
     """
     SupportLevel models the level of support of an individual public official for
-    a special campaign and associated legislation.
+    a special campaign and associated legislation. Will also serve as voting record
+    once final action occurs.
     """
+
+    # TODO: Add voting actions that will override support levels when displayed
 
     official = models.ForeignKey(PublicOfficial, on_delete=models.PROTECT)
     SUPPORT_LEVEL_CHOICES = (
-        ('strongly_supports', 'Strongly Supports'),
-        ('supports', 'Supports'),
-        ('undecided', 'Undecided'),
-        ('opposes', 'Opposes'),
-        ('strongly_opposes', 'Strongly Opposes'),
+        ('Strongly Supports', 'Strongly Supports'),
+        ('Supports', 'Supports'),
+        ('Undecided On', 'Undecided On'),
+        ('Opposes', 'Opposes'),
+        ('Strongly Opposes', 'Strongly Opposes'),
     )
     campaign = models.ForeignKey(Campaign, on_delete=models.PROTECT)
     campaign_support = models.CharField(max_length=255, choices=SUPPORT_LEVEL_CHOICES)

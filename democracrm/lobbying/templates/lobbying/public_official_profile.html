@@ -1,0 +1,24 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+<h2>Lobbying: Official Profile</h2>
+
+<h3>{{ public_official.full_name }}</h3>
+
+<h4>Profile Info</h4>
+<ul>
+    <li>Public Office: {{ public_official.office }}</li>
+    <li>Elected Official: {{ public_official.is_elected }}</li>
+    <li>Political Party: {{ public_official.party }}</li>
+</ul>
+
+<h4>Current Support Levels</h4>
+<ul>
+{% for level in support_levels %}
+    <li>
+    {{ level.campaign_support | lower | capfirst }} the {{ level.campaign }} campaign and
+    {{ level.legislation_support | lower }} the {{ level.legislation }} ({{ level.legislation.number }}) bill
+    </li>
+{% endfor %}
+</ul>
+{% endblock %}
