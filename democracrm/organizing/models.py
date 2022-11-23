@@ -102,6 +102,8 @@ class Campaign(CRMBase):
     class Meta:
         ordering = ['category', '-priority', 'name']
 
+    # TODO: Add target goals for each public office for legislation passage
+
     def target_supporters(self):
         return self.supportlevel_set.filter(
             Q(campaign_support='supports') | Q(campaign_support='strongly_supports')).count()
