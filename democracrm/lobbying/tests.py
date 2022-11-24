@@ -9,6 +9,7 @@ from .models import (
     PoliticalSubdivision,
     PublicOfficial,
     SupportLevel,
+    InterpersonalTie,
 )
 
 
@@ -78,8 +79,26 @@ class SupportLevelTests(TestCase):
         self.assertIsInstance(support_level, SupportLevel)
 
 
-def init_public_official():
-    official = PublicOfficial(first_name='Jane', last_name='Doe')
+def init_public_official(first_name='Jane', last_name='Doe'):
+    official = PublicOfficial(first_name=first_name, last_name=last_name)
     official.save()
 
     return official
+
+
+class InterpersonalTieTests(TestCase):
+
+    def test_interpersonal_tie_creation(self):
+        official1 = init_public_official(first_name='Official', last_name='One')
+        official2 = init_public_official(first_name='Official', last_name='Two')
+        tie = InterpersonalTie(official1=official1, official2=official2)
+        tie.save()
+        self.assertIsInstance(tie, InterpersonalTie)
+
+    def test_interpersonal_tie_relationship_summary(self):
+        official1 = init_public_official(first_name='Official', last_name='One')
+        official2 = init_public_official(first_name='Official', last_name='Two')
+        tie = InterpersonalTie(official1=official1, official2=official2)
+        tie.save()
+        self.assertEquals(tie.relationship_summary(), 'Official One is unknown/neutral towards Official Two')
+

@@ -3,8 +3,8 @@ from django.contrib import admin
 
 from .models import (PoliticalParty, Voter,
                      GoverningBody, PoliticalSubdivision, PublicOfficial,
-                     PublicOffice, Committee, Legislation, Session, SupportLevel,
-                     )
+                     PublicOffice, Committee, Legislation, LegislativeSession,
+                     SupportLevel, InterpersonalTie)
 
 
 @admin.register(PoliticalParty)
@@ -43,8 +43,8 @@ class CommitteeAdmin(admin.ModelAdmin):
     list_display = ['name', 'body', 'office']
 
 
-@admin.register(Session)
-class SessionAdmin(admin.ModelAdmin):
+@admin.register(LegislativeSession)
+class LegislativeSessionAdmin(admin.ModelAdmin):
     list_display = ['name', 'body', 'start_date', 'end_date']
 
 
@@ -56,3 +56,8 @@ class LegislationAdmin(admin.ModelAdmin):
 @admin.register(SupportLevel)
 class SupportLevelAdmin(admin.ModelAdmin):
     list_display = ['official', 'campaign', 'campaign_support', 'legislation', 'legislation_support']
+
+
+@admin.register(InterpersonalTie)
+class InterpersonalTieAdmin(admin.ModelAdmin):
+    list_display = ['official1', 'tie_strength', 'tie_affinity', 'official2']

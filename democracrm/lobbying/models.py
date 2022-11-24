@@ -4,6 +4,7 @@ from django.db import models
 from core.models import CRMBase
 from organizing.models import Campaign
 
+
 class PoliticalParty(CRMBase):
     """
     A formal political party active with candidates and/or elected officials
@@ -197,7 +198,7 @@ class Committee(CRMBase):
         return self.name
 
 
-class Session(CRMBase):
+class LegislativeSession(CRMBase):
     """
     Represents legislative sessions, within which bills exist and must be enacted
     before the session ends and the legislative process restarts.
@@ -220,7 +221,7 @@ class Legislation(CRMBase):
     name = models.CharField(max_length=255)
     body = models.ForeignKey(GoverningBody, on_delete=models.RESTRICT)
     committee = models.ForeignKey(Committee, null=True, blank=True, on_delete=models.RESTRICT)
-    session = models.ForeignKey(Session, null=True, blank=True, on_delete=models.RESTRICT)
+    session = models.ForeignKey(LegislativeSession, null=True, blank=True, on_delete=models.RESTRICT)
     number = models.CharField(null=True, blank=True, max_length=255)
     description = models.TextField(null=True, blank=True)
     url = models.URLField(null=True, blank=True)
@@ -244,14 +245,13 @@ class Legislation(CRMBase):
 
 class SupportLevel(CRMBase):
     """
-    SupportLevel models the level of support of an individual public official for
-    a special campaign and associated legislation. Will also serve as voting record
-    once final action occurs.
+    lobbying.SupportLevel models the level of support of an individual public
+    official for a specific campaign and associated legislation.
     """
 
-    # TODO: Add voting actions that will override support levels when displayed
-
     official = models.ForeignKey(PublicOfficial, on_delete=models.PROTECT)
+    # I'd prefer to use lower case with underscores for field values, but it's
+    # too difficult to reformat in templates
     SUPPORT_LEVEL_CHOICES = (
         ('Strongly Supports', 'Strongly Supports'),
         ('Supports', 'Supports'),
@@ -268,4 +268,44 @@ class SupportLevel(CRMBase):
         verbose_name_plural = 'Support Levels'
 
     def __str__(self):
-        return f'{self.official} on {self.campaign}'
+        return f'Support level of {self.official} on {self.campaign}'
+
+
+class InterpersonalTie(CRMBase):
+    """
+    lobbying.InterpersonalTie models key relationship data between public
+    officials to map out affinity groups and share awareness of influence
+    dynamics among the officials via social network analysis. Note that each
+    record is only in the context of the first official; the second official
+    could have a very different attitude of the relationship.
+    """
+
+    # Official one provides the directional perspective for the record
+    # Ex. Official 1 has a strongly positive view of Official 2
+    official1 = models.ForeignKey('PublicOfficial', related_name='ties_from', on_delete=models.PROTECT)
+    official2 = models.ForeignKey('PublicOfficial', related_name='ties_to', on_delete=models.PROTECT)
+    TIE_STRENGTH_CHOICES = (
+        ('strong', 'Strong'),
+        ('weak', 'Weak'),
+        ('invisible', 'Invisible'),
+        ('unknown', 'Unknown',)
+    )
+    tie_strength = models.CharField(default='unknown', max_length=10, choices=TIE_STRENGTH_CHOICES)
+    TIE_AFFINITY_CHOICES = (
+        ('positive', 'Positive'),
+        ('neutral', 'Neutral'),
+        ('negative', 'Negative'),
+    )
+    tie_affinity = models.CharField(default='neutral', max_length=10, choices=TIE_AFFINITY_CHOICES)
+    notes = models.TextField(null=True, blank=True)
+
+    class Meta:
+        verbose_name_plural = 'Interpersonal Ties'
+
+    def relationship_summary(self):
+        return f'{self.official1} is {self.tie_strength}/{self.tie_affinity} towards {self.official2}'
+
+    def __str__(self):
+        return f'{self.official1} -> {self.official2}'
+
+
