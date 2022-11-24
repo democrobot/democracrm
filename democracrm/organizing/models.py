@@ -96,6 +96,7 @@ class Campaign(CRMBase):
         ('lost', 'Lost'),
     )
     status = models.CharField(default='brainstorming', max_length=255, choices=STATUS_CHOICES)
+    targets = models.ManyToManyField('lobbying.PublicOffice')
     # TODO: Add ballot title, legislation view, election date, and other details
     is_public = models.BooleanField(default=False)
 
@@ -106,15 +107,31 @@ class Campaign(CRMBase):
 
     def target_supporters(self):
         return self.supportlevel_set.filter(
-            Q(campaign_support='supports') | Q(campaign_support='strongly_supports')).count()
+            Q(campaign_support='Supports') | Q(campaign_support='Strongly Supports'))
+
+    def target_supporters_count(self):
+        return self.target_supporters().count()
 
     def target_undecided(self):
-        return self.supportlevel_set.filter(campaign_support='undecided').count()
+        return self.supportlevel_set.filter(campaign_support='Undecided On')
+
+    def target_undecided_count(self):
+        return self.target_undecided().count()
 
     def target_opposers(self):
         return self.supportlevel_set.filter(
-            Q(campaign_support='opposes') | Q(campaign_support='strongly_opposes')).count()
+            Q(campaign_support='Opposes') | Q(campaign_support='Strongly Opposes'))
 
+    def target_opposers_count(self):
+        return self.target_opposers().count()
+
+    def target_support_analysis(self):
+        analysis = {}
+        for target in self.targets.all():
+            target_name = target.name
+            supporters = self.supportlevel_set.filter()
+            analysis[target_name] = []
+        return analysis
 
     def __str__(self):
         return self.name
@@ -142,6 +159,9 @@ class Person(CRMBase):
 
     def last_name(self):
         return self.user.last_name
+
+    def full_name(self):
+        return f'{self.user.first_name} {self.user.last_name}'
 
     def __str__(self):
         return self.user.get_full_name()

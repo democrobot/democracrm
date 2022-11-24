@@ -54,8 +54,8 @@ if sentry_sdk and SECRETS['SENTRY_DSN']:
 DEBUG = True
 
 # TODO: Modify appropriately for upcoming external testing
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
-
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.ngrok.io']
+CSRF_TRUSTED_ORIGINS = ['https://*.ngrok.io']
 
 # Application definition
 

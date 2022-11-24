@@ -1,0 +1,11 @@
+{% extends "organizing/base.html" %}
+
+{% block section_name %}Campaigns{% endblock %}
+
+{% block section_content %}
+<ul>
+{% for campaign in campaigns %}
+    <li><a href="/organizing/campaigns/{{ campaign.id}}">{{ campaign }}</a></li>
+{% endfor %}
+</ul>
+{% endblock %}

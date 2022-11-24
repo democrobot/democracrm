@@ -5,7 +5,15 @@
     <title>DemocraCRM</title>
 </head>
 <body>
-<h1>DemocraCRM</h1>
+<div align="right">
+{% if user.is_authenticated %}
+  Hi {{ user.email }}! <a href="/admin/logout">Admin Logout</a>
+{% else %}
+  You are not logged in: <a href="/admin">Admin Login</a>
+{% endif %}
+</div>
+
+<h1><a href="/">DemocraCRM</a></h1>
 
 {% block content %}
 ...

@@ -173,11 +173,16 @@ class PublicOfficial(models.Model):
     class Meta:
         verbose_name_plural = "Public Officials"
 
+    def full_name(self):
+        return f'{self.first_name} {self.last_name}'
+
+    def full_name_with_title(self):
+        return f'{self.title} {self.first_name} {self.last_name}'
+
     def __str__(self):
         return self.full_name()
 
-    def full_name(self):
-        return f'{self.first_name} {self.last_name}'
+
 
 
 class Committee(models.Model):
