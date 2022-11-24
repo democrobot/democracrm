@@ -102,3 +102,26 @@ class InterpersonalTieTests(TestCase):
         tie.save()
         self.assertEquals(tie.relationship_summary(), 'Official One is unknown/neutral towards Official Two')
 
+    def test_interpersonal_ties_to(self):
+        official1 = init_public_official(first_name='Official', last_name='One')
+        official2 = init_public_official(first_name='Official', last_name='Two')
+        official3 = init_public_official(first_name='Official', last_name='Three')
+        tie1 = InterpersonalTie(official1=official1, official2=official2)
+        tie1.save()
+        tie2 = InterpersonalTie(official1=official1, official2=official3)
+        tie2.save()
+        ties = official1.ties_from.all()
+        self.assertIn(tie1, ties)
+        self.assertIn(tie2, ties)
+
+    def test_interpersonal_ties_from(self):
+        official1 = init_public_official(first_name='Official', last_name='One')
+        official2 = init_public_official(first_name='Official', last_name='Two')
+        official3 = init_public_official(first_name='Official', last_name='Three')
+        tie1 = InterpersonalTie(official1=official1, official2=official3)
+        tie1.save()
+        tie2 = InterpersonalTie(official1=official2, official2=official3)
+        tie2.save()
+        ties = official3.ties_to.all()
+        self.assertIn(tie1, ties)
+        self.assertIn(tie2, ties)
