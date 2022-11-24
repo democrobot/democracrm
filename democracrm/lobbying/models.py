@@ -4,7 +4,7 @@ from django.db import models
 from core.models import CRMBase
 from organizing.models import Campaign
 
-class PoliticalParty(models.Model):
+class PoliticalParty(CRMBase):
     """
     A formal political party active with candidates and/or elected officials
     being represented.
@@ -23,7 +23,7 @@ class PoliticalParty(models.Model):
         verbose_name_plural = "Political Parties"
 
 
-class Voter(models.Model):
+class Voter(CRMBase):
     """
     An individual voter record.
     """
@@ -58,7 +58,7 @@ class Voter(models.Model):
             return 'N/A'
 
 
-class GoverningBody(models.Model):
+class GoverningBody(CRMBase):
     """
     A governing body is a level of government responsible for legislative,
     executive, and judicial authority for a defined geographic area containing
@@ -87,7 +87,7 @@ class GoverningBody(models.Model):
         return self.name
 
 
-class PublicOffice(models.Model):
+class PublicOffice(CRMBase):
     """
     Represents the office that public officials serve within a governing body.
     """
@@ -113,7 +113,7 @@ class PublicOffice(models.Model):
         return len(self.publicofficial_set.all())
 
 
-class PoliticalSubdivision(models.Model):
+class PoliticalSubdivision(CRMBase):
     """
     A political subdivision is a defined subset of a public office, again with a
     defined geographic area coterminous or as a subset of the public office.
@@ -141,7 +141,7 @@ class PoliticalSubdivision(models.Model):
         return self.office.governing_body
 
 
-class PublicOfficial(models.Model):
+class PublicOfficial(CRMBase):
     """
     Represents elected or appointed public officials that are lobbying targets.
     """
@@ -183,9 +183,7 @@ class PublicOfficial(models.Model):
         return self.full_name()
 
 
-
-
-class Committee(models.Model):
+class Committee(CRMBase):
     """
     Represents committees, commissions, or other bodies that review legislation
     before releasing it for final passage.
@@ -199,7 +197,7 @@ class Committee(models.Model):
         return self.name
 
 
-class Session(models.Model):
+class Session(CRMBase):
     """
     Represents legislative sessions, within which bills exist and must be enacted
     before the session ends and the legislative process restarts.
@@ -214,7 +212,7 @@ class Session(models.Model):
     end_date = models.DateField(null=True, blank=True)
 
 
-class Legislation(models.Model):
+class Legislation(CRMBase):
     """
     Represents proposed or existing legislation related to campaigns.
     """
