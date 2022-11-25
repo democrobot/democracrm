@@ -1,7 +1,9 @@
 from django.test import TestCase
 
-from accounts.models import OrganizationAcount
-from core.models import Boundary, ContactInfo
+from accounts.models import OrganizationAccount
+from contacts.models import ContactInfo
+from places.models import Boundary
+
 
 from .models import (
     Organization,
@@ -79,7 +81,7 @@ def init_org_account():
     boundary.save()
     org_contact = ContactInfo(first_name='Test', last_name='Contact')
     org_contact.save()
-    org_account = OrgnanizationAccount(
+    org_account = OrganizationAccount(
         name='March on Harrisburg',
         territory=boundary,
         primary_contact=org_contact

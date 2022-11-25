@@ -96,7 +96,7 @@ class Campaign(CRMBase):
         ('lost', 'Lost'),
     )
     status = models.CharField(default='brainstorming', max_length=255, choices=STATUS_CHOICES)
-    #targets = models.ManyToManyField('lobbying.PublicOffice')
+    targets = models.ManyToManyField('lobbying.PublicOffice')
     # TODO: Add ballot title, legislation view, election date, and other details
     is_public = models.BooleanField(default=False)
 
@@ -147,7 +147,7 @@ class Person(CRMBase):
     org_account = models.ForeignKey('accounts.OrganizationAccount', on_delete=models.PROTECT)
     chapter = models.ForeignKey('organizing.Chapter', null=True, blank=True, on_delete=models.PROTECT)
     contact = models.ForeignKey('contacts.ContactInfo', null=True, blank=True, on_delete=models.PROTECT)
-    #voter = models.ForeignKey('lobbying.Voter', null=True, blank=True, on_delete=models.PROTECT)
+    voter = models.ForeignKey('lobbying.Voter', null=True, blank=True, on_delete=models.PROTECT)
     notes = models.TextField(null=True, blank=True)
     # TODO: board member? other role tracking?
 

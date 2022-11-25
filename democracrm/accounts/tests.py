@@ -1,15 +1,16 @@
 from django.test import TestCase
 
-from core.models import Boundary, ContactInfo
-from .models import User, Organization
+from .models import UserAccount, OrganizationAccount
+from contacts.models import ContactInfo
+from places.models import Boundary
 
 
 class UserTests(TestCase):
 
     def test_user_creation(self):
-        user = User(email='name@example.com')
+        user = UserAccount(email='name@example.com')
         user.save()
-        self.assertIsInstance(user, User)
+        self.assertIsInstance(user, UserAccount)
 
 
 class OrganizationTests(TestCase):
@@ -19,10 +20,10 @@ class OrganizationTests(TestCase):
         boundary.save()
         contact = ContactInfo()
         contact.save()
-        organization = Organization(
+        org_account = OrganizationAccount(
             name='March on Harrisburg',
             territory=boundary,
             primary_contact=contact
         )
-        organization.save()
-        self.assertIsInstance(organization, Organization)
+        org_account.save()
+        self.assertIsInstance(org_account, OrganizationAccount)

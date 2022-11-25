@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from core.models import Boundary
+from places.models import Boundary
 from organizing.models import Organization
 from organizing.tests import init_campaign
 
