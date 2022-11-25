@@ -69,7 +69,7 @@ INSTALLED_APPS = [
     'accounts',
     'contacts',
     'core',
-#    'lobbying',
+    'lobbying',
     'organizing',
     'places'
 ]
