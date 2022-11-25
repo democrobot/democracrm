@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from core.models import GeographicBoundary
+from core.models import Boundary
 from organizing.models import Organization
 from organizing.tests import init_campaign
 
@@ -16,7 +16,7 @@ from .models import (
 class GoverningBodyTests(TestCase):
 
     def test_create_governing_body(self):
-        boundary = GeographicBoundary(name='Pennsylvania')
+        boundary = Boundary(name='Pennsylvania')
         boundary.save()
         governing_body = GoverningBody(name='Example Body', boundary=boundary)
         governing_body.save()
@@ -27,7 +27,7 @@ class GoverningBodyTests(TestCase):
 class PoliticalSubdivisionTests(TestCase):
 
     def test_political_subdivision_creation(self):
-        boundary = GeographicBoundary(name='Pennsylvania')
+        boundary = Boundary(name='Pennsylvania')
         boundary.save()
         governing_body = GoverningBody(name='Pennsylvania State Government', boundary=boundary)
         governing_body.save()

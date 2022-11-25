@@ -32,9 +32,9 @@ class CRMBase(models.Model):
         abstract = True
 
 
-class GeographicBoundary(CRMBase):
+class Boundary(CRMBase):
     """
-    A geographic boundary is an official political boundary, represented by a
+    A boundary is an official political boundary, represented by a
     polygon-based geospatial record that can be associated
     with a variety of other spatial overlays, such as governing bodies and
     political subdivisions.
@@ -45,7 +45,7 @@ class GeographicBoundary(CRMBase):
 
     # For now, boundaries can only have one parent, which is almost always true
     parent = models.ForeignKey(
-        'GeographicBoundary',
+        'Boundary',
         null=True,
         blank=True,
         on_delete=models.PROTECT
@@ -68,7 +68,7 @@ class GeographicBoundary(CRMBase):
     )
 
     class Meta:
-        verbose_name_plural = "Geographic Boundaries"
+        verbose_name_plural = "Boundaries"
 
     def __repr__(self):
         return self.name
@@ -77,20 +77,20 @@ class GeographicBoundary(CRMBase):
         return self.name
 
 
-class GeographicRegion(CRMBase):
+class Region(CRMBase):
     """
     User-defined regions for use in organizations.
     """
 
     organization = models.ForeignKey('accounts.Organization', on_delete=models.PROTECT)
     name = models.CharField(max_length=255)
-    boundaries = models.ManyToManyField(GeographicBoundary)
+    boundaries = models.ManyToManyField(Boundary)
 
     def __str__(self):
         return self.name
 
     class Meta:
-        verbose_name_plural = 'Geographic Regions'
+        verbose_name_plural = 'Regions'
 
 
 class Site(CRMBase):

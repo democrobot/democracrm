@@ -1,7 +1,7 @@
 from django.test import TestCase
 
 from .models import (
-    GeographicBoundary,
+    Boundary,
     Site,
     Location,
     ContactInfo,
@@ -11,12 +11,12 @@ from .models import (
 from .utils import geocode_address
 
 
-class GeographyBoundaryTests(TestCase):
+class BoundaryTests(TestCase):
 
-    def test_geography_boundary_creation(self):
-        boundary = GeographicBoundary(name='Pennsylvania')
+    def test_boundary_creation(self):
+        boundary = Boundary(name='Pennsylvania')
         boundary.save()
-        self.assertIsInstance(boundary, GeographicBoundary)
+        self.assertIsInstance(boundary, Boundary)
 
 
 class SiteTests(TestCase):

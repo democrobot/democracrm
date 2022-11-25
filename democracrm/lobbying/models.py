@@ -77,7 +77,7 @@ class GoverningBody(CRMBase):
         ('municipal', 'Municipal'),
     )
     level = models.CharField(max_length=255, choices=LEVEL_CHOICES)
-    boundary = models.ForeignKey('core.GeographicBoundary', on_delete=models.RESTRICT)
+    boundary = models.ForeignKey('core.Boundary', on_delete=models.RESTRICT)
     # geom
 
     class Meta:

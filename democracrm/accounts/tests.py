@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from core.models import GeographicBoundary, ContactInfo
+from core.models import Boundary, ContactInfo
 from .models import User, Organization
 
 
@@ -15,13 +15,13 @@ class UserTests(TestCase):
 class OrganizationTests(TestCase):
 
     def test_organization_creation(self):
-        area = GeographicBoundary(name='Pennsylvania')
-        area.save()
+        boundary = Boundary(name='Pennsylvania')
+        boundary.save()
         contact = ContactInfo()
         contact.save()
         organization = Organization(
             name='March on Harrisburg',
-            territory=area,
+            territory=boundary,
             primary_contact=contact
         )
         organization.save()

@@ -1,7 +1,7 @@
 from django.test import TestCase
 
 from accounts.models import Organization as OrgAccount
-from core.models import GeographicBoundary, ContactInfo
+from core.models import Boundary, ContactInfo
 
 from .models import (
     Organization,
@@ -75,7 +75,7 @@ class ChapterTests(TestCase):
 
 
 def init_organization():
-    boundary = GeographicBoundary(name='Pennsylvania')
+    boundary = Boundary(name='Pennsylvania')
     boundary.save()
     org_contact = ContactInfo(first_name='Test', last_name='Contact')
     org_contact.save()

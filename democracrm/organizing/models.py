@@ -175,7 +175,7 @@ class Chapter(CRMBase):
     name = models.CharField(max_length=255)
     organization = models.ForeignKey('accounts.Organization',
                                      on_delete=models.PROTECT)
-    region = models.ForeignKey('core.GeographicRegion', on_delete=models.PROTECT)
+    region = models.ForeignKey('core.Region', on_delete=models.PROTECT)
 
     def __str__(self):
         return self.name

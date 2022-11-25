@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import (GeographicBoundary, GeographicRegion, Site, Location,
+from .models import (Boundary, Region, Site, Location,
                      ContactRole, ContactInfo, Comment, SocialMediaAccount)
 
 
@@ -12,13 +12,13 @@ from .models import (GeographicBoundary, GeographicRegion, Site, Location,
 # #admin_site.register(MyModel)
 
 
-@admin.register(GeographicBoundary)
-class GeographicBoundaryAdmin(admin.ModelAdmin):
+@admin.register(Boundary)
+class BoundaryAdmin(admin.ModelAdmin):
     list_display = ['name', 'parent', 'level']
 
 
-@admin.register(GeographicRegion)
-class GeographicRegionAdmin(admin.ModelAdmin):
+@admin.register(Region)
+class RegionAdmin(admin.ModelAdmin):
     list_display = ['name',]
 
 
