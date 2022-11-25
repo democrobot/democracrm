@@ -1,3 +1,50 @@
-site_name: DemocraCRM
+site_name: DemocraCRM Documentation
+site_url: https://docs.democracrm.org
+repo_name: democracrm/democracrm
+repo_url: https://github.com/democracrm/democracrm
 theme:
   name: material
+  icon:
+    repo: fontawesome/brands/github
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/lightbulb-outline
+        name: Switch to Dark Mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/lightbulb
+        name: Switch to Light Mode
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/democracrm/democracrm
+    - icon: fontawesome/brands/twitter
+      link: https://www.twitter.com/democracrm
+markdown_extensions:
+  - admonition
+nav:
+    - Introduction: 'index.md'
+    - Installation: 'installation.md'
+    - Configuration: 'configuration.md'
+    - Upgrading: 'upgrading.md'
+    - Getting Started:
+        - User Account: 'getting-started/user_account.md'
+        - Organization Account: 'getting-started/organization_account.md'
+        - Platform & Campaigns: 'getting-started/platform-campaigns.md'
+        - People & Places: 'getting-started/people-places.md'
+    - Features:
+        - Accounts: 'features/accounts.md'
+        - Places: 'features/places.md'
+    - Data Models:
+        - Accounts
+        - Core:
+            - Geographic Boundaries: 'models/core/geographic_boundaries.md'
+        - Lobbying
+        - Organizing
+
+    - Development
+    - Release Notes
+    - License: 'license.md'
