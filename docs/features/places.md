@@ -2,11 +2,11 @@
 
 
 
-## Geographic Boundaries
+## Boundaries
 
 
 
-## Geographic Regions
+## Regions
 
 
 
