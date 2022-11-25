@@ -47,6 +47,7 @@ nav:
         - Lobbying
         - Organizing
 
-    - Development
+    - Development:
+        - Documentation: 'development/documentation.md'
     - Release Notes
     - License: 'license.md'

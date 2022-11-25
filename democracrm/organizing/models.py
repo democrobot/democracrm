@@ -40,7 +40,7 @@ class Platform(CRMBase):
     # TODO: Should be a singleton instance for the install, created on account
     # initialization
 
-    organization = models.ForeignKey('accounts.Organization', on_delete=models.PROTECT)
+    org_account = models.ForeignKey('accounts.OrganizationAccount', on_delete=models.PROTECT)
     # TODO: Change title to name
     title = models.CharField(null=True, blank=True, max_length=255)
     description = models.TextField()
@@ -143,10 +143,10 @@ class Person(CRMBase):
     to many other key objects in the CRM.
     """
 
-    user = models.ForeignKey('accounts.User', null=True, blank=True, on_delete=models.PROTECT)
-    organization = models.ForeignKey('accounts.Organization', on_delete=models.PROTECT)
+    user_account = models.ForeignKey('accounts.UserAccount', null=True, blank=True, on_delete=models.PROTECT)
+    org_account = models.ForeignKey('accounts.OrganizationAccount', on_delete=models.PROTECT)
     chapter = models.ForeignKey('organizing.Chapter', null=True, blank=True, on_delete=models.PROTECT)
-    contact = models.ForeignKey('core.ContactInfo', null=True, blank=True, on_delete=models.PROTECT)
+    contact = models.ForeignKey('contacts.ContactInfo', null=True, blank=True, on_delete=models.PROTECT)
     voter = models.ForeignKey('lobbying.Voter', null=True, blank=True, on_delete=models.PROTECT)
     notes = models.TextField(null=True, blank=True)
     # TODO: board member? other role tracking?
@@ -173,9 +173,9 @@ class Chapter(CRMBase):
     """
 
     name = models.CharField(max_length=255)
-    organization = models.ForeignKey('accounts.Organization',
+    org_account = models.ForeignKey('accounts.OrganizationAccount',
                                      on_delete=models.PROTECT)
-    region = models.ForeignKey('core.Region', on_delete=models.PROTECT)
+    region = models.ForeignKey('places.Region', on_delete=models.PROTECT)
 
     def __str__(self):
         return self.name

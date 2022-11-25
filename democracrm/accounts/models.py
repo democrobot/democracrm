@@ -2,10 +2,12 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models  # TODO: Migrate to GeoDjango models
 
 from .managers import UserManager
-from core.models import CRMBase, Boundary, ContactInfo
+from core.models import CRMBase
+from places.models import Boundary
+from contacts.models import ContactInfo
 
 
-class User(AbstractUser, CRMBase):
+class UserAccount(AbstractUser, CRMBase):
     """
     User accounts within the platform. Users remain independent of organizations,
     so that they can work with multiple organizations. However, objects created
@@ -22,7 +24,7 @@ class User(AbstractUser, CRMBase):
     objects = UserManager()
 
 
-class Organization(CRMBase):
+class OrganizationAccount(CRMBase):
     """
     Organizations represent the organizational account within the system; all
     management is based on this context by users. Organizations can choose to
@@ -40,7 +42,7 @@ class Organization(CRMBase):
     notes = models.TextField(null=True, blank=True)
 
     class Meta:
-        verbose_name_plural = 'Organizations'
+        verbose_name_plural = 'Organization Accounts'
 
     def __str__(self):
         return self.name

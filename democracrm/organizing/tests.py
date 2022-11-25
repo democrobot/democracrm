@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from accounts.models import Organization as OrgAccount
+from accounts.models import OrganizationAcount
 from core.models import Boundary, ContactInfo
 
 from .models import (
@@ -27,8 +27,8 @@ class OrganizationTests(TestCase):
 class PlatformTests(TestCase):
 
     def test_platform_creation(self):
-        organization = init_organization()
-        platform = Platform(title='Test Platform', organization=organization)
+        org_account = init_org_account()
+        platform = Platform(title='Test Platform', org_account=org_account)
         platform.save()
         self.assertIsInstance(platform, Platform)
 
@@ -36,8 +36,8 @@ class PlatformTests(TestCase):
 class PlatformCategoryTests(TestCase):
 
     def test_platform_category_creation(self):
-        organization = init_organization()
-        platform = Platform(title='Test Platform', organization=organization)
+        org_account = init_org_account()
+        platform = Platform(title='Test Platform', org_account=org_account)
         platform.save()
         category = PlatformCategory(platform=platform, name='Category', order=1)
         category.save()
@@ -47,8 +47,8 @@ class PlatformCategoryTests(TestCase):
 class CampaignTests(TestCase):
 
     def test_campaign_creation(self):
-        organization = init_organization()
-        platform = Platform(title='Test Platform', organization=organization)
+        org_account = init_org_account()
+        platform = Platform(title='Test Platform', org_account=org_account)
         platform.save()
         campaign = Campaign(platform=platform, name='Campaign', status='brainstorming')
         campaign.save()
@@ -58,10 +58,10 @@ class CampaignTests(TestCase):
 class PersonTests(TestCase):
 
     def test_person_creation(self):
-        organization = init_organization()
+        org_account = init_org_account()
         contact = ContactInfo(first_name='Jane', last_name='Doe')
         contact.save()
-        person = Person(organization=organization, contact=contact)
+        person = Person(org_account=org_account, contact=contact)
         person.save()
         self.assertIsInstance(person, Person)
 
@@ -69,29 +69,29 @@ class PersonTests(TestCase):
 class ChapterTests(TestCase):
 
     def test_chapter_creation(self):
-        organization = init_organization()
-        chapter = Chapter(name='Test Chapter', organization=organization)
-        self.assertIsInstance(chapter,Chapter)
+        org_account = init_org_account()
+        chapter = Chapter(name='Test Chapter', org_account=org_account)
+        self.assertIsInstance(chapter, Chapter)
 
 
-def init_organization():
+def init_org_account():
     boundary = Boundary(name='Pennsylvania')
     boundary.save()
     org_contact = ContactInfo(first_name='Test', last_name='Contact')
     org_contact.save()
-    organization = OrgAccount(
+    org_account = OrgnanizationAccount(
         name='March on Harrisburg',
         territory=boundary,
         primary_contact=org_contact
     )
-    organization.save()
+    org_account.save()
 
-    return organization
+    return org_account
 
 
 def init_platform():
-    organization = init_organization()
-    platform = Platform(title='Test Platform', organization=organization)
+    org_account = init_org_account()
+    platform = Platform(title='Test Platform', org_account=org_account)
     platform.save()
 
     return platform

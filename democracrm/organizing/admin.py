@@ -17,7 +17,7 @@ class OrganizationAdmin(admin.ModelAdmin):
 
 @admin.register(Platform)
 class PlatformAdmin(admin.ModelAdmin):
-    list_display = ['title', 'organization']
+    list_display = ['title', 'org_account']
 
 
 @admin.register(PlatformCategory)
@@ -32,10 +32,10 @@ class CampaignAdmin(admin.ModelAdmin):
 
 @admin.register(Person)
 class PersonAdmin(admin.ModelAdmin):
-    list_display = ['full_name', 'user', 'last_name', 'first_name', 'organization']
+    list_display = ['full_name', 'user_account', 'last_name', 'first_name', 'org_account']
 
 
 @admin.register(Chapter)
 class ChapterAdmin(admin.ModelAdmin):
-    list_display = ['name', 'organization', 'region']
+    list_display = ['name', 'org_account', 'region']
 

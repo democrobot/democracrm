@@ -51,6 +51,7 @@ class PoliticalSubdivisionTests(TestCase):
         official2 = PublicOfficial(first_name='John', last_name='Smith',
                                    subdivision=political_subdivision)
         official2.save()
+        self.fail()
 
 
 class PublicOfficialTests(TestCase):
