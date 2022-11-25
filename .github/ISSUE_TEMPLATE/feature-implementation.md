@@ -21,4 +21,4 @@ assignees: ''
 - [ ] Write functional tests
 - [ ] Write docstring
 - [ ] Write code
-- [ ] Write wiki page
+- [ ] Write documentation
