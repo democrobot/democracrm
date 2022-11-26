@@ -1,5 +1,6 @@
 from django.db import models
 
+# from accounts.models import OrganizationAccount
 from core.models import CRMBase
 
 
@@ -10,9 +11,6 @@ class Boundary(CRMBase):
     with a variety of other spatial overlays, such as governing bodies and
     political subdivisions.
     """
-
-    # TODO: Define "root" of reform effort area, such as the state, and use that
-    # to generate the base map. Only one record can be the root!
 
     # For now, boundaries can only have one parent, which is almost always true
     parent = models.ForeignKey(
@@ -25,8 +23,9 @@ class Boundary(CRMBase):
     name = models.CharField(
         max_length=255
     )
+    description = models.TextField(null=True, blank=True)
     # Defined areas based off of this: https://www2.census.gov/geo/pdfs/reference/geodiagram.pdf
-    # The focus is on areas with jurisdiction over elections
+    # The focus is on areas with jurisdiction over legislation and elections
     LEVEL_CHOICES = (
         ('nation', 'Nation'),
         ('state', 'State'),
@@ -48,14 +47,27 @@ class Boundary(CRMBase):
         return self.name
 
 
+class RegionGroup(CRMBase):
+    """
+    Group of Region objects in a one-to-many topology.
+    """
+
+    # TODO: Should it be hierarchical?
+
+    name = models.CharField(max_length=255)
+    description = models.TextField(null=True, blank=True)
+    overlapping_enabled = models.BooleanField(default=False)
+
+
 class Region(CRMBase):
     """
     User-defined regions for use in organizations.
     """
 
-    org_account = models.ForeignKey('accounts.OrganizationAccount', on_delete=models.PROTECT)
     name = models.CharField(max_length=255)
+    description = models.TextField(null=True, blank=True)
     boundaries = models.ManyToManyField(Boundary)
+    group = models.ForeignKey(RegionGroup, null=True, blank=True, on_delete=models.PROTECT)
 
     def __str__(self):
         return self.name
@@ -64,18 +76,26 @@ class Region(CRMBase):
         verbose_name_plural = 'Regions'
 
 
+class SiteGroup(CRMBase):
+    """
+    Group of Site objects in a one-to-many topology.
+    """
+
+    # TODO: Should it be hierarchical?
+
+    name = models.CharField(max_length=255)
+    description = models.TextField(null=True, blank=True)
+
+
 class Site(CRMBase):
     """
     A Site is a point-based geospatial record.
     """
 
-    name = models.CharField(
-        max_length=255
-    )
-    description = models.TextField(
-        null=True,
-        blank=True
-    )
+    name = models.CharField(max_length=255)
+    description = models.TextField(null=True, blank=True)
+    group = models.ForeignKey(SiteGroup, null=True, blank=True,
+                              on_delete=models.PROTECT)
     # TODO: Add mailing address
     has_physical_address = models.BooleanField(
         default=False
@@ -162,8 +182,8 @@ class Location(CRMBase):
     parent = models.ForeignKey('Location', on_delete=models.PROTECT, blank=True, null=True)
     site = models.ForeignKey(Site, on_delete=models.PROTECT)
     name = models.CharField(max_length=255)
+    description = models.TextField(null=True, blank=True)
     unit = models.CharField(null=True, blank=True, max_length=255)
-    description = models.TextField(blank=True)
 
     def __str__(self):
         return self.name

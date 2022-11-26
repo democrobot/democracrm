@@ -63,14 +63,38 @@ reform efforts in the Pennsylvania State Government, the boundary would be the s
 ## Regions
 
 Regions are user-defined groups of boundaries (of the same level) that can be used for organizing purposes within an
-organization account. Multiple regions can be created within an organization account, and assigned to any records that
-support them.
+organization account. Multiple regions can be created within an organization account, and assigned to the record types
+below.
 
+### Organizations
 
+Organization records used to track other organizations can have a region linked to them. This is helpful, for example,
+to know in what communities a partnering organization is active in.
+
+### Chapters
+
+Chapters are specifically formed to subdivide an organization's territory into regions, such as to build up the base of
+people involved in each area and coordinate efforts for large campaign actions. A region must be added to each chapter
+when created.
+
+!!! warning
+
+    Regions assigned to chapters will be validated to ensure they do not overlap with the regions of existing chapters.
+
+## Region Groups
+
+Region Groups are available to help organize Regions, when necessary.
 
 
 ## Sites
 
+Sites are specific points that can be mapped. They can be addressable, by street address, such as a building, or they
+can be based on coordinates, such as a rally point for a campaign action.
 
+## Site Groups
+
+Site Groups are available to help organize Sites, when necessary.
 
 ## Locations
+
+Locations are areas within a Site. They can be hierarchical.
