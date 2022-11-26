@@ -1,5 +1,5 @@
 """
-WSGI config for mohcrm project.
+WSGI config for the DemocraCRM project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 

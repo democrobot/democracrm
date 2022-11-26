@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models import Q
 
 from core.models import CRMBase
+from places.models import Region
 
 
 class Organization(CRMBase):
@@ -24,8 +25,10 @@ class Organization(CRMBase):
     url = models.URLField(null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     notes = models.TextField(null=True, blank=True)
-    # Endorsement?
-    # Sites, contacts, and social media accounts can be linked to partners
+    region = models.ForeignKey(Region, null=True, blank=True, on_delete=models.PROTECT)
+    # TODO: Should organizations have boundaries or regions?
+    # TODO: Can they be used to manage endorsement?
+    # Sites, contacts, and social media accounts can be linked to organizations, as well
 
     def __str__(self):
         return self.name
@@ -47,7 +50,7 @@ class Platform(CRMBase):
     categories_enabled = models.BooleanField(default=False)
 
     def __str__(self):
-        return f'{self.organization} Platform'
+        return f'{self.org_account} Platform'
 
 
 class PlatformCategory(CRMBase):
@@ -175,7 +178,7 @@ class Chapter(CRMBase):
     name = models.CharField(max_length=255)
     org_account = models.ForeignKey('accounts.OrganizationAccount',
                                      on_delete=models.PROTECT)
-    region = models.ForeignKey('places.Region', on_delete=models.PROTECT)
+    region = models.ForeignKey(Region, on_delete=models.PROTECT)
 
     def __str__(self):
         return self.name

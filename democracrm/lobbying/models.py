@@ -12,6 +12,7 @@ class PoliticalParty(CRMBase):
     """
 
     name = models.CharField(null=False, max_length=255)
+    # TODO: Should parties be linked to boundaries?
 
     def __repr__(self):
         return self.name
@@ -126,7 +127,7 @@ class PoliticalSubdivision(CRMBase):
     name = models.CharField(null=False, max_length=255)
     district = models.IntegerField(null=True, blank=True)
     seats = models.IntegerField(default=1)
-    # Needs geom field
+    # Needs boundary field
 
     class Meta:
         ordering = ['name']

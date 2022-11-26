@@ -1,4 +1,4 @@
-"""mohcrm URL Configuration
+"""DemocraCRM URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.0/topics/http/urls/
@@ -18,8 +18,8 @@ from django.urls import include, path
 
 
 urlpatterns = [
-    #path('', include('core.urls')),
-    #path('lobbying/', include('lobbying.urls')),
-    #path('organizing/', include('organizing.urls')),
+    path('', include('core.urls')),
+    path('lobbying/', include('lobbying.urls')),
+    path('organizing/', include('organizing.urls')),
     path('admin/', admin.site.urls),
 ]

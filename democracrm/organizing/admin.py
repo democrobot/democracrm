@@ -28,6 +28,7 @@ class PlatformCategoryAdmin(admin.ModelAdmin):
 @admin.register(Campaign)
 class CampaignAdmin(admin.ModelAdmin):
     list_display = ['name', 'category', 'priority', 'status', 'target_supporters_count', 'target_undecided_count', 'target_opposers_count']
+    save_as = True
 
 
 @admin.register(Person)

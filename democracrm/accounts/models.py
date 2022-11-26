@@ -23,6 +23,9 @@ class UserAccount(AbstractUser, CRMBase):
 
     objects = UserManager()
 
+    class Meta:
+        verbose_name_plural = 'User Accounts'
+
 
 class OrganizationAccount(CRMBase):
     """
