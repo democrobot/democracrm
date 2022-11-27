@@ -3,7 +3,7 @@ from django.db import models
 from core.models import CRMBase, CRMTreeBase
 
 
-class Boundary(CRMBase):
+class Boundary(CRMTreeBase):
     """
     A boundary is an official political boundary, represented by a
     polygon-based geospatial record that can be associated
@@ -168,7 +168,7 @@ class Site(CRMBase):
         return self.name
 
 
-class Location(CRMBase):
+class Location(CRMTreeBase):
     """
 
     """

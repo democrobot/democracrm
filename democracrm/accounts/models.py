@@ -18,7 +18,7 @@ class UserAccount(AbstractUser, CRMBase):
 
     email = models.EmailField(unique=True)
     username = None  # disable the AbstractUser.username field
-    USERNAME_FIELD = "email"
+    USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
     objects = UserManager()

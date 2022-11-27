@@ -8,7 +8,7 @@ from places.models import Boundary
 class UserTests(TestCase):
 
     def test_user_creation(self):
-        user = UserAccount(email='name@example.com')
+        user = UserAccount(email='name@example.com', password='abc123')
         user.save()
         self.assertIsInstance(user, UserAccount)
 
