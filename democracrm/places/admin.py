@@ -5,7 +5,7 @@ from .models import Boundary, Region, Site, Location
 
 @admin.register(Boundary)
 class BoundaryAdmin(admin.ModelAdmin):
-    list_display = ['name', 'parent', 'level']
+    list_display = ['name', 'level']
 
 
 @admin.register(Region)
@@ -20,4 +20,4 @@ class SiteAdmin(admin.ModelAdmin):
 
 @admin.register(Location)
 class LocationAdmin(admin.ModelAdmin):
-    list_display = ['name', 'parent', 'site']
+    list_display = ['name', 'site']

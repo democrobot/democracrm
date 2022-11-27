@@ -1,4 +1,5 @@
 import uuid
+from tree_queries.models import TreeNode
 
 from django.db import models  # TODO: Migrate to GeoDjango models
 from django.utils.html import format_html
@@ -25,6 +26,15 @@ class CRMBase(models.Model):
             setattr(self, k, v)
             update_fields.add(k)
         self.save(update_fields=update_fields)
+
+    class Meta:
+        abstract = True
+
+
+class CRMTreeBase(CRMBase, TreeNode):
+    """
+    Base class with efficient hierarchical capabilities.
+    """
 
     class Meta:
         abstract = True

@@ -1,7 +1,6 @@
 from django.db import models
 
-# from accounts.models import OrganizationAccount
-from core.models import CRMBase
+from core.models import CRMBase, CRMTreeBase
 
 
 class Boundary(CRMBase):
@@ -13,12 +12,7 @@ class Boundary(CRMBase):
     """
 
     # For now, boundaries can only have one parent, which is almost always true
-    parent = models.ForeignKey(
-        'Boundary',
-        null=True,
-        blank=True,
-        on_delete=models.PROTECT
-    )
+
     # Name should be the official name of the jurisdiction
     name = models.CharField(
         max_length=255
@@ -179,7 +173,6 @@ class Location(CRMBase):
 
     """
 
-    parent = models.ForeignKey('Location', on_delete=models.PROTECT, blank=True, null=True)
     site = models.ForeignKey(Site, on_delete=models.PROTECT)
     name = models.CharField(max_length=255)
     description = models.TextField(null=True, blank=True)
