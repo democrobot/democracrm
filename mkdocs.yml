@@ -27,14 +27,20 @@ markdown_extensions:
   - admonition
 nav:
     - Introduction: 'index.md'
-    - Installation: 'installation.md'
+    - Installation:
+      - Installation Overview: 'installation/installation_overview.md'
+      - Ubuntu Linux: 'installation/ubuntu_linux.md'
+      - PostgreSQL Database: 'installation/postgresql_database.md'
+      - DemocraCRM Application: 'installation/democracrm_app.md'
+      - Gunicorn: 'installation/gunicorn.md'
+      - NGINX Web Server: 'installation/nginx_web_server.md'
     - Configuration: 'configuration.md'
     - Upgrading: 'upgrading.md'
     - Getting Started:
-        - User Account: 'getting-started/user_account.md'
-        - Organization Account: 'getting-started/organization_account.md'
-        - Platform & Campaigns: 'getting-started/platform-campaigns.md'
-        - People & Places: 'getting-started/people-places.md'
+      - User Account: 'getting-started/user_account.md'
+      - Organization Account: 'getting-started/organization_account.md'
+      - Platform & Campaigns: 'getting-started/platform-campaigns.md'
+      - People & Places: 'getting-started/people-places.md'
     - Features:
         - Accounts: 'features/accounts.md'
         - Places: 'features/places.md'
