@@ -4,7 +4,7 @@ from django.db import models  # TODO: Migrate to GeoDjango models
 from .managers import UserManager
 from core.models import CRMBase
 from places.models import Boundary
-from contacts.models import ContactInfo
+from contacts.models import Contact
 
 
 class UserAccount(AbstractUser, CRMBase):
@@ -41,7 +41,7 @@ class OrganizationAccount(CRMBase):
     territory = models.ForeignKey(Boundary, on_delete=models.PROTECT)
     # Creating a primary contact is mandatory for creating an organization and
     # this information will be published publicly
-    primary_contact = models.ForeignKey(ContactInfo, on_delete=models.PROTECT)
+    #primary_contact = models.ForeignKey(Contact, null=True, blank=True, on_delete=models.PROTECT)
     notes = models.TextField(null=True, blank=True)
 
     class Meta:

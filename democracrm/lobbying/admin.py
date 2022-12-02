@@ -50,12 +50,12 @@ class LegislativeSessionAdmin(admin.ModelAdmin):
 
 @admin.register(Legislation)
 class LegislationAdmin(admin.ModelAdmin):
-    list_display = ['name', 'number', 'url', 'status', 'campaign']
+    list_display = ['name', 'number', 'url', 'status']
 
 
 @admin.register(SupportLevel)
 class SupportLevelAdmin(admin.ModelAdmin):
-    list_display = ['official', 'campaign', 'campaign_support', 'legislation', 'legislation_support']
+    list_display = ['official', 'campaign_support', 'legislation', 'legislation_support']
 
 
 @admin.register(InterpersonalTie)

@@ -1,11 +1,11 @@
 from django.test import TestCase
 
-from .models import ContactRole, ContactInfo
+from .models import Contact, ContactRole, ContactGroup
 
 
-class ContactInfoTests(TestCase):
+class ContactTests(TestCase):
 
     def test_contact_info_creation(self):
-        contact_info = ContactInfo()
+        contact_info = Contact()
         contact_info.save()
-        self.assertIsInstance(contact_info, ContactInfo)
+        self.assertIsInstance(contact_info, Contact)

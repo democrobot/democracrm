@@ -1,7 +1,10 @@
 from django.db import models
 from django.db.models import Q
 
+from accounts.models import UserAccount, OrganizationAccount
+from contacts.models import Contact
 from core.models import CRMBase
+# from lobbying.models import Voter, PublicOffice  # Circular reference issue
 from places.models import Region
 
 
@@ -43,7 +46,7 @@ class Platform(CRMBase):
     # TODO: Should be a singleton instance for the install, created on account
     # initialization
 
-    org_account = models.ForeignKey('accounts.OrganizationAccount', on_delete=models.PROTECT)
+    org_account = models.ForeignKey(OrganizationAccount, on_delete=models.PROTECT)
     # TODO: Change title to name
     title = models.CharField(null=True, blank=True, max_length=255)
     description = models.TextField()
@@ -140,16 +143,29 @@ class Campaign(CRMBase):
         return self.name
 
 
+class Chapter(CRMBase):
+    """
+    Regional chapters
+    """
+
+    name = models.CharField(max_length=255)
+    org_account = models.ForeignKey(OrganizationAccount, on_delete=models.PROTECT)
+    region = models.ForeignKey(Region, on_delete=models.PROTECT)
+
+    def __str__(self):
+        return self.name
+
+
 class Person(CRMBase):
     """
     Provides a record for each person an organization interacts with, linking
     to many other key objects in the CRM.
     """
 
-    user_account = models.ForeignKey('accounts.UserAccount', null=True, blank=True, on_delete=models.PROTECT)
-    org_account = models.ForeignKey('accounts.OrganizationAccount', on_delete=models.PROTECT)
-    chapter = models.ForeignKey('organizing.Chapter', null=True, blank=True, on_delete=models.PROTECT)
-    contact = models.ForeignKey('contacts.ContactInfo', null=True, blank=True, on_delete=models.PROTECT)
+    user_account = models.ForeignKey(UserAccount, null=True, blank=True, on_delete=models.PROTECT)
+    org_account = models.ForeignKey(OrganizationAccount, on_delete=models.PROTECT)
+    chapter = models.ForeignKey(Chapter, null=True, blank=True, on_delete=models.PROTECT)
+    contact = models.ForeignKey(Contact, null=True, blank=True, on_delete=models.PROTECT)
     voter = models.ForeignKey('lobbying.Voter', null=True, blank=True, on_delete=models.PROTECT)
     notes = models.TextField(null=True, blank=True)
     # TODO: board member? other role tracking?
@@ -170,15 +186,4 @@ class Person(CRMBase):
         return self.user.get_full_name()
 
 
-class Chapter(CRMBase):
-    """
-    Regional chapters
-    """
 
-    name = models.CharField(max_length=255)
-    org_account = models.ForeignKey('accounts.OrganizationAccount',
-                                     on_delete=models.PROTECT)
-    region = models.ForeignKey(Region, on_delete=models.PROTECT)
-
-    def __str__(self):
-        return self.name

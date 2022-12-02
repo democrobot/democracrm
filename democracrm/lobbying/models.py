@@ -30,7 +30,6 @@ class Voter(CRMBase):
     An individual voter record.
     """
 
-    uuid = models.UUIDField('UUID', default=uuid.uuid4)
     party = models.ForeignKey(PoliticalParty, on_delete=models.RESTRICT)
     first_name = models.CharField('First Name', null=True, blank=True, max_length=255)
     middle_name = models.CharField('Middle Name', null=True, blank=True, max_length=255)
@@ -235,7 +234,6 @@ class Legislation(CRMBase):
         ('rejected', 'Rejected'),
     )
     status = models.CharField(null=True, blank=True, max_length=255, choices=STATUS_CHOICES)
-    campaign = models.ForeignKey('organizing.Campaign', on_delete=models.RESTRICT)
 
     class Meta:
         verbose_name_plural = 'Legislation'
@@ -262,6 +260,8 @@ class SupportLevel(CRMBase):
     )
     campaign = models.ForeignKey(Campaign, on_delete=models.PROTECT)
     campaign_support = models.CharField(max_length=255, choices=SUPPORT_LEVEL_CHOICES)
+    # FIXME: What if there are multiple bills involving the campaign?
+    # Perhaps have a group/collection of legislation mapped to each campaign?
     legislation = models.ForeignKey(Legislation, null=True, blank=True, on_delete=models.PROTECT)
     legislation_support = models.CharField(max_length=255, choices=SUPPORT_LEVEL_CHOICES)
 

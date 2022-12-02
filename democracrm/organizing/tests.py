@@ -1,7 +1,7 @@
 from django.test import TestCase
 
 from accounts.models import OrganizationAccount
-from contacts.models import ContactInfo
+from contacts.models import Contact
 from places.models import Boundary
 
 
@@ -61,7 +61,7 @@ class PersonTests(TestCase):
 
     def test_person_creation(self):
         org_account = init_org_account()
-        contact = ContactInfo(first_name='Jane', last_name='Doe')
+        contact = Contact(first_name='Jane', last_name='Doe')
         contact.save()
         person = Person(org_account=org_account, contact=contact)
         person.save()
@@ -79,12 +79,12 @@ class ChapterTests(TestCase):
 def init_org_account():
     boundary = Boundary(name='Pennsylvania')
     boundary.save()
-    org_contact = ContactInfo(first_name='Test', last_name='Contact')
+    org_contact = Contact(first_name='Test', last_name='Contact')
     org_contact.save()
     org_account = OrganizationAccount(
         name='March on Harrisburg',
         territory=boundary,
-        primary_contact=org_contact
+        #primary_contact=org_contact
     )
     org_account.save()
 

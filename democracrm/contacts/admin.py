@@ -1,6 +1,11 @@
 from django.contrib import admin
 
-from .models import ContactRole, ContactInfo
+from .models import Contact, ContactRole, ContactGroup
+
+
+@admin.register(Contact)
+class ContactAdmin(admin.ModelAdmin):
+    list_display = ['full_name']
 
 
 @admin.register(ContactRole)
@@ -8,6 +13,6 @@ class ContactRoleAdmin(admin.ModelAdmin):
     list_display = ['name']
 
 
-@admin.register(ContactInfo)
-class ContactInfoAdmin(admin.ModelAdmin):
-    list_display = ['full_name', 'role']
+@admin.register(ContactGroup)
+class ContactGroupAdmin(admin.ModelAdmin):
+    list_display = ['name']

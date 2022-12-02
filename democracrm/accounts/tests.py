@@ -1,29 +1,29 @@
 from django.test import TestCase
 
 from .models import UserAccount, OrganizationAccount
-from contacts.models import ContactInfo
+from contacts.models import Contact
 from places.models import Boundary
 
 
-class UserTests(TestCase):
+class UserAccountTests(TestCase):
 
-    def test_user_creation(self):
+    def test_user_account_creation(self):
         user = UserAccount(email='name@example.com', password='abc123')
         user.save()
         self.assertIsInstance(user, UserAccount)
 
 
-class OrganizationTests(TestCase):
+class OrganizationAccountTests(TestCase):
 
-    def test_organization_creation(self):
+    def test_organization_account_creation(self):
         boundary = Boundary(name='Pennsylvania')
         boundary.save()
-        contact = ContactInfo()
+        contact = Contact()
         contact.save()
         org_account = OrganizationAccount(
             name='March on Harrisburg',
             territory=boundary,
-            primary_contact=contact
+            #primary_contact=contact
         )
         org_account.save()
         self.assertIsInstance(org_account, OrganizationAccount)
