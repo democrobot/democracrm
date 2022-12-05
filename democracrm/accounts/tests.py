@@ -27,3 +27,9 @@ class OrganizationAccountTests(TestCase):
         )
         org_account.save()
         self.assertIsInstance(org_account, OrganizationAccount)
+
+
+def init_user_account():
+    user_account = UserAccount(email='name@example.com', password='abc123')
+    user_account.save()
+    return user_account

@@ -17,7 +17,7 @@ class Boundary(CRMTreeBase):
     name = models.CharField(
         max_length=255
     )
-    description = models.TextField(null=True, blank=True)
+    description = models.TextField(blank=True)
     # Defined areas based off of this: https://www2.census.gov/geo/pdfs/reference/geodiagram.pdf
     # The focus is on areas with jurisdiction over legislation and elections
     LEVEL_CHOICES = (
@@ -49,8 +49,14 @@ class RegionGroup(CRMBase):
     # TODO: Should it be hierarchical?
 
     name = models.CharField(max_length=255)
-    description = models.TextField(null=True, blank=True)
+    description = models.TextField(blank=True)
     overlapping_enabled = models.BooleanField(default=False)
+
+    class Meta:
+        verbose_name_plural = 'Region Groups'
+
+    def __str__(self):
+        return self.name
 
 
 class Region(CRMBase):
@@ -59,15 +65,15 @@ class Region(CRMBase):
     """
 
     name = models.CharField(max_length=255)
-    description = models.TextField(null=True, blank=True)
-    boundaries = models.ManyToManyField(Boundary)
-    group = models.ForeignKey(RegionGroup, null=True, blank=True, on_delete=models.PROTECT)
-
-    def __str__(self):
-        return self.name
+    description = models.TextField(blank=True)
+    boundaries = models.ManyToManyField(Boundary, blank=True)
+    group = models.ForeignKey(RegionGroup, blank=True, on_delete=models.PROTECT)
 
     class Meta:
         verbose_name_plural = 'Regions'
+
+    def __str__(self):
+        return self.name
 
 
 class SiteGroup(CRMBase):
@@ -78,7 +84,13 @@ class SiteGroup(CRMBase):
     # TODO: Should it be hierarchical?
 
     name = models.CharField(max_length=255)
-    description = models.TextField(null=True, blank=True)
+    description = models.TextField(blank=True)
+
+    class Meta:
+        verbose_name_plural = True
+
+    def __str__(self):
+        return self.name
 
 
 class Site(CRMBase):
@@ -87,51 +99,52 @@ class Site(CRMBase):
     """
 
     name = models.CharField(max_length=255)
-    description = models.TextField(null=True, blank=True)
-    group = models.ForeignKey(SiteGroup, null=True, blank=True,
+    description = models.TextField(blank=True)
+    group = models.ForeignKey(SiteGroup, blank=True, null=True,
                               on_delete=models.PROTECT)
     # TODO: Add mailing address
     has_physical_address = models.BooleanField(
         default=False
     )
     physical_street_number = models.CharField(
-        null=True,
         blank=True,
         max_length=10
     )
-    physical_street_direction = models.CharField(null=True, blank=True, max_length=10)
-    physical_street_name = models.CharField(null=True, blank=True, max_length=255)
-    physical_street_suffix = models.CharField(null=True, blank=True, max_length=100)
-    physical_unit_number = models.CharField(null=True, blank=True, max_length=50)
-    physical_city = models.CharField(null=True, blank=True, max_length=255)
-    physical_state = models.CharField(null=True, blank=True, max_length=255)
-    physical_zip_code = models.CharField(null=True, blank=True, max_length=10)
-    physical_county = models.CharField(null=True, blank=True, max_length=255)
+    physical_street_direction = models.CharField(blank=True, max_length=10)
+    physical_street_name = models.CharField(blank=True, max_length=255)
+    physical_street_suffix = models.CharField(blank=True, max_length=100)
+    physical_unit_number = models.CharField(blank=True, max_length=50)
+    physical_city = models.CharField(blank=True, max_length=255)
+    physical_state = models.CharField(blank=True, max_length=255)
+    physical_zip_code = models.CharField(blank=True, max_length=10)
+    physical_county = models.CharField(blank=True, max_length=255)
     physical_latitude = models.FloatField(null=True, blank=True)
     physical_longitude = models.FloatField(null=True, blank=True)
     has_mailing_address = models.BooleanField(
         default=False
     )
     mailing_street_number = models.CharField(
-        null=True,
         blank=True,
         max_length=10
     )
-    mailing_street_direction = models.CharField(null=True, blank=True,
-                                                 max_length=10)
-    mailing_street_name = models.CharField(null=True, blank=True,
-                                            max_length=255)
-    mailing_street_suffix = models.CharField(null=True, blank=True,
-                                              max_length=100)
-    mailing_unit_number = models.CharField(null=True, blank=True,
-                                            max_length=50)
-    mailing_po_box = models.CharField(null=True, blank=True, max_length=255)
-    mailing_city = models.CharField(null=True, blank=True, max_length=255)
-    mailing_state = models.CharField(null=True, blank=True, max_length=255)
-    mailing_zip_code = models.CharField(null=True, blank=True, max_length=10)
-    mailing_county = models.CharField(null=True, blank=True, max_length=255)
+    mailing_street_direction = models.CharField(blank=True, max_length=10)
+    mailing_street_name = models.CharField(blank=True, max_length=255)
+    mailing_street_suffix = models.CharField(blank=True, max_length=100)
+    mailing_unit_number = models.CharField(blank=True, max_length=50)
+    mailing_po_box = models.CharField(blank=True, max_length=255)
+    mailing_city = models.CharField(blank=True, max_length=255)
+    mailing_state = models.CharField(blank=True, max_length=255)
+    mailing_zip_code = models.CharField(blank=True, max_length=10)
+    mailing_county = models.CharField(blank=True, max_length=255)
     mailing_latitude = models.FloatField(null=True, blank=True)
     mailing_longitude = models.FloatField(null=True, blank=True)
+    notes = models.TextField(blank=True)
+
+    class Meta:
+        verbose_name_plural = 'Sites'
+
+    def __str__(self):
+        return self.name
 
     def full_physical_address(self):
         parts = []
@@ -143,7 +156,7 @@ class Site(CRMBase):
         parts.append(self.physical_city)
         parts.append(self.physical_state)
         parts.append(self.physical_zip_code)
-        return ' '.join([i for i in parts if i is not None])
+        return ' '.join([i for i in parts if i])
 
     def full_mailing_address(self):
         parts = []
@@ -156,16 +169,13 @@ class Site(CRMBase):
         parts.append(self.mailing_city)
         parts.append(self.mailing_state)
         parts.append(self.mailing_zip_code)
-        return ' '.join([i for i in parts if i is not None])
+        return ' '.join([i for i in parts if i])
 
     def physical_coordinates(self):
         return self.physical_latitude, self.physical_longitude
 
     def mailing_coordinates(self):
         return self.mailing_latitude, self.mailing_longitude
-
-    def __str__(self):
-        return self.name
 
 
 class Location(CRMTreeBase):
@@ -175,8 +185,11 @@ class Location(CRMTreeBase):
 
     site = models.ForeignKey(Site, on_delete=models.PROTECT)
     name = models.CharField(max_length=255)
-    description = models.TextField(null=True, blank=True)
-    unit = models.CharField(null=True, blank=True, max_length=255)
+    description = models.TextField(blank=True)
+    unit = models.CharField(blank=True, max_length=255)
+
+    class Meta:
+        verbose_name_plural = True
 
     def __str__(self):
         return self.name

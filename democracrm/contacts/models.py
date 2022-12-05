@@ -13,24 +13,24 @@ class Contact(CRMBase):
 
     # TODO: Ensure all relevant vCard fields can be imported/exported
 
-    name_prefix = models.CharField(null=True, blank=True, max_length=50)
+    name_prefix = models.CharField(blank=True, max_length=50)
     first_name = models.CharField(max_length=100)
-    middle_name = models.CharField(null=True, blank=True, max_length=100)
+    middle_name = models.CharField(blank=True, max_length=100)
     last_name = models.CharField(max_length=100)
-    name_suffix = models.CharField(null=True, blank=True, max_length=50)
-    title = models.CharField(null=True, blank=True, max_length=255)
-    personal_phone = models.CharField(null=True, blank=True, max_length=255)
-    work_phone = models.CharField(null=True, blank=True, max_length=255)
-    mobile_phone = models.CharField(null=True, blank=True, max_length=255)
-    personal_fax = models.CharField(null=True, blank=True, max_length=255)
-    work_fax = models.CharField(null=True, blank=True, max_length=255)
-    personal_email = models.CharField(null=True, blank=True, max_length=255)
-    work_email = models.CharField(null=True, blank=True, max_length=255)
-    url = models.URLField(null=True, blank=True)
+    name_suffix = models.CharField(blank=True, max_length=50)
+    title = models.CharField(blank=True, max_length=255)
+    personal_phone = models.CharField(blank=True, max_length=255)
+    work_phone = models.CharField(blank=True, max_length=255)
+    mobile_phone = models.CharField(blank=True, max_length=255)
+    personal_fax = models.CharField(blank=True, max_length=255)
+    work_fax = models.CharField(blank=True, max_length=255)
+    personal_email = models.CharField(blank=True, max_length=255)
+    work_email = models.CharField(blank=True, max_length=255)
+    url = models.URLField(blank=True)
     birthday = models.DateField(null=True, blank=True)
-    notes = models.TextField(null=True, blank=True)
+    notes = models.TextField(blank=True)
     # If an address is needed, create and attach to a site
-    site = models.ManyToManyField(Site)
+    site = models.ManyToManyField(Site, blank=True)
 
     # TODO: Implement vCard import/export and QR code generation
     # Might need a custom method on the manager for importing into a new Contact
@@ -51,8 +51,14 @@ class ContactRole(CRMBase):
     provide a specific context to the person when linked to something else.
     """
 
-    name = models.CharField(max_length=255)
-    description = models.TextField(null=True, blank=True)
+    # TODO: Complete this model
+
+    name = models.CharField(
+        max_length=255
+    )
+    description = models.TextField(
+        blank=True
+    )
 
     class Meta:
         verbose_name_plural = 'Contact Roles'
@@ -67,8 +73,17 @@ class ContactGroup(CRMTreeBase):
     hierarchical directories of contact information.
     """
 
-    name = models.CharField(max_length=255)
-    description = models.TextField(null=True, blank=True)
+    name = models.CharField(
+        max_length=255
+    )
+    description = models.TextField(
+        blank=True
+    )
+    # Explore ways to provide UI for this
+    contacts = models.ManyToManyField(
+        Contact,
+        blank=True
+    )
 
     class Meta:
         verbose_name_plural = 'Contact Groups'

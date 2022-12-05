@@ -1,6 +1,7 @@
 from django.test import TestCase
 
 from accounts.models import OrganizationAccount
+from accounts.tests import init_user_account
 from contacts.models import Contact
 from places.models import Boundary
 
@@ -60,10 +61,11 @@ class CampaignTests(TestCase):
 class PersonTests(TestCase):
 
     def test_person_creation(self):
+        user_account = init_user_account()
         org_account = init_org_account()
         contact = Contact(first_name='Jane', last_name='Doe')
         contact.save()
-        person = Person(org_account=org_account, contact=contact)
+        person = Person(user_account=user_account, org_account=org_account, contact=contact)
         person.save()
         self.assertIsInstance(person, Person)
 
@@ -71,6 +73,7 @@ class PersonTests(TestCase):
 class ChapterTests(TestCase):
 
     def test_chapter_creation(self):
+        user_account = init_user_account()
         org_account = init_org_account()
         chapter = Chapter(name='Test Chapter', org_account=org_account)
         self.assertIsInstance(chapter, Chapter)
@@ -93,7 +96,7 @@ def init_org_account():
 
 def init_platform():
     org_account = init_org_account()
-    platform = Platform(title='Test Platform', org_account=org_account)
+    platform = Platform.objects.create(title='Test Platform', org_account=org_account)
     platform.save()
 
     return platform
@@ -101,7 +104,7 @@ def init_platform():
 
 def init_campaign():
     platform = init_platform()
-    campaign = Campaign(name='Test Campaign', platform=platform)
+    campaign = Campaign.objects.create(name='Test Campaign', platform=platform)
     campaign.save()
 
     return campaign

@@ -7,7 +7,7 @@ from .utils import geocode_address
 class BoundaryTests(TestCase):
 
     def test_boundary_creation(self):
-        boundary = Boundary(name='Pennsylvania')
+        boundary = Boundary.objects.create(name='Pennsylvania')
         boundary.save()
         self.assertIsInstance(boundary, Boundary)
 
@@ -15,16 +15,16 @@ class BoundaryTests(TestCase):
 class SiteTests(TestCase):
 
     def test_has_docstring(self):
-        site = Site(name='Example Site')
+        site = Site.objects.create(name='Example Site')
         self.assertIsNotNone(site.__doc__)
 
     def test_site_creation(self):
-        site = Site()
+        site = Site.objects.create(name='Example Site')
         site.save()
         self.assertIsInstance(site, Site)
 
     def test_site_physical_address(self):
-        site = Site(
+        site = Site.objects.create(
             name='PA State Capitol Complex',
             physical_street_number='501',
             physical_street_direction='N',
@@ -39,7 +39,7 @@ class SiteTests(TestCase):
         self.assertEquals(site.full_physical_address(), address)
 
     def test_site_mailing_address(self):
-        site = Site(
+        site = Site.objects.create(
             name='PA Treasury - Unclaimed Property',
             mailing_po_box='P.O. Box 1837',
             mailing_city='Harrisburg',
@@ -53,7 +53,7 @@ class SiteTests(TestCase):
     def test_site_coordinates(self):
         # Coordinates for PA Capitol based on Wikipedia
         # https://en.wikipedia.org/wiki/Pennsylvania_State_Capitol
-        site = Site(
+        site = Site.objects.create(
             name='PA State Capitol Complex',
             physical_latitude=40.264444,
             physical_longitude=-76.883611
@@ -66,13 +66,13 @@ class SiteTests(TestCase):
 class LocationTests(TestCase):
 
     def test_has_docstring(self):
-        site = Site()
+        site = Site.objects.create(name='Example Site')
         self.assertIsNotNone(site.__doc__)
 
     def test_location_creation(self):
-        site = Site()
+        site = Site.objects.create(name='Example Site')
         site.save()
-        location = Location(site=site)
+        location = Location.objects.create(site=site)
         location.save()
         self.assertIsInstance(location, Location)
 

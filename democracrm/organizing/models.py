@@ -4,7 +4,7 @@ from django.db.models import Q
 from accounts.models import UserAccount, OrganizationAccount
 from contacts.models import Contact
 from core.models import CRMBase
-# from lobbying.models import Voter, PublicOffice  # Circular reference issue
+# from lobbying.models import Voter, PublicOffice  # FIXME: Circular reference issue
 from places.models import Region
 
 
@@ -19,15 +19,16 @@ class Organization(CRMBase):
     # TODO: Provide org. groups?
 
     name = models.CharField(max_length=255)
+    description = models.TextField(blank=True)
+    # FIXME: Update to Django choices model
     RELATIONSHIP_CHOICES = (
         ('ally', 'Ally'),
         ('opponent', 'Opponent'),
         ('unknown', 'Unknown'),
     )
     relationship = models.CharField(default='unknown', max_length=255, choices=RELATIONSHIP_CHOICES)
-    url = models.URLField(null=True, blank=True)
-    description = models.TextField(null=True, blank=True)
-    notes = models.TextField(null=True, blank=True)
+    url = models.URLField(blank=True)
+    notes = models.TextField(blank=True)
     region = models.ForeignKey(Region, null=True, blank=True, on_delete=models.PROTECT)
     # TODO: Should organizations have boundaries or regions?
     # TODO: Can they be used to manage endorsement?
@@ -48,8 +49,8 @@ class Platform(CRMBase):
 
     org_account = models.ForeignKey(OrganizationAccount, on_delete=models.PROTECT)
     # TODO: Change title to name
-    title = models.CharField(null=True, blank=True, max_length=255)
-    description = models.TextField()
+    title = models.CharField(blank=True, max_length=255)
+    description = models.TextField(blank=True)
     categories_enabled = models.BooleanField(default=False)
 
     def __str__(self):
@@ -63,7 +64,7 @@ class PlatformCategory(CRMBase):
     """
 
     platform = models.ForeignKey(Platform, on_delete=models.PROTECT)
-    name = models.CharField(null=False, blank=False, max_length=255)
+    name = models.CharField(max_length=255)
     # TODO: The order field currently is not significant
     order = models.IntegerField(default=1)
 
@@ -82,8 +83,9 @@ class Campaign(CRMBase):
 
     platform = models.ForeignKey(Platform, on_delete=models.PROTECT)
     name = models.CharField(max_length=255)
-    description = models.TextField(null=True, blank=True)
+    description = models.TextField(blank=True)
     category = models.ForeignKey(PlatformCategory, null=True, blank=True, on_delete=models.PROTECT)
+    # FIXME: Update to Django choices model
     PRIORITY_CHOICES = (
         (5, 'Top'),
         (4, 'High'),
@@ -92,6 +94,7 @@ class Campaign(CRMBase):
         (1, 'None')
     )
     priority = models.IntegerField(default=3, choices=PRIORITY_CHOICES)
+    # FIXME: Update to Django choices model
     STATUS_CHOICES = (
         ('brainstorming', 'Brainstorming'),
         ('planned', 'Planned'),
@@ -102,7 +105,7 @@ class Campaign(CRMBase):
         ('lost', 'Lost'),
     )
     status = models.CharField(default='brainstorming', max_length=255, choices=STATUS_CHOICES)
-    targets = models.ManyToManyField('lobbying.PublicOffice')
+    targets = models.ManyToManyField('lobbying.PublicOffice', blank=True)
     # TODO: Add ballot title, legislation view, election date, and other details
     is_public = models.BooleanField(default=False)
 
@@ -162,12 +165,12 @@ class Person(CRMBase):
     to many other key objects in the CRM.
     """
 
-    user_account = models.ForeignKey(UserAccount, null=True, blank=True, on_delete=models.PROTECT)
+    user_account = models.ForeignKey(UserAccount, blank=True, on_delete=models.PROTECT)
     org_account = models.ForeignKey(OrganizationAccount, on_delete=models.PROTECT)
     chapter = models.ForeignKey(Chapter, null=True, blank=True, on_delete=models.PROTECT)
     contact = models.ForeignKey(Contact, null=True, blank=True, on_delete=models.PROTECT)
     voter = models.ForeignKey('lobbying.Voter', null=True, blank=True, on_delete=models.PROTECT)
-    notes = models.TextField(null=True, blank=True)
+    notes = models.TextField(blank=True)
     # TODO: board member? other role tracking?
 
     class Meta:

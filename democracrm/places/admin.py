@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Boundary, Region, Site, Location
+from .models import Boundary, Region, RegionGroup, Site, SiteGroup, Location
 
 
 @admin.register(Boundary)
@@ -8,8 +8,18 @@ class BoundaryAdmin(admin.ModelAdmin):
     list_display = ['name', 'level']
 
 
+@admin.register(RegionGroup)
+class RegionGroupAdmin(admin.ModelAdmin):
+    list_display = ['name',]
+
+
 @admin.register(Region)
 class RegionAdmin(admin.ModelAdmin):
+    list_display = ['name',]
+
+
+@admin.register(SiteGroup)
+class SiteGroupAdmin(admin.ModelAdmin):
     list_display = ['name',]
 
 
