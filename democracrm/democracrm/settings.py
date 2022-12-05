@@ -72,6 +72,7 @@ INSTALLED_APPS = [
     'lobbying',
     'organizing',
     'places',
+    'social',
 ]
 
 MIDDLEWARE = [
