@@ -37,12 +37,12 @@ class OrganizationAccount(CRMBase):
 
     name = models.CharField(max_length=255)
     slug = models.SlugField()
-    description = models.TextField()
+    description = models.TextField(blank=True)
     territory = models.ForeignKey(Boundary, on_delete=models.PROTECT)
     # Creating a primary contact is mandatory for creating an organization and
     # this information will be published publicly
     #primary_contact = models.ForeignKey(Contact, null=True, blank=True, on_delete=models.PROTECT)
-    notes = models.TextField()
+    notes = models.TextField(blank=True)
 
     class Meta:
         verbose_name_plural = 'Organization Accounts'

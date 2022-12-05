@@ -87,7 +87,7 @@ class SiteGroup(CRMBase):
     description = models.TextField(blank=True)
 
     class Meta:
-        verbose_name_plural = True
+        verbose_name_plural = 'Site Groups'
 
     def __str__(self):
         return self.name
@@ -189,7 +189,7 @@ class Location(CRMTreeBase):
     unit = models.CharField(blank=True, max_length=255)
 
     class Meta:
-        verbose_name_plural = True
+        verbose_name_plural = 'Locations'
 
     def __str__(self):
         return self.name
