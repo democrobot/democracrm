@@ -33,7 +33,7 @@ record for the state of Pennsylvania.
 
 ### Political Subdivisions
 
-Boundaries also define the area(a) of the political subdivisions for each public office of a governing body. Continuing
+Boundaries also define the area(s) of the political subdivision(s) for each public office of a governing body. Continuing
 with the example of the Pennsylvania State Government, the three primary public offices would be the State Senate, the
 State House, and the Governor.
 

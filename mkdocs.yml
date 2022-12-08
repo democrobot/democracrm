@@ -42,18 +42,20 @@ nav:
       - Platform & Campaigns: 'getting-started/platform-campaigns.md'
       - People & Places: 'getting-started/people-places.md'
     - Features:
-        - Accounts: 'features/accounts.md'
-        - Contacts: 'features/contacts.md'
-        - Places: 'features/places.md'
-        - Organizing: 'features/organizing.md'
-        - Lobbying: 'features/lobbying.md'
+      - Accounts: 'features/accounts.md'
+      - Contacts: 'features/contacts.md'
+      - Places: 'features/places.md'
+      - Organizing: 'features/organizing.md'
+      - Lobbying: 'features/lobbying.md'
+      - Social: 'features/social.md'
+      - Web: 'features/web.md'
     - Data Models:
-        - Accounts:
-            - User Account: 'models/accounts/user_account.md'
-            - Organization Account: 'models/accounts/organization_account.md'
-        - Core:
-            - Geographic Boundaries: 'models/core/geographic_boundaries.md'
+      - Accounts:
+        - User Account: 'models/accounts/user_account.md'
+        - Organization Account: 'models/accounts/organization_account.md'
+      - Core:
+        - Geographic Boundaries: 'models/core/geographic_boundaries.md'
     - Development:
-        - Documentation: 'development/documentation.md'
+      - Documentation: 'development/documentation.md'
     - Release Notes
     - License: 'license.md'

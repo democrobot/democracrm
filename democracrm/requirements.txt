@@ -1,0 +1,7 @@
+Django
+django-tree-queries
+sentrysdk
+coverage
+psycopg2
+requests
+pygeocodio

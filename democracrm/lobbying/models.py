@@ -13,7 +13,7 @@ class PoliticalParty(CRMBase):
 
     name = models.CharField(max_length=255)
     # TODO: Should parties be linked to boundaries?
-    # TODO: Should they be hierarchical
+    # TODO: Should they be hierarchical?
 
     def __repr__(self):
         return self.name
