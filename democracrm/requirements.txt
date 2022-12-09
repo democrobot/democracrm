@@ -1,6 +1,6 @@
 Django
 django-tree-queries
-sentrysdk
+sentry-sdk
 coverage
 psycopg2
 requests
