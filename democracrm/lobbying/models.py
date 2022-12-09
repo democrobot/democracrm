@@ -129,13 +129,30 @@ class PublicOffice(CRMBase):
         ('judicial', 'Judicial'),
         ('other', 'Other'),
     )
-    type = models.CharField(default='legislative', max_length=255, choices=TYPE_CHOICES)
-    governing_body = models.ForeignKey(GoverningBody, on_delete=models.PROTECT)
-    name = models.CharField(max_length=255)
-    description = models.TextField(blank=True)
-    total_seats = models.IntegerField(default=1)
-    seats_per_subdivision = models.IntegerField(default=1)
-    notes = models.TextField(blank=True)
+    type = models.CharField(
+        default='legislative',
+        max_length=255,
+        choices=TYPE_CHOICES
+    )
+    governing_body = models.ForeignKey(
+        GoverningBody,
+        on_delete=models.PROTECT
+    )
+    name = models.CharField(
+        max_length=255
+    )
+    description = models.TextField(
+        blank=True
+    )
+    total_seats = models.IntegerField(
+        default=1
+    )
+    seats_per_subdivision = models.IntegerField(
+        default=1
+    )
+    notes = models.TextField(
+        blank=True
+    )
 
     class Meta:
         verbose_name_plural = 'Public Offices'
@@ -155,26 +172,40 @@ class PoliticalSubdivision(CRMBase):
     seats included in that district.
     """
 
-    public_office = models.ForeignKey(PublicOffice, on_delete=models.PROTECT)
-    name = models.CharField(max_length=255)
-    description = models.TextField(blank=True)
-    district = models.IntegerField(null=True, blank=True)
-    seats = models.IntegerField(default=1)
-    notes = models.TextField(blank=True)
+    public_office = models.ForeignKey(
+        PublicOffice,
+        on_delete=models.PROTECT
+    )
+    name = models.CharField(
+        max_length=255
+    )
+    description = models.TextField(
+        blank=True
+    )
+    district = models.IntegerField(
+        null=True,
+        blank=True
+    )
+    seats = models.IntegerField(
+        default=1
+    )
+    notes = models.TextField(
+        blank=True
+    )
     # Needs boundary field
 
     class Meta:
         ordering = ['name']
-        verbose_name_plural = "Political Subdivisions"
+        verbose_name_plural = 'Political Subdivisions'
 
     def __repr__(self):
-        return f'{self.name} ({self.office.governing_body})'
+        return f'{self.name} ({self.public_office.governing_body})'
 
     def __str__(self):
-        return f'{self.name} ({self.office.governing_body})'
+        return f'{self.name} ({self.public_office.governing_body})'
 
     def governing_body(self):
-        return self.office.governing_body
+        return self.public_office.governing_body
 
 
 class PublicOfficial(CRMBase):
@@ -182,19 +213,6 @@ class PublicOfficial(CRMBase):
     Represents elected or appointed public officials that are lobbying targets.
     """
 
-    public_office = models.ForeignKey(PublicOffice, blank=True, on_delete=models.RESTRICT)
-    is_elected = models.BooleanField(default=True)
-    title = models.CharField(default='Legislator', max_length=255)
-    is_leadership = models.BooleanField(default=False)
-    leadership_title = models.CharField(blank=True, max_length=255)
-    prefix_name = models.CharField(blank=True, max_length=50)
-    first_name = models.CharField(max_length=100)
-    middle_name = models.CharField(blank=True, max_length=100)
-    last_name = models.CharField(max_length=100)
-    suffix_name = models.CharField(blank=True, max_length=50)
-    political_party = models.ForeignKey(PoliticalParty, blank=True, on_delete=models.PROTECT)
-    service_start = models.DateField(null=True, blank=True)
-    service_end = models.DateField(null=True, blank=True)
     ROLE_CHOICES = (
         ('legislative', 'Legislative'),
         ('executive', 'Executive'),
@@ -202,12 +220,73 @@ class PublicOfficial(CRMBase):
         ('administrative', 'Administrative'),
         ('clerical', 'Clerical'),
     )
-    role = models.CharField(max_length=100, choices=ROLE_CHOICES, default='Legislator')
-    political_subdivision = models.ForeignKey(PoliticalSubdivision, on_delete=models.RESTRICT)
-    notes = models.TextField(blank=True)
+
+    prefix_name = models.CharField(
+        blank=True,
+        max_length=50
+    )
+    first_name = models.CharField(
+        max_length=100
+    )
+    middle_name = models.CharField(
+        blank=True,
+        max_length=100
+    )
+    last_name = models.CharField(
+        max_length=100
+    )
+    suffix_name = models.CharField(
+        blank=True,
+        max_length=50
+    )
+    role = models.CharField(
+        max_length=100,
+        choices=ROLE_CHOICES,
+        default='Legislator'
+    )
+    public_office = models.ForeignKey(
+        PublicOffice,
+        blank=True,
+        on_delete=models.RESTRICT
+    )
+    political_subdivision = models.ForeignKey(
+        PoliticalSubdivision,
+        on_delete=models.RESTRICT
+    )
+    title = models.CharField(
+        default='Legislator',
+        max_length=255
+    )
+    is_leadership = models.BooleanField(
+        default=False
+    )
+    leadership_title = models.CharField(
+        blank=True,
+        max_length=255
+    )
+    is_elected = models.BooleanField(
+        default=True
+    )
+    political_party = models.ForeignKey(
+        PoliticalParty,
+        blank=True,
+        on_delete=models.PROTECT
+    )
+    # TODO: Create term field as range? Might not work for appointed officials.
+    service_start = models.DateField(
+        null=True,
+        blank=True
+    )
+    service_end = models.DateField(
+        null=True,
+        blank=True
+    )
+    notes = models.TextField(
+        blank=True
+    )
 
     class Meta:
-        verbose_name_plural = "Public Officials"
+        verbose_name_plural = 'Public Officials'
 
     def full_name(self):
         return f'{self.first_name} {self.last_name}'
@@ -225,11 +304,24 @@ class Committee(CRMBase):
     before releasing it for final passage.
     """
 
-    name = models.CharField(max_length=255)
-    description = models.TextField(blank=True)
-    governing_body = models.ForeignKey(GoverningBody, blank=True, on_delete=models.RESTRICT)
-    public_office = models.ForeignKey(PublicOffice, on_delete=models.RESTRICT)
-    notes = models.TextField(blank=True)
+    name = models.CharField(
+        max_length=255
+    )
+    description = models.TextField(
+        blank=True
+    )
+    governing_body = models.ForeignKey(
+        GoverningBody,
+        blank=True,
+        on_delete=models.RESTRICT
+    )
+    public_office = models.ForeignKey(
+        PublicOffice,
+        on_delete=models.RESTRICT
+    )
+    notes = models.TextField(
+        blank=True
+    )
 
     def __str__(self):
         return self.name
@@ -244,12 +336,33 @@ class LegislativeSession(CRMBase):
     # TODO: Can this be automated for each defined governing body's
     #  legislative branch?
 
-    governing_body = models.ForeignKey(GoverningBody, on_delete=models.RESTRICT)
-    name = models.CharField(blank=True, max_length=255) # TODO: Set based on duration field
-    description = models.TextField(blank=True)
-    start_date = models.DateField(blank=True)
-    end_date = models.DateField(blank=True)
-    notes = models.TextField(blank=True)
+    governing_body = models.ForeignKey(
+        GoverningBody,
+        on_delete=models.RESTRICT
+    )
+    name = models.CharField(
+        blank=True,
+        max_length=255
+    )
+    description = models.TextField(
+        blank=True
+    )
+    # TODO: Set based on duration field
+    start_date = models.DateField(
+        blank=True
+    )
+    end_date = models.DateField(
+        blank=True
+    )
+    notes = models.TextField(
+        blank=True
+    )
+
+    class Meta:
+        verbose_name_plural = 'Legislative Sessions'
+
+    def __str__(self):
+        return self.name
 
 
 class Legislation(CRMBase):
@@ -257,13 +370,6 @@ class Legislation(CRMBase):
     Represents proposed or existing legislation related to campaigns.
     """
 
-    name = models.CharField(max_length=255)
-    description = models.TextField(blank=True)
-    governing_body = models.ForeignKey(GoverningBody, on_delete=models.RESTRICT)
-    committee = models.ForeignKey(Committee, blank=True, on_delete=models.RESTRICT)
-    legislative_session = models.ForeignKey(LegislativeSession, blank=True, on_delete=models.RESTRICT)
-    number = models.CharField(blank=True, max_length=255)
-    url = models.URLField(blank=True)
     STATUS_CHOICES = (
         ('proposed', 'Proposed'),
         ('in-committee', 'In Committee'),
@@ -272,8 +378,42 @@ class Legislation(CRMBase):
         ('adopted', 'Adopted'),
         ('rejected', 'Rejected'),
     )
-    status = models.CharField(blank=True, max_length=255, choices=STATUS_CHOICES)
-    notes = models.TextField(blank=True)
+
+    name = models.CharField(
+        max_length=255
+    )
+    description = models.TextField(
+        blank=True
+    )
+    governing_body = models.ForeignKey(
+        GoverningBody,
+        on_delete=models.RESTRICT
+    )
+    committee = models.ForeignKey(
+        Committee,
+        blank=True,
+        on_delete=models.RESTRICT
+    )
+    legislative_session = models.ForeignKey(
+        LegislativeSession,
+        blank=True,
+        on_delete=models.RESTRICT
+    )
+    number = models.CharField(
+        blank=True,
+        max_length=255
+    )
+    url = models.URLField(
+        blank=True
+    )
+    status = models.CharField(
+        blank=True,
+        max_length=255,
+        choices=STATUS_CHOICES
+    )
+    notes = models.TextField(
+        blank=True
+    )
 
     class Meta:
         verbose_name_plural = 'Legislation'
@@ -288,10 +428,6 @@ class SupportLevel(CRMBase):
     official for a specific campaign and associated legislation.
     """
 
-    public_official = models.ForeignKey(
-        PublicOfficial,
-        on_delete=models.PROTECT
-    )
     # I'd prefer to use lower case with underscores for field values, but it's
     # too difficult to reformat in templates
     SUPPORT_LEVEL_CHOICES = (
@@ -300,6 +436,11 @@ class SupportLevel(CRMBase):
         ('Undecided On', 'Undecided On'),
         ('Opposes', 'Opposes'),
         ('Strongly Opposes', 'Strongly Opposes'),
+    )
+
+    public_official = models.ForeignKey(
+        PublicOfficial,
+        on_delete=models.PROTECT
     )
     campaign = models.ForeignKey(
         Campaign,
@@ -329,7 +470,7 @@ class SupportLevel(CRMBase):
         verbose_name_plural = 'Support Levels'
 
     def __str__(self):
-        return f'Support level of {self.official} on {self.campaign}'
+        return f'Support level of {self.public_official} on {self.campaign}'
 
 
 class InterpersonalTie(CRMBase):
@@ -382,9 +523,7 @@ class InterpersonalTie(CRMBase):
         verbose_name_plural = 'Interpersonal Ties'
 
     def relationship_summary(self):
-        return f'{self.official1} is {self.tie_strength}/{self.tie_affinity} towards {self.official2}'
+        return f'{self.public_official1} is {self.tie_strength}/{self.tie_affinity} towards {self.public_official2}'
 
     def __str__(self):
-        return f'{self.official1} -> {self.official2}'
-
-
+        return f'{self.public_official1} -> {self.public_official2}'

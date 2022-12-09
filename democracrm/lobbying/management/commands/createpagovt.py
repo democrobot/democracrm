@@ -14,24 +14,22 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         pass
-        #parser.add_argument('office', nargs='+', type=str)
 
-    def create_subdivisions(self, public_office):
+    @staticmethod
+    def create_subdivisions(public_office):
 
-        if public_office.seats == 1:
+        if public_office.total_seats == 1:
             PoliticalSubdivision.objects.get_or_create(
-                office=public_office,
+                public_office=public_office,
                 name=public_office.name,
-                seats=public_office.seats
+                seats=public_office.total_seats
             )
         else:
-            # For now assume all seats are single-member districts
-            # TODO: Add district seat size in PublicOffice
-            for seat in range(1, public_office.seats+1):
+            for seat in range(1, public_office.total_seats + 1):
                 PoliticalSubdivision.objects.get_or_create(
-                    office=public_office,
+                    public_office=public_office,
                     name=f'{public_office.name} District {seat}',
-                    seats=1
+                    seats=public_office.seats_per_subdivision
                 )
 
     def handle(self, *args, **options):
@@ -52,7 +50,8 @@ class Command(BaseCommand):
             governing_body=governing_body,
             type='executive',
             name='PA Governor',
-            seats=1
+            total_seats=1,
+            seats_per_subdivision=1
         )
         self.create_subdivisions(state_governor)
 
@@ -60,7 +59,8 @@ class Command(BaseCommand):
             governing_body=governing_body,
             type='legislative',
             name='PA State Senate',
-            seats=50
+            total_seats=50,
+            seats_per_subdivision=1
         )
         self.create_subdivisions(state_senate)
 
@@ -68,7 +68,8 @@ class Command(BaseCommand):
             governing_body=governing_body,
             type='legislative',
             name='PA State House',
-            seats=203
+            total_seats=203,
+            seats_per_subdivision=1
         )
         self.create_subdivisions(state_house)
 

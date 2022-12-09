@@ -8,6 +8,8 @@ from lobbying.models import (
     PublicOfficial,
 )
 
+# https://betterprogramming.pub/3-techniques-for-importing-large-csv-files-into-a-django-app-2b6e5e47dba0
+
 democrat, created = PoliticalParty.objects.get_or_create(
     name='Democratic'
 )

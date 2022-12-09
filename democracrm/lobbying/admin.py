@@ -25,7 +25,7 @@ class GoverningBodyAdmin(admin.ModelAdmin):
 
 @admin.register(PublicOffice)
 class PublicOfficeAdmin(admin.ModelAdmin):
-    list_display = ['name', 'governing_body', 'total_seats', 'officials_count']
+    list_display = ['name', 'governing_body', 'total_seats', 'seats_per_subdivision', 'officials_count']
 
 
 @admin.register(PoliticalSubdivision)
