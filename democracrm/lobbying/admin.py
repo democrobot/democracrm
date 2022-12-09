@@ -9,12 +9,12 @@ from .models import (PoliticalParty, Voter,
 
 @admin.register(PoliticalParty)
 class PoliticalPartyAdmin(admin.ModelAdmin):
-    pass
+    list_display = ['name', 'abbreviation', 'initial']
 
 
 @admin.register(Voter)
 class VoterAdmin(admin.ModelAdmin):
-    list_display = ['full_name', 'first_name', 'last_name', 'party', 'uuid']
+    list_display = ['full_name', 'first_name', 'last_name', 'political_party', 'uuid']
     readonly_fields = ('uuid',)
 
 
@@ -25,27 +25,27 @@ class GoverningBodyAdmin(admin.ModelAdmin):
 
 @admin.register(PublicOffice)
 class PublicOfficeAdmin(admin.ModelAdmin):
-    list_display = ['name', 'governing_body', 'seats', 'officials_count']
+    list_display = ['name', 'governing_body', 'total_seats', 'officials_count']
 
 
 @admin.register(PoliticalSubdivision)
 class PoliticalSubdivisionAdmin(admin.ModelAdmin):
-    list_display = ['name', 'governing_body', 'office', 'district', 'seats']
+    list_display = ['name', 'governing_body', 'public_office', 'district', 'seats']
 
 
 @admin.register(PublicOfficial)
 class PublicOfficialAdmin(admin.ModelAdmin):
-    list_display = ['full_name', 'title', 'is_elected', 'is_leadership', 'party', 'role', 'subdivision']
+    list_display = ['full_name', 'title', 'is_elected', 'is_leadership', 'political_party', 'role', 'political_subdivision']
 
 
 @admin.register(Committee)
 class CommitteeAdmin(admin.ModelAdmin):
-    list_display = ['name', 'body', 'office']
+    list_display = ['name', 'governing_body', 'public_office']
 
 
 @admin.register(LegislativeSession)
 class LegislativeSessionAdmin(admin.ModelAdmin):
-    list_display = ['name', 'body', 'start_date', 'end_date']
+    list_display = ['name', 'governing_body', 'start_date', 'end_date']
 
 
 @admin.register(Legislation)
@@ -55,9 +55,9 @@ class LegislationAdmin(admin.ModelAdmin):
 
 @admin.register(SupportLevel)
 class SupportLevelAdmin(admin.ModelAdmin):
-    list_display = ['official', 'campaign_support', 'legislation', 'legislation_support']
+    list_display = ['public_official', 'campaign_support', 'legislation', 'legislation_support']
 
 
 @admin.register(InterpersonalTie)
 class InterpersonalTieAdmin(admin.ModelAdmin):
-    list_display = ['official1', 'tie_strength', 'tie_affinity', 'official2']
+    list_display = ['public_official1', 'tie_strength', 'tie_affinity', 'public_official2']

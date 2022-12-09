@@ -7,4 +7,6 @@ class Comment(CRMBase):
     """
     Comments are text records that can be added to many other objects.
     """
-    text = models.TextField(blank=True)
+    text = models.TextField(
+        blank=True
+    )

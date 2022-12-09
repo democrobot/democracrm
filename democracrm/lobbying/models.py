@@ -1,4 +1,3 @@
-import uuid
 from django.contrib.gis.db import models
 
 from core.models import CRMBase
@@ -11,7 +10,23 @@ class PoliticalParty(CRMBase):
     being represented.
     """
 
-    name = models.CharField(max_length=255)
+    name = models.CharField(
+        max_length=255
+    )
+    description = models.TextField(
+        blank=True
+    )
+    abbreviation = models.CharField(
+        blank=True,
+        max_length=10
+    )
+    initial = models.CharField(
+        blank=True,
+        max_length=1
+    )
+    notes = models.TextField(
+        blank=True
+    )
     # TODO: Should parties be linked to boundaries?
     # TODO: Should they be hierarchical?
 
@@ -31,7 +46,7 @@ class Voter(CRMBase):
     An individual voter record.
     """
 
-    party = models.ForeignKey(PoliticalParty, on_delete=models.RESTRICT)
+    political_party = models.ForeignKey(PoliticalParty, on_delete=models.RESTRICT)
     first_name = models.CharField('First Name', blank=True, max_length=255)
     middle_name = models.CharField('Middle Name', blank=True, max_length=255)
     last_name = models.CharField('Last Name', blank=True, max_length=255)
@@ -70,15 +85,29 @@ class GoverningBody(CRMBase):
     with specific governmental branches and/or offices.
     """
 
-    name = models.CharField(max_length=255)
+    name = models.CharField(
+        max_length=255
+    )
+    description = models.TextField(
+        blank=True
+    )
     LEVEL_CHOICES = (
         ('federal', 'Federal'),
         ('state', 'State'),
         ('county', 'County'),
         ('municipal', 'Municipal'),
     )
-    level = models.CharField(max_length=255, choices=LEVEL_CHOICES)
-    boundary = models.ForeignKey('places.Boundary', on_delete=models.RESTRICT)
+    level = models.CharField(
+        max_length=255,
+        choices=LEVEL_CHOICES
+    )
+    boundary = models.ForeignKey(
+        'places.Boundary',
+        on_delete=models.RESTRICT
+    )
+    notes = models.TextField(
+        blank=True
+    )
     # geom
 
     class Meta:
@@ -103,7 +132,10 @@ class PublicOffice(CRMBase):
     type = models.CharField(default='legislative', max_length=255, choices=TYPE_CHOICES)
     governing_body = models.ForeignKey(GoverningBody, on_delete=models.PROTECT)
     name = models.CharField(max_length=255)
-    seats = models.IntegerField(default=1)
+    description = models.TextField(blank=True)
+    total_seats = models.IntegerField(default=1)
+    seats_per_subdivision = models.IntegerField(default=1)
+    notes = models.TextField(blank=True)
 
     class Meta:
         verbose_name_plural = 'Public Offices'
@@ -123,10 +155,12 @@ class PoliticalSubdivision(CRMBase):
     seats included in that district.
     """
 
-    office = models.ForeignKey(PublicOffice, on_delete=models.PROTECT)
+    public_office = models.ForeignKey(PublicOffice, on_delete=models.PROTECT)
     name = models.CharField(max_length=255)
+    description = models.TextField(blank=True)
     district = models.IntegerField(null=True, blank=True)
     seats = models.IntegerField(default=1)
+    notes = models.TextField(blank=True)
     # Needs boundary field
 
     class Meta:
@@ -148,7 +182,7 @@ class PublicOfficial(CRMBase):
     Represents elected or appointed public officials that are lobbying targets.
     """
 
-    office = models.ForeignKey(PublicOffice, blank=True, on_delete=models.RESTRICT)
+    public_office = models.ForeignKey(PublicOffice, blank=True, on_delete=models.RESTRICT)
     is_elected = models.BooleanField(default=True)
     title = models.CharField(default='Legislator', max_length=255)
     is_leadership = models.BooleanField(default=False)
@@ -158,7 +192,7 @@ class PublicOfficial(CRMBase):
     middle_name = models.CharField(blank=True, max_length=100)
     last_name = models.CharField(max_length=100)
     suffix_name = models.CharField(blank=True, max_length=50)
-    party = models.ForeignKey(PoliticalParty, blank=True, on_delete=models.PROTECT)
+    political_party = models.ForeignKey(PoliticalParty, blank=True, on_delete=models.PROTECT)
     service_start = models.DateField(null=True, blank=True)
     service_end = models.DateField(null=True, blank=True)
     ROLE_CHOICES = (
@@ -169,7 +203,7 @@ class PublicOfficial(CRMBase):
         ('clerical', 'Clerical'),
     )
     role = models.CharField(max_length=100, choices=ROLE_CHOICES, default='Legislator')
-    subdivision = models.ForeignKey(PoliticalSubdivision, on_delete=models.RESTRICT)
+    political_subdivision = models.ForeignKey(PoliticalSubdivision, on_delete=models.RESTRICT)
     notes = models.TextField(blank=True)
 
     class Meta:
@@ -192,8 +226,10 @@ class Committee(CRMBase):
     """
 
     name = models.CharField(max_length=255)
-    body = models.ForeignKey(GoverningBody, blank=True, on_delete=models.RESTRICT)
-    office = models.ForeignKey(PublicOffice, on_delete=models.RESTRICT)
+    description = models.TextField(blank=True)
+    governing_body = models.ForeignKey(GoverningBody, blank=True, on_delete=models.RESTRICT)
+    public_office = models.ForeignKey(PublicOffice, on_delete=models.RESTRICT)
+    notes = models.TextField(blank=True)
 
     def __str__(self):
         return self.name
@@ -208,10 +244,12 @@ class LegislativeSession(CRMBase):
     # TODO: Can this be automated for each defined governing body's
     #  legislative branch?
 
-    body = models.ForeignKey(GoverningBody, on_delete=models.RESTRICT)
+    governing_body = models.ForeignKey(GoverningBody, on_delete=models.RESTRICT)
     name = models.CharField(blank=True, max_length=255) # TODO: Set based on duration field
+    description = models.TextField(blank=True)
     start_date = models.DateField(blank=True)
     end_date = models.DateField(blank=True)
+    notes = models.TextField(blank=True)
 
 
 class Legislation(CRMBase):
@@ -220,11 +258,11 @@ class Legislation(CRMBase):
     """
 
     name = models.CharField(max_length=255)
-    body = models.ForeignKey(GoverningBody, on_delete=models.RESTRICT)
-    committee = models.ForeignKey(Committee, blank=True, on_delete=models.RESTRICT)
-    session = models.ForeignKey(LegislativeSession, blank=True, on_delete=models.RESTRICT)
-    number = models.CharField(blank=True, max_length=255)
     description = models.TextField(blank=True)
+    governing_body = models.ForeignKey(GoverningBody, on_delete=models.RESTRICT)
+    committee = models.ForeignKey(Committee, blank=True, on_delete=models.RESTRICT)
+    legislative_session = models.ForeignKey(LegislativeSession, blank=True, on_delete=models.RESTRICT)
+    number = models.CharField(blank=True, max_length=255)
     url = models.URLField(blank=True)
     STATUS_CHOICES = (
         ('proposed', 'Proposed'),
@@ -235,6 +273,7 @@ class Legislation(CRMBase):
         ('rejected', 'Rejected'),
     )
     status = models.CharField(blank=True, max_length=255, choices=STATUS_CHOICES)
+    notes = models.TextField(blank=True)
 
     class Meta:
         verbose_name_plural = 'Legislation'
@@ -249,7 +288,10 @@ class SupportLevel(CRMBase):
     official for a specific campaign and associated legislation.
     """
 
-    official = models.ForeignKey(PublicOfficial, on_delete=models.PROTECT)
+    public_official = models.ForeignKey(
+        PublicOfficial,
+        on_delete=models.PROTECT
+    )
     # I'd prefer to use lower case with underscores for field values, but it's
     # too difficult to reformat in templates
     SUPPORT_LEVEL_CHOICES = (
@@ -259,12 +301,29 @@ class SupportLevel(CRMBase):
         ('Opposes', 'Opposes'),
         ('Strongly Opposes', 'Strongly Opposes'),
     )
-    campaign = models.ForeignKey(Campaign, on_delete=models.PROTECT)
-    campaign_support = models.CharField(max_length=255, choices=SUPPORT_LEVEL_CHOICES)
+    campaign = models.ForeignKey(
+        Campaign,
+        on_delete=models.PROTECT
+    )
+    campaign_support = models.CharField(
+        max_length=255,
+        choices=SUPPORT_LEVEL_CHOICES
+    )
     # FIXME: What if there are multiple bills involving the campaign?
     # Perhaps have a group/collection of legislation mapped to each campaign?
-    legislation = models.ForeignKey(Legislation, null=True, blank=True, on_delete=models.PROTECT)
-    legislation_support = models.CharField(max_length=255, choices=SUPPORT_LEVEL_CHOICES)
+    legislation = models.ForeignKey(
+        Legislation,
+        null=True,
+        blank=True,
+        on_delete=models.PROTECT
+    )
+    legislation_support = models.CharField(
+        max_length=255,
+        choices=SUPPORT_LEVEL_CHOICES
+    )
+    notes = models.TextField(
+        blank=True
+    )
 
     class Meta:
         verbose_name_plural = 'Support Levels'
@@ -284,22 +343,40 @@ class InterpersonalTie(CRMBase):
 
     # Official one provides the directional perspective for the record
     # Ex. Official 1 has a strongly positive view of Official 2
-    official1 = models.ForeignKey('PublicOfficial', related_name='ties_from', on_delete=models.PROTECT)
-    official2 = models.ForeignKey('PublicOfficial', related_name='ties_to', on_delete=models.PROTECT)
+    public_official1 = models.ForeignKey(
+        'PublicOfficial',
+        related_name='ties_from',
+        on_delete=models.PROTECT
+    )
+    public_official2 = models.ForeignKey(
+        'PublicOfficial',
+        related_name='ties_to',
+        on_delete=models.PROTECT
+    )
     TIE_STRENGTH_CHOICES = (
         ('strong', 'Strong'),
         ('weak', 'Weak'),
         ('invisible', 'Invisible'),
         ('unknown', 'Unknown',)
     )
-    tie_strength = models.CharField(default='unknown', max_length=10, choices=TIE_STRENGTH_CHOICES)
+    tie_strength = models.CharField(
+        default='unknown',
+        max_length=10,
+        choices=TIE_STRENGTH_CHOICES
+    )
     TIE_AFFINITY_CHOICES = (
         ('positive', 'Positive'),
         ('neutral', 'Neutral'),
         ('negative', 'Negative'),
     )
-    tie_affinity = models.CharField(default='neutral', max_length=10, choices=TIE_AFFINITY_CHOICES)
-    notes = models.TextField(blank=True)
+    tie_affinity = models.CharField(
+        default='neutral',
+        max_length=10,
+        choices=TIE_AFFINITY_CHOICES
+    )
+    notes = models.TextField(
+        blank=True
+    )
 
     class Meta:
         verbose_name_plural = 'Interpersonal Ties'
