@@ -19,18 +19,20 @@ class Command(BaseCommand):
     def create_subdivisions(public_office):
 
         if public_office.total_seats == 1:
-            PoliticalSubdivision.objects.get_or_create(
+            PoliticalSubdivision.objects.update_or_create(
                 public_office=public_office,
                 name=public_office.name,
                 seats=public_office.total_seats
             )
         else:
             for seat in range(1, public_office.total_seats + 1):
-                PoliticalSubdivision.objects.get_or_create(
+                subdivision, created = PoliticalSubdivision.objects.update_or_create(
                     public_office=public_office,
                     name=f'{public_office.name} District {seat}',
+                    district=seat,
                     seats=public_office.seats_per_subdivision
                 )
+                print(f'{subdivision} created or updated')
 
     def handle(self, *args, **options):
         print('Creating Pennsylvania data')

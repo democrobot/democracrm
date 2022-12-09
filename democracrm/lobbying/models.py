@@ -257,6 +257,9 @@ class PublicOfficial(CRMBase):
         default='Legislator',
         max_length=255
     )
+    description = models.TextField(
+        blank=True
+    )
     is_leadership = models.BooleanField(
         default=False
     )
@@ -265,6 +268,9 @@ class PublicOfficial(CRMBase):
         max_length=255
     )
     is_elected = models.BooleanField(
+        default=True
+    )
+    is_seeking_reelection = models.BooleanField(
         default=True
     )
     political_party = models.ForeignKey(
@@ -279,6 +285,15 @@ class PublicOfficial(CRMBase):
     )
     service_end = models.DateField(
         null=True,
+        blank=True
+    )
+    official_profile_url = models.URLField(
+        blank=True
+    )
+    official_profile_thumbnail_url = models.URLField(
+        blank=True
+    )
+    official_profile_photo_url = models.URLField(
         blank=True
     )
     notes = models.TextField(
