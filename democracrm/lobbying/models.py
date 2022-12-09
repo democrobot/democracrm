@@ -1,5 +1,5 @@
 import uuid
-from django.db import models
+from django.contrib.gis.db import models
 
 from core.models import CRMBase
 from organizing.models import Campaign

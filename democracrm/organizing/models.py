@@ -1,5 +1,5 @@
-from django.db import models
-from django.db.models import Q
+from django.contrib.gis.db import models
+from django.contrib.gis.db.models import Q
 
 from accounts.models import UserAccount, OrganizationAccount
 from contacts.models import Contact

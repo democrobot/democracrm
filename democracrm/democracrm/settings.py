@@ -54,7 +54,7 @@ if sentry_sdk and SECRETS['SENTRY_DSN']:
 DEBUG = True
 
 # TODO: Modify appropriately for upcoming external testing
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.ngrok.io']
+ALLOWED_HOSTS = ['*']
 CSRF_TRUSTED_ORIGINS = ['https://*.ngrok.io']
 
 # Application definition
@@ -66,6 +66,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.gis',
     'accounts',
     'contacts',
     'core',
@@ -112,7 +113,7 @@ WSGI_APPLICATION = 'democracrm.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'HOST': '192.168.1.5',
         'PORT': '5432',
         'NAME': 'democracrm',

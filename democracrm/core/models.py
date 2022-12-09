@@ -1,7 +1,7 @@
 import uuid
 from tree_queries.models import TreeNode
 
-from django.db import models  # TODO: Migrate to GeoDjango models
+from django.contrib.gis.db import models
 from django.utils.html import format_html
 
 

@@ -1,4 +1,4 @@
-from django.db import models
+from django.contrib.gis.db import models
 
 from core.models import CRMBase, CRMTreeBase
 from places.models import Site
@@ -13,24 +13,71 @@ class Contact(CRMBase):
 
     # TODO: Ensure all relevant vCard fields can be imported/exported
 
-    name_prefix = models.CharField(blank=True, max_length=50)
-    first_name = models.CharField(max_length=100)
-    middle_name = models.CharField(blank=True, max_length=100)
-    last_name = models.CharField(max_length=100)
-    name_suffix = models.CharField(blank=True, max_length=50)
-    title = models.CharField(blank=True, max_length=255)
-    personal_phone = models.CharField(blank=True, max_length=255)
-    work_phone = models.CharField(blank=True, max_length=255)
-    mobile_phone = models.CharField(blank=True, max_length=255)
-    personal_fax = models.CharField(blank=True, max_length=255)
-    work_fax = models.CharField(blank=True, max_length=255)
-    personal_email = models.CharField(blank=True, max_length=255)
-    work_email = models.CharField(blank=True, max_length=255)
-    url = models.URLField(blank=True)
-    birthday = models.DateField(null=True, blank=True)
-    notes = models.TextField(blank=True)
+    name_prefix = models.CharField(
+        blank=True,
+        max_length=50
+    )
+    first_name = models.CharField(
+        max_length=100
+    )
+    middle_name = models.CharField(
+        blank=True,
+        max_length=100
+    )
+    last_name = models.CharField(
+        max_length=100
+    )
+    name_suffix = models.CharField(
+        blank=True,
+        max_length=50
+    )
+    title = models.CharField(
+        blank=True,
+        max_length=255
+    )
+    personal_phone = models.CharField(
+        blank=True,
+        max_length=255
+    )
+    work_phone = models.CharField(
+        blank=True,
+        max_length=255
+    )
+    mobile_phone = models.CharField(
+        blank=True,
+        max_length=255
+    )
+    personal_fax = models.CharField(
+        blank=True,
+        max_length=255
+    )
+    work_fax = models.CharField(
+        blank=True,
+        max_length=255
+    )
+    personal_email = models.CharField(
+        blank=True,
+        max_length=255
+    )
+    work_email = models.CharField(
+        blank=True,
+        max_length=255
+    )
+    url = models.URLField(
+        blank=True
+    )
+    birthday = models.DateField(
+        null=True,
+        blank=True
+    )
+    notes = models.TextField(
+        blank=True
+    )
     # If an address is needed, create and attach to a site
-    site = models.ManyToManyField(Site, blank=True)
+    site = models.ManyToManyField(
+        Site,
+        blank=True
+    )
 
     # TODO: Implement vCard import/export and QR code generation
     # Might need a custom method on the manager for importing into a new Contact
