@@ -39,8 +39,8 @@ class PublicOfficialAdmin(admin.ModelAdmin):
                     'political_subdivision']
     list_filter = ['is_elected', 'is_leadership', 'public_office', 'role', 'political_party']
     ordering = ['last_name', 'first_name']
-    search_help_text = 'Search on last name or leadership title'
-    search_fields = ['last_name', 'political_subdivision__district', 'leadership_title']
+    search_help_text = 'Search on last name, district, leadership title, and notes'
+    search_fields = ['last_name', 'political_subdivision__district', 'leadership_title', 'notes']
 
 @admin.register(Committee)
 class CommitteeAdmin(admin.ModelAdmin):

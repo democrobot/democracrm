@@ -153,17 +153,18 @@ class GoverningBody(CRMBase):
     with specific governmental branches and/or offices.
     """
 
-    name = models.CharField(
-        max_length=255
-    )
-    description = models.TextField(
-        blank=True
-    )
     LEVEL_CHOICES = (
         ('federal', 'Federal'),
         ('state', 'State'),
         ('county', 'County'),
         ('municipal', 'Municipal'),
+    )
+
+    name = models.CharField(
+        max_length=255
+    )
+    description = models.TextField(
+        blank=True
     )
     level = models.CharField(
         max_length=255,
@@ -197,6 +198,7 @@ class PublicOffice(CRMBase):
         ('judicial', 'Judicial'),
         ('other', 'Other'),
     )
+
     type = models.CharField(
         default='legislative',
         max_length=255,
@@ -566,6 +568,18 @@ class InterpersonalTie(CRMBase):
     could have a very different attitude of the relationship.
     """
 
+    TIE_STRENGTH_CHOICES = (
+        ('strong', 'Strong'),
+        ('weak', 'Weak'),
+        ('invisible', 'Invisible'),
+        ('unknown', 'Unknown',)
+    )
+    TIE_AFFINITY_CHOICES = (
+        ('positive', 'Positive'),
+        ('neutral', 'Neutral'),
+        ('negative', 'Negative'),
+    )
+
     # Official one provides the directional perspective for the record
     # Ex. Official 1 has a strongly positive view of Official 2
     public_official1 = models.ForeignKey(
@@ -578,21 +592,10 @@ class InterpersonalTie(CRMBase):
         related_name='ties_to',
         on_delete=models.PROTECT
     )
-    TIE_STRENGTH_CHOICES = (
-        ('strong', 'Strong'),
-        ('weak', 'Weak'),
-        ('invisible', 'Invisible'),
-        ('unknown', 'Unknown',)
-    )
     tie_strength = models.CharField(
         default='unknown',
         max_length=10,
         choices=TIE_STRENGTH_CHOICES
-    )
-    TIE_AFFINITY_CHOICES = (
-        ('positive', 'Positive'),
-        ('neutral', 'Neutral'),
-        ('negative', 'Negative'),
     )
     tie_affinity = models.CharField(
         default='neutral',
