@@ -1,7 +1,9 @@
 from django.test import TestCase
 
-from places.models import Boundary
 from organizing.tests import init_campaign
+from places.models import Boundary
+from places.tests import init_boundary
+
 
 from .models import (
     Committee,
@@ -17,10 +19,11 @@ from .models import (
     Voter
 )
 
+
 class GoverningBodyTests(TestCase):
 
     def test_create_governing_body(self):
-        boundary = Boundary.objects.create(name='Pennsylvania')
+        boundary = Boundary.objects.create(name='Pennsylvania', level='state')
         boundary.save()
         governing_body = GoverningBody(name='Example Body', boundary=boundary)
         governing_body.save()
@@ -31,7 +34,7 @@ class GoverningBodyTests(TestCase):
 class PoliticalSubdivisionTests(TestCase):
 
     def test_political_subdivision_creation(self):
-        boundary = Boundary.objects.create(name='Pennsylvania')
+        boundary = Boundary.objects.create(name='Pennsylvania', level='state')
         boundary.save()
         governing_body = init_governing_body()
         governing_body.save()
@@ -61,7 +64,7 @@ class PublicOfficialTests(TestCase):
     def test_public_official_creation(self):
         official = init_public_official()
         official.save()
-        self.assertEquals(official.role, 'Legislator')
+        self.assertEquals(official.role, PublicOfficial.Role.LEGISLATIVE)
 
     def test_subdivision_assignment(self):
         political_subdivision = init_political_subdivision()
@@ -140,8 +143,13 @@ def init_governing_body():
 
 
 def init_political_subdivision(name='Test District'):
+    boundary = init_boundary()
     public_office = init_public_office()
-    political_subdivision = PoliticalSubdivision.objects.create(public_office=public_office, name=name)
+    political_subdivision = PoliticalSubdivision.objects.create(
+        boundary=boundary,
+        public_office=public_office,
+        name=name
+    )
     political_subdivision.save()
 
     return political_subdivision

@@ -20,6 +20,7 @@ class Boundary(CRMTreeBase):
     description = models.TextField(blank=True)
     # Defined areas based off of this: https://www2.census.gov/geo/pdfs/reference/geodiagram.pdf
     # The focus is on areas with jurisdiction over legislation and elections
+    # The boundaries will be considered surrounding or within whatever level is defined
     LEVEL_CHOICES = (
         ('nation', 'Nation'),
         ('state', 'State'),

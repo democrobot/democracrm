@@ -1,6 +1,7 @@
 from django.contrib.gis.db import models
+from django.utils.translation import gettext_lazy as _
 
-from core.models import CRMBase
+from core.models import CRMBase, CRMTreeBase
 from organizing.models import Campaign
 
 
@@ -28,7 +29,7 @@ class PoliticalParty(CRMBase):
         blank=True
     )
     # TODO: Should parties be linked to boundaries?
-    # TODO: Should they be hierarchical?
+    # TODO: Should they be hierarchical since they technically are?
 
     def __repr__(self):
         return self.name
@@ -133,6 +134,8 @@ class Voter(CRMBase):
         max_length=254
     )
 
+    # TODO: Add point geom field
+
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
 
@@ -153,12 +156,11 @@ class GoverningBody(CRMBase):
     with specific governmental branches and/or offices.
     """
 
-    LEVEL_CHOICES = (
-        ('federal', 'Federal'),
-        ('state', 'State'),
-        ('county', 'County'),
-        ('municipal', 'Municipal'),
-    )
+    class Level(models.TextChoices):
+        FEDERAL = 'federal', _('Federal')
+        STATE = 'state', _('State')
+        COUNTY = 'county', _('County')
+        MUNICIPAL = 'municipal', _('Municipal')
 
     name = models.CharField(
         max_length=255
@@ -168,7 +170,7 @@ class GoverningBody(CRMBase):
     )
     level = models.CharField(
         max_length=255,
-        choices=LEVEL_CHOICES
+        choices=Level.choices
     )
     boundary = models.ForeignKey(
         'places.Boundary',
@@ -177,11 +179,12 @@ class GoverningBody(CRMBase):
     notes = models.TextField(
         blank=True
     )
-    # geom
 
     class Meta:
         ordering = ['name']
         verbose_name_plural = "Governing Bodies"
+
+    # TODO: Add point geom field (based on capitol)
 
     def __str__(self):
         return self.name
@@ -192,17 +195,16 @@ class PublicOffice(CRMBase):
     Represents the office that public officials serve within a governing body.
     """
 
-    TYPE_CHOICES = (
-        ('legislative', 'Legislative'),
-        ('executive', 'Executive'),
-        ('judicial', 'Judicial'),
-        ('other', 'Other'),
-    )
+    class Type(models.TextChoices):
+        LEGISLATIVE = 'legislative', _('Legislative')
+        EXECUTIVE = 'executive', _('Executive')
+        JUDICIAL = 'judicial', _('Judicial')
+        OTHER = 'other', _('Other')
 
     type = models.CharField(
         default='legislative',
         max_length=255,
-        choices=TYPE_CHOICES
+        choices=Type.choices
     )
     governing_body = models.ForeignKey(
         GoverningBody,
@@ -242,6 +244,10 @@ class PoliticalSubdivision(CRMBase):
     seats included in that district.
     """
 
+    boundary = models.ForeignKey(
+        'places.Boundary',
+        on_delete=models.RESTRICT
+    )
     public_office = models.ForeignKey(
         PublicOffice,
         on_delete=models.PROTECT
@@ -262,7 +268,8 @@ class PoliticalSubdivision(CRMBase):
     notes = models.TextField(
         blank=True
     )
-    # Needs boundary field
+
+    # TODO: Add boundary field
 
     class Meta:
         ordering = ['name']
@@ -283,13 +290,12 @@ class PublicOfficial(CRMBase):
     Represents elected or appointed public officials that are lobbying targets.
     """
 
-    ROLE_CHOICES = (
-        ('legislative', 'Legislative'),
-        ('executive', 'Executive'),
-        ('judicial', 'Judicial'),
-        ('administrative', 'Administrative'),
-        ('clerical', 'Clerical'),
-    )
+    class Role(models.TextChoices):
+        LEGISLATIVE = 'legislative', _('Legislative')
+        EXECUTIVE = 'executive', _('Executive')
+        JUDICIAL = 'judicial', _('Judicial')
+        ADMINISTRATIVE = 'administrative', _('Administrative')
+        CLERICAL = 'clerical', _('Clerical')
 
     prefix_name = models.CharField(
         blank=True,
@@ -311,8 +317,8 @@ class PublicOfficial(CRMBase):
     )
     role = models.CharField(
         max_length=100,
-        choices=ROLE_CHOICES,
-        default='Legislator'
+        choices=Role.choices,
+        default=Role.LEGISLATIVE
     )
     public_office = models.ForeignKey(
         PublicOffice,
@@ -382,6 +388,32 @@ class PublicOfficial(CRMBase):
 
     def __str__(self):
         return self.full_name()
+
+
+class PublicOfficialGroup(CRMTreeBase):
+    """
+    Use to organize public officials.
+    """
+
+    name = models.CharField(
+        max_length=255
+    )
+    description = models.TextField(
+        blank=True
+    )
+    public_officials = models.ManyToManyField(
+        PublicOfficial,
+        blank=True
+    )
+
+    class Meta:
+        verbose_name_plural = 'Public Official Groups'
+
+    def __str__(self):
+        return self.name
+
+    def __repr__(self):
+        return self.name
 
 
 class Committee(CRMBase):
@@ -456,14 +488,13 @@ class Legislation(CRMBase):
     Represents proposed or existing legislation related to campaigns.
     """
 
-    STATUS_CHOICES = (
-        ('proposed', 'Proposed'),
-        ('in-committee', 'In Committee'),
-        ('in-debate', 'In Debate'),
-        ('voting-on', 'Voting On'),
-        ('adopted', 'Adopted'),
-        ('rejected', 'Rejected'),
-    )
+    class Status(models.TextChoices):
+        PROPOSED = 'proposed', _('Proposed')
+        IN_COMMITTEE = 'in-committee', _('In Committee')
+        IN_DEBATE = 'in-debate', _('In Debate')
+        VOTING_ON = 'voting-on', _('Voting On')
+        ADOPTED = 'adopted', _('Adopted')
+        REJECTED = 'rejected', _('Rejected')
 
     name = models.CharField(
         max_length=255
@@ -495,7 +526,7 @@ class Legislation(CRMBase):
     status = models.CharField(
         blank=True,
         max_length=255,
-        choices=STATUS_CHOICES
+        choices=Status.choices
     )
     notes = models.TextField(
         blank=True
@@ -508,21 +539,40 @@ class Legislation(CRMBase):
         return self.name
 
 
+class LegislationGroup(CRMBase):
+    """
+    Used to group legislation for campaign tracking (i.e. House and Senate bills for same campaign, etc.)
+    """
+
+    name = models.CharField(
+        max_length=255
+    )
+    description = models.TextField(
+        blank=True
+    )
+    legislation = models.ManyToManyField(
+        Legislation,
+        blank=True
+    )
+    notes = models.TextField(
+        blank=True
+    )
+
+
 class SupportLevel(CRMBase):
     """
     lobbying.SupportLevel models the level of support of an individual public
     official for a specific campaign and associated legislation.
     """
 
-    # I'd prefer to use lower case with underscores for field values, but it's
+    # FIXME: I'd prefer to use lower case with underscores for field values, but it's
     # too difficult to reformat in templates
-    SUPPORT_LEVEL_CHOICES = (
-        ('Strongly Supports', 'Strongly Supports'),
-        ('Supports', 'Supports'),
-        ('Undecided On', 'Undecided On'),
-        ('Opposes', 'Opposes'),
-        ('Strongly Opposes', 'Strongly Opposes'),
-    )
+    class Status(models.TextChoices):
+        STRONGLY_SUPPORTS = 'Strongly Supports', _('Strongly Supports')
+        SUPPORTS = 'Supports', _('Supports')
+        UNDECIDED_ON = 'Undecided On', _('Undecided On')
+        OPPOSES = 'Opposes', _('Opposes')
+        STRONGLY_OPPOSES = 'Strongly Opposes', _('Strongly Opposes')
 
     public_official = models.ForeignKey(
         PublicOfficial,
@@ -534,19 +584,17 @@ class SupportLevel(CRMBase):
     )
     campaign_support = models.CharField(
         max_length=255,
-        choices=SUPPORT_LEVEL_CHOICES
+        choices=Status.choices
     )
-    # FIXME: What if there are multiple bills involving the campaign?
-    # Perhaps have a group/collection of legislation mapped to each campaign?
     legislation = models.ForeignKey(
-        Legislation,
+        LegislationGroup,
         null=True,
         blank=True,
         on_delete=models.PROTECT
     )
     legislation_support = models.CharField(
         max_length=255,
-        choices=SUPPORT_LEVEL_CHOICES
+        choices=Status.choices
     )
     notes = models.TextField(
         blank=True
@@ -568,17 +616,16 @@ class InterpersonalTie(CRMBase):
     could have a very different attitude of the relationship.
     """
 
-    TIE_STRENGTH_CHOICES = (
-        ('strong', 'Strong'),
-        ('weak', 'Weak'),
-        ('invisible', 'Invisible'),
-        ('unknown', 'Unknown',)
-    )
-    TIE_AFFINITY_CHOICES = (
-        ('positive', 'Positive'),
-        ('neutral', 'Neutral'),
-        ('negative', 'Negative'),
-    )
+    class TieStrength(models.TextChoices):
+        STRONG = 'strong', _('Strong')
+        WEAK = 'weak', _('Weak')
+        INVISIBLE = 'invisible', _('Invisible')
+        UNKNOWN = 'unknown', _('Unknown')
+
+    class TieAffinity(models.TextChoices):
+        POSITIVE = 'positive', _('Positive')
+        NEUTRAL = 'neutral', _('Neutral')
+        NEGATIVE = 'negative', _('Negative')
 
     # Official one provides the directional perspective for the record
     # Ex. Official 1 has a strongly positive view of Official 2
@@ -595,12 +642,12 @@ class InterpersonalTie(CRMBase):
     tie_strength = models.CharField(
         default='unknown',
         max_length=10,
-        choices=TIE_STRENGTH_CHOICES
+        choices=TieStrength.choices
     )
     tie_affinity = models.CharField(
         default='neutral',
         max_length=10,
-        choices=TIE_AFFINITY_CHOICES
+        choices=TieAffinity.choices
     )
     notes = models.TextField(
         blank=True

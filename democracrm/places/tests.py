@@ -85,3 +85,12 @@ class UtilsTests(TestCase):
         input_address = '10 N 2nd St, Harrisburg, PA 17101'
         output_address = geocode_address(input_address)
         self.assertEquals(output_address['results'][0]['formatted_address'], input_address)
+
+
+def init_boundary():
+    boundary = Boundary.objects.create(
+        name='Test Boundary',
+        level='state'
+    )
+
+    return boundary
