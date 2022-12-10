@@ -1,7 +1,6 @@
 from django.test import TestCase
 
 from places.models import Boundary
-from organizing.models import Organization
 from organizing.tests import init_campaign
 
 from .models import (
@@ -17,7 +16,6 @@ from .models import (
     SupportLevel,
     Voter
 )
-
 
 class GoverningBodyTests(TestCase):
 
@@ -37,8 +35,8 @@ class PoliticalSubdivisionTests(TestCase):
         boundary.save()
         governing_body = init_governing_body()
         governing_body.save()
-        office = init_public_office()
-        office.save()
+        public_office = init_public_office()
+        public_office.save()
         political_subdivision = init_political_subdivision()
         political_subdivision.save()
 
@@ -79,8 +77,8 @@ class SupportLevelTests(TestCase):
 
     def test_support_level_creation(self):
         campaign = init_campaign()
-        official = init_public_official()
-        support_level = SupportLevel.objects.create(campaign=campaign, official=official)
+        public_official = init_public_official()
+        support_level = SupportLevel.objects.create(campaign=campaign, public_official=public_official)
         support_level.save()
         self.assertIsInstance(support_level, SupportLevel)
 
@@ -88,40 +86,40 @@ class SupportLevelTests(TestCase):
 class InterpersonalTieTests(TestCase):
 
     def test_interpersonal_tie_creation(self):
-        official1 = init_public_official(first_name='Official', last_name='One')
-        official2 = init_public_official(first_name='Official', last_name='Two')
-        tie = InterpersonalTie.objects.create(official1=official1, official2=official2)
+        public_official1 = init_public_official(first_name='Official', last_name='One')
+        public_official2 = init_public_official(first_name='Official', last_name='Two')
+        tie = InterpersonalTie.objects.create(public_official1=public_official1, public_official2=public_official2)
         tie.save()
         self.assertIsInstance(tie, InterpersonalTie)
 
     def test_interpersonal_tie_relationship_summary(self):
-        official1 = init_public_official(first_name='Official', last_name='One')
-        official2 = init_public_official(first_name='Official', last_name='Two')
-        tie = InterpersonalTie.objects.create(official1=official1, official2=official2)
+        public_official1 = init_public_official(first_name='Official', last_name='One')
+        public_official2 = init_public_official(first_name='Official', last_name='Two')
+        tie = InterpersonalTie.objects.create(public_official1=public_official1, public_official2=public_official2)
         tie.save()
         self.assertEquals(tie.relationship_summary(), 'Official One is unknown/neutral towards Official Two')
 
     def test_interpersonal_ties_to(self):
-        official1 = init_public_official(first_name='Official', last_name='One')
-        official2 = init_public_official(first_name='Official', last_name='Two')
-        official3 = init_public_official(first_name='Official', last_name='Three')
-        tie1 = InterpersonalTie.objects.create(official1=official1, official2=official2)
+        public_official1 = init_public_official(first_name='Official', last_name='One')
+        public_official2 = init_public_official(first_name='Official', last_name='Two')
+        public_official3 = init_public_official(first_name='Official', last_name='Three')
+        tie1 = InterpersonalTie.objects.create(public_official1=public_official1, public_official2=public_official2)
         tie1.save()
-        tie2 = InterpersonalTie.objects.create(official1=official1, official2=official3)
+        tie2 = InterpersonalTie.objects.create(public_official1=public_official1, public_official2=public_official3)
         tie2.save()
-        ties = official1.ties_from.all()
+        ties = public_official1.ties_from.all()
         self.assertIn(tie1, ties)
         self.assertIn(tie2, ties)
 
     def test_interpersonal_ties_from(self):
-        official1 = init_public_official(first_name='Official', last_name='One')
-        official2 = init_public_official(first_name='Official', last_name='Two')
-        official3 = init_public_official(first_name='Official', last_name='Three')
-        tie1 = InterpersonalTie.objects.create(official1=official1, official2=official3)
+        public_official1 = init_public_official(first_name='Official', last_name='One')
+        public_official2 = init_public_official(first_name='Official', last_name='Two')
+        public_official3 = init_public_official(first_name='Official', last_name='Three')
+        tie1 = InterpersonalTie.objects.create(public_official1=public_official1, public_official2=public_official3)
         tie1.save()
-        tie2 = InterpersonalTie.objects.create(official1=official2, official2=official3)
+        tie2 = InterpersonalTie.objects.create(public_official1=public_official2, public_official2=public_official3)
         tie2.save()
-        ties = official3.ties_to.all()
+        ties = public_official3.ties_to.all()
         self.assertIn(tie1, ties)
         self.assertIn(tie2, ties)
 
@@ -142,32 +140,32 @@ def init_governing_body():
 
 
 def init_political_subdivision(name='Test District'):
-    office = init_public_office()
-    subdivision = PoliticalSubdivision.objects.create(office=office, name=name)
-    subdivision.save()
+    public_office = init_public_office()
+    political_subdivision = PoliticalSubdivision.objects.create(public_office=public_office, name=name)
+    political_subdivision.save()
 
-    return subdivision
+    return political_subdivision
 
 
 def init_public_office(name='State Senator'):
     governing_body = init_governing_body()
-    office = PublicOffice.objects.create(name=name, governing_body=governing_body)
-    office.save()
+    public_office = PublicOffice.objects.create(name=name, governing_body=governing_body)
+    public_office.save()
 
-    return office
+    return public_office
 
 
 def init_public_official(first_name='Jane', last_name='Doe'):
-    party = init_political_party()
-    office = init_public_office()
-    subdivision = init_political_subdivision()
-    official = PublicOfficial.objects.create(
+    political_party = init_political_party()
+    public_office = init_public_office()
+    political_subdivision = init_political_subdivision()
+    public_official = PublicOfficial.objects.create(
         first_name=first_name,
         last_name=last_name,
-        office=office,
-        subdivision=subdivision,
-        party=party
+        public_office=public_office,
+        political_subdivision=political_subdivision,
+        political_party=political_party
     )
-    official.save()
+    public_official.save()
 
-    return official
+    return public_official

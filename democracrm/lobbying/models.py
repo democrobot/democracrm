@@ -46,24 +46,92 @@ class Voter(CRMBase):
     An individual voter record.
     """
 
-    political_party = models.ForeignKey(PoliticalParty, on_delete=models.RESTRICT)
-    first_name = models.CharField('First Name', blank=True, max_length=255)
-    middle_name = models.CharField('Middle Name', blank=True, max_length=255)
-    last_name = models.CharField('Last Name', blank=True, max_length=255)
-    sex = models.CharField('Sex', blank=True, max_length=10)
-    birth_date = models.DateField('Birth Date', blank=True)
-    initial_registration = models.DateField('Initial Registration', blank=True)
-    current_registration = models.DateField('Current Registration', blank=True)
-    address_number = models.CharField('Address Number', blank=True, max_length=100)
-    address_street_direction = models.CharField('Address Street Direction', blank=True, max_length=100)
-    address_street_name = models.CharField('Address Street Name', blank=True, max_length=100)
-    address_street_type = models.CharField('Address Street Type', blank=True, max_length=100)
-    address_unit = models.CharField('Address Unit', blank=True, max_length=100)
-    city = models.CharField('City', blank=True, max_length=100)
-    state = models.CharField('State', blank=True, max_length=100)
-    zip_code = models.CharField('ZIP Code', blank=True, max_length=100)
-    phone_number = models.CharField('Phone Number', blank=True, max_length=11)
-    email_address = models.CharField('Email', blank=True, max_length=254)
+    political_party = models.ForeignKey(
+        PoliticalParty,
+        on_delete=models.RESTRICT
+    )
+    first_name = models.CharField(
+        'First Name',
+        blank=True,
+        max_length=255
+    )
+    middle_name = models.CharField(
+        'Middle Name',
+        blank=True,
+        max_length=255
+    )
+    last_name = models.CharField(
+        'Last Name',
+        blank=True,
+        max_length=255
+    )
+    sex = models.CharField(
+        'Sex',
+        blank=True,
+        max_length=10
+    )
+    birth_date = models.DateField(
+        'Birth Date',
+        blank=True
+    )
+    initial_registration = models.DateField(
+        'Initial Registration',
+        blank=True
+    )
+    current_registration = models.DateField(
+        'Current Registration',
+        blank=True
+    )
+    address_number = models.CharField(
+        'Address Number',
+        blank=True,
+        max_length=100
+    )
+    address_street_direction = models.CharField(
+        'Address Street Direction',
+        blank=True,
+        max_length=100
+    )
+    address_street_name = models.CharField(
+        'Address Street Name',
+        blank=True,
+        max_length=100
+    )
+    address_street_type = models.CharField(
+        'Address Street Type',
+        blank=True,
+        max_length=100
+    )
+    address_unit = models.CharField(
+        'Address Unit',
+        blank=True,
+        max_length=100
+    )
+    city = models.CharField(
+        'City',
+        blank=True,
+        max_length=100
+    )
+    state = models.CharField(
+        'State',
+        blank=True,
+        max_length=100
+    )
+    zip_code = models.CharField(
+        'ZIP Code',
+        blank=True,
+        max_length=100
+    )
+    phone_number = models.CharField(
+        'Phone Number',
+        blank=True,
+        max_length=11
+    )
+    email_address = models.CharField(
+        'Email',
+        blank=True,
+        max_length=254
+    )
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
@@ -199,10 +267,10 @@ class PoliticalSubdivision(CRMBase):
         verbose_name_plural = 'Political Subdivisions'
 
     def __repr__(self):
-        return f'{self.name} ({self.public_office.governing_body})'
+        return f'{self.name}'
 
     def __str__(self):
-        return f'{self.name} ({self.public_office.governing_body})'
+        return f'{self.name}'
 
     def governing_body(self):
         return self.public_office.governing_body
@@ -301,6 +369,7 @@ class PublicOfficial(CRMBase):
     )
 
     class Meta:
+        ordering = ['last_name']
         verbose_name_plural = 'Public Officials'
 
     def full_name(self):

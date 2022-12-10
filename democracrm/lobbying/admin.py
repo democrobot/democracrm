@@ -35,8 +35,12 @@ class PoliticalSubdivisionAdmin(admin.ModelAdmin):
 
 @admin.register(PublicOfficial)
 class PublicOfficialAdmin(admin.ModelAdmin):
-    list_display = ['first_name', 'last_name', 'title', 'is_elected', 'is_leadership', 'political_party', 'role', 'political_subdivision']
-
+    list_display = ['full_name', 'title', 'role', 'is_elected', 'is_leadership', 'leadership_title', 'political_party',
+                    'political_subdivision']
+    list_filter = ['is_elected', 'is_leadership', 'public_office', 'role', 'political_party']
+    ordering = ['last_name', 'first_name']
+    search_help_text = 'Search on last name or leadership title'
+    search_fields = ['last_name', 'political_subdivision__district', 'leadership_title']
 
 @admin.register(Committee)
 class CommitteeAdmin(admin.ModelAdmin):
