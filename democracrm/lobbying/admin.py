@@ -2,7 +2,7 @@ from django.contrib import admin
 
 
 from .models import (PoliticalParty, Voter,
-                     GoverningBody, PoliticalSubdivision, PublicOfficial, PublicOfficialGroup,
+                     GoverningBody, PoliticalSubdivision, PublicOfficial, PublicOfficialRole, PublicOfficialGroup,
                      PublicOffice, Committee, Legislation, LegislativeSession,
                      SupportLevel, InterpersonalTie)
 
@@ -42,9 +42,27 @@ class PublicOfficialAdmin(admin.ModelAdmin):
     search_help_text = 'Search on last name, district, leadership title, and notes'
     search_fields = ['last_name', 'political_subdivision__district', 'leadership_title', 'notes']
 
+
+@admin.register(PublicOfficialRole)
+class PublicOfficialRoleAdmin(admin.ModelAdmin):
+    list_display = ['name', 'public_official', 'public_office', 'is_leadership', 'leadership_title', 'political_party', 'political_subdivision']
+    list_filter = ['is_elected', 'is_leadership', 'public_office', 'public_official__political_party']
+    #ordering = ['last_name', 'first_name']
+    search_help_text = 'Search on last name, district, leadership title, and notes'
+    search_fields = ['political_subdivision__district', 'leadership_title', 'notes']
+
+    @admin.display(description='Political Party')
+    def political_party(self, obj):
+        if obj.public_official.political_party:
+            return obj.public_official.political_party
+        else:
+            return None
+
+
 @admin.register(PublicOfficialGroup)
 class PublicOfficialGroupAdmin(admin.ModelAdmin):
     list_display = ['name', 'description']
+
 
 @admin.register(Committee)
 class CommitteeAdmin(admin.ModelAdmin):

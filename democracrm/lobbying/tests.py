@@ -10,6 +10,7 @@ from .models import (
     GoverningBody,
     InterpersonalTie,
     Legislation,
+    LegislationGroup,
     LegislativeSession,
     PoliticalParty,
     PoliticalSubdivision,

@@ -1,3 +1,4 @@
+from django.contrib import admin
 from django.contrib.gis.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -323,10 +324,13 @@ class PublicOfficial(CRMBase):
     public_office = models.ForeignKey(
         PublicOffice,
         blank=True,
+        null=True,
         on_delete=models.RESTRICT
     )
     political_subdivision = models.ForeignKey(
         PoliticalSubdivision,
+        blank=True,
+        null=True,
         on_delete=models.RESTRICT
     )
     title = models.CharField(
@@ -352,6 +356,7 @@ class PublicOfficial(CRMBase):
     political_party = models.ForeignKey(
         PoliticalParty,
         blank=True,
+        null=True,
         on_delete=models.PROTECT
     )
     # TODO: Create term field as range? Might not work for appointed officials.
@@ -390,6 +395,86 @@ class PublicOfficial(CRMBase):
         return self.full_name()
 
 
+class PublicOfficialRole(CRMBase):
+    """
+    Defined governmental roles, attached to public offices (and political subdivisions, where applicable), held by
+    specific public officials. These are the positions sought after when people are elected or appointed as public
+    officials, and the same public official can hold multiple roles or shift between them in their career.
+    """
+
+    class Type(models.TextChoices):
+        LEGISLATIVE = 'legislative', _('Legislative')
+        EXECUTIVE = 'executive', _('Executive')
+        JUDICIAL = 'judicial', _('Judicial')
+        ADMINISTRATIVE = 'administrative', _('Administrative')
+        CLERICAL = 'clerical', _('Clerical')
+
+    name = models.CharField(
+        max_length=255
+    )
+    description = models.TextField(
+        blank=True
+    )
+    is_elected = models.BooleanField(
+        default=True
+    )
+    is_leadership = models.BooleanField(
+        default=False
+    )
+    leadership_title = models.CharField(
+        blank=True,
+        max_length=255
+    )
+    public_office = models.ForeignKey(
+        PublicOffice,
+        on_delete=models.PROTECT
+    )
+    political_subdivision = models.ForeignKey(
+        PoliticalSubdivision,
+        blank=True,
+        null=True,
+        on_delete=models.PROTECT
+    )
+    type = models.CharField(
+        max_length=100,
+        choices=Type.choices,
+        default=Type.LEGISLATIVE
+    )
+    public_official = models.ForeignKey(
+        PublicOfficial,
+        blank=True,
+        null=True,
+        on_delete=models.PROTECT
+    )
+    # TODO: Create term field as range? Might not work for appointed officials.
+    service_start = models.DateField(
+        null=True,
+        blank=True
+    )
+    service_end = models.DateField(
+        null=True,
+        blank=True
+    )
+    official_profile_url = models.URLField(
+        blank=True
+    )
+    official_profile_thumbnail_url = models.URLField(
+        blank=True
+    )
+    official_profile_photo_url = models.URLField(
+        blank=True
+    )
+    notes = models.TextField(
+        blank=True
+    )
+
+    class Meta:
+        verbose_name_plural = 'Public Official Roles'
+
+    def __str__(self):
+        return self.name
+
+
 class PublicOfficialGroup(CRMTreeBase):
     """
     Use to organize public officials.
@@ -416,11 +501,13 @@ class PublicOfficialGroup(CRMTreeBase):
         return self.name
 
 
-class Committee(CRMBase):
+class Committee(CRMTreeBase):
     """
     Represents committees, commissions, or other bodies that review legislation
     before releasing it for final passage.
     """
+
+    # TODO: Enable nest for subcommittees
 
     name = models.CharField(
         max_length=255
@@ -445,6 +532,61 @@ class Committee(CRMBase):
         return self.name
 
 
+class CommitteeRole(CRMBase):
+    """
+    Roles for each committee.
+    """
+
+    class Type(models.TextChoices):
+        CHAIR = 'chair', _('Chair')
+        VICE_CHAIR = 'vice-chair', _('Vice-Chair')
+        EX_OFFICIO = 'officio', _('Ex-Officio')
+        MEMBER = 'member', _('Member')
+
+    name = models.CharField(
+        max_length=255
+    )
+    description = models.TextField(
+        blank=True
+    )
+    is_leadership = models.BooleanField(
+        default=False
+    )
+    leadership_title = models.CharField(
+        blank=True,
+        max_length=255
+    )
+    type = models.CharField(
+        max_length=100,
+        choices=Type.choices,
+        default=Type.MEMBER
+    )
+    public_official = models.ForeignKey(
+        PublicOfficial,
+        blank=True,
+        null=True,
+        on_delete=models.PROTECT
+    )
+    # TODO: Create term field as range? Might not work for appointed officials.
+    service_start = models.DateField(
+        null=True,
+        blank=True
+    )
+    service_end = models.DateField(
+        null=True,
+        blank=True
+    )
+    notes = models.TextField(
+        blank=True
+    )
+
+    class Meta:
+        verbose_name_plural = 'Committee Roles'
+
+    def __str__(self):
+        return self.name
+
+
 class LegislativeSession(CRMBase):
     """
     Represents legislative sessions, within which bills exist and must be enacted
@@ -452,7 +594,7 @@ class LegislativeSession(CRMBase):
     """
 
     # TODO: Can this be automated for each defined governing body's
-    #  legislative branch?
+    # legislative branch?
 
     governing_body = models.ForeignKey(
         GoverningBody,
