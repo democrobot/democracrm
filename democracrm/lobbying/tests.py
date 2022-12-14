@@ -16,6 +16,8 @@ from .models import (
     PoliticalSubdivision,
     PublicOffice,
     PublicOfficial,
+    PublicOfficialPosition,
+    PublicOfficialGroup,
     SupportLevel,
     Voter
 )

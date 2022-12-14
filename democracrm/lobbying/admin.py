@@ -2,7 +2,7 @@ from django.contrib import admin
 
 
 from .models import (PoliticalParty, Voter,
-                     GoverningBody, PoliticalSubdivision, PublicOfficial, PublicOfficialRole, PublicOfficialGroup,
+                     GoverningBody, PoliticalSubdivision, PublicOfficial, PublicOfficialPosition, PublicOfficialGroup,
                      PublicOffice, Committee, Legislation, LegislativeSession,
                      SupportLevel, InterpersonalTie)
 
@@ -14,7 +14,8 @@ class PoliticalPartyAdmin(admin.ModelAdmin):
 
 @admin.register(Voter)
 class VoterAdmin(admin.ModelAdmin):
-    list_display = ['full_name', 'first_name', 'last_name', 'political_party', 'uuid']
+    list_display = ['full_name', 'id', 'status', 'political_party', 'short_physical_address',
+                    'county', 'email_address', 'phone_number']
     readonly_fields = ('uuid',)
 
 
@@ -43,8 +44,8 @@ class PublicOfficialAdmin(admin.ModelAdmin):
     search_fields = ['last_name', 'political_subdivision__district', 'leadership_title', 'notes']
 
 
-@admin.register(PublicOfficialRole)
-class PublicOfficialRoleAdmin(admin.ModelAdmin):
+@admin.register(PublicOfficialPosition)
+class PublicOfficialPositionAdmin(admin.ModelAdmin):
     list_display = ['name', 'public_official', 'public_office', 'is_leadership', 'leadership_title', 'political_party', 'political_subdivision']
     list_filter = ['is_elected', 'is_leadership', 'public_office', 'public_official__political_party']
     #ordering = ['last_name', 'first_name']

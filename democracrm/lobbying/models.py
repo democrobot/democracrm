@@ -4,6 +4,7 @@ from django.utils.translation import gettext_lazy as _
 
 from core.models import CRMBase, CRMTreeBase
 from organizing.models import Campaign
+from places.models import Boundary
 
 
 class PoliticalParty(CRMBase):
@@ -48,9 +49,22 @@ class Voter(CRMBase):
     An individual voter record.
     """
 
+    class Status(models.TextChoices):
+        ACTIVE = 'active', _('Active')
+        INACTIVE = 'inactive', _('Inactive')
+
+    id = models.CharField(
+        max_length=100,
+        primary_key=True
+    )
     political_party = models.ForeignKey(
         PoliticalParty,
         on_delete=models.RESTRICT
+    )
+    prefix_name = models.CharField(
+        'Prefix Name',
+        blank=True,
+        max_length=255
     )
     first_name = models.CharField(
         'First Name',
@@ -67,6 +81,11 @@ class Voter(CRMBase):
         blank=True,
         max_length=255
     )
+    suffix_name = models.CharField(
+        'Suffix Name',
+        blank=True,
+        max_length=255
+    )
     sex = models.CharField(
         'Sex',
         blank=True,
@@ -76,51 +95,96 @@ class Voter(CRMBase):
         'Birth Date',
         blank=True
     )
-    initial_registration = models.DateField(
+    initial_registration_date = models.DateField(
         'Initial Registration',
         blank=True
     )
-    current_registration = models.DateField(
+    last_registration_date = models.DateField(
         'Current Registration',
         blank=True
     )
-    address_number = models.CharField(
+    status = models.CharField(
+        max_length=20,
+        choices=Status.choices,
+        default=Status.ACTIVE
+    )
+    physical_address_street_number = models.CharField(
         'Address Number',
         blank=True,
         max_length=100
     )
-    address_street_direction = models.CharField(
-        'Address Street Direction',
+    physical_address_street_number_suffix = models.CharField(
         blank=True,
-        max_length=100
+        max_length=10
     )
-    address_street_name = models.CharField(
+    physical_address_street_name = models.CharField(
         'Address Street Name',
         blank=True,
         max_length=100
     )
-    address_street_type = models.CharField(
-        'Address Street Type',
-        blank=True,
-        max_length=100
-    )
-    address_unit = models.CharField(
+    physical_address_unit = models.CharField(
         'Address Unit',
         blank=True,
         max_length=100
     )
-    city = models.CharField(
+    physical_address_supplemental = models.CharField(
+        'Address Supplement',
+        blank=True,
+        max_length=100
+    )
+    physical_address_city = models.CharField(
         'City',
         blank=True,
         max_length=100
     )
-    state = models.CharField(
-        'State',
+    municipality = models.ForeignKey(
+        Boundary,
+        blank=True,
+        null=True,
+        related_name='municipal_voters',
+        on_delete=models.SET_NULL
+    )
+    county = models.ForeignKey(
+        Boundary,
+        blank=True,
+        null=True,
+        related_name='county_voters',
+        on_delete=models.SET_NULL
+    )
+    state = models.ForeignKey(
+        Boundary,
+        blank=True,
+        null=True,
+        related_name='state_voters',
+        on_delete=models.SET_NULL
+    )
+    physical_address_zip_code = models.CharField(
+        'ZIP Code',
         blank=True,
         max_length=100
     )
-    zip_code = models.CharField(
-        'ZIP Code',
+    mailing_address = models.CharField(
+        'Mailing Address',
+        blank=True,
+        max_length=100
+    )
+    mailing_address_supplemental = models.CharField(
+        'Mailing Address Supplement',
+        blank=True,
+        max_length=100
+    )
+    mailing_address_city = models.CharField(
+        'Mailing City',
+        blank=True,
+        max_length=100
+    )
+    mailing_address_state = models.CharField(
+        'Mailing State',
+        blank=True,
+        max_length=100
+    )
+    mailing_address_zip_code = models.CharField(
+        'Mailing ZIP Code',
         blank=True,
         max_length=100
     )
@@ -145,6 +209,39 @@ class Voter(CRMBase):
             return str(self)
         else:
             return 'N/A'
+
+    def short_physical_address(self):
+        street_number = self.physical_address_street_number
+        street_number_suffix = self.physical_address_street_number_suffix
+        street_number_supplemental = self.physical_address_supplemental
+        print(street_number_supplemental)
+        street_name = self.physical_address_street_name
+        unit = self.physical_address_unit
+        print(unit)
+
+        if unit and not street_number_supplemental:
+            address = f'{street_number}{street_number_suffix} {street_name} Unit {unit}'
+        elif street_number_supplemental and not unit:
+            address = f'{street_number}{street_number_suffix} {street_name} {street_number_supplemental}'
+        elif unit and street_number_supplemental:
+            address = f'{street_number}{street_number_suffix} {street_name} {street_number_supplemental} Unit {unit}'
+        else:
+            address = f'{street_number}{street_number_suffix} {street_name}'
+
+        return address
+
+    def full_physical_address(self):
+        street_number = self.physical_address_street_number
+        street_number_suffix = self.physical_address_street_number_suffix
+        street_name = self.physical_address_street_name
+        city = self.physical_city
+        state = self.physical_state
+        zip_code = self.physical_zip_code
+
+        # TODO: Add unit and supplementals
+        address = f'{street_number}{street_number_suffix} {street_name} {city} {state} {zip_code}'
+
+        return address
 
 
 class GoverningBody(CRMBase):
@@ -395,11 +492,11 @@ class PublicOfficial(CRMBase):
         return self.full_name()
 
 
-class PublicOfficialRole(CRMBase):
+class PublicOfficialPosition(CRMBase):
     """
-    Defined governmental roles, attached to public offices (and political subdivisions, where applicable), held by
+    Defined governmental positions, attached to public offices (and political subdivisions, where applicable), held by
     specific public officials. These are the positions sought after when people are elected or appointed as public
-    officials, and the same public official can hold multiple roles or shift between them in their career.
+    officials, and the same public official can hold multiple position or shift between them in their career.
     """
 
     class Type(models.TextChoices):
@@ -469,7 +566,7 @@ class PublicOfficialRole(CRMBase):
     )
 
     class Meta:
-        verbose_name_plural = 'Public Official Roles'
+        verbose_name_plural = 'Public Official Positions'
 
     def __str__(self):
         return self.name
@@ -477,7 +574,7 @@ class PublicOfficialRole(CRMBase):
 
 class PublicOfficialGroup(CRMTreeBase):
     """
-    Use to organize public officials.
+    Used to organize public officials.
     """
 
     name = models.CharField(
@@ -540,7 +637,7 @@ class CommitteeRole(CRMBase):
     class Type(models.TextChoices):
         CHAIR = 'chair', _('Chair')
         VICE_CHAIR = 'vice-chair', _('Vice-Chair')
-        EX_OFFICIO = 'officio', _('Ex-Officio')
+        EX_OFFICIO = 'ex-officio', _('Ex-Officio')
         MEMBER = 'member', _('Member')
 
     name = models.CharField(
