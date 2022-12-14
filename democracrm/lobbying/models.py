@@ -93,14 +93,33 @@ class Voter(CRMBase):
     )
     birth_date = models.DateField(
         'Birth Date',
+        null=True,
         blank=True
     )
     initial_registration_date = models.DateField(
         'Initial Registration',
+        null=True,
         blank=True
     )
     last_registration_date = models.DateField(
         'Current Registration',
+        null=True,
+        blank=True
+    )
+    last_election_date = models.DateField(
+        null=True,
+        blank=True
+    )
+    last_voting_date = models.DateField(
+        null=True,
+        blank=True
+    )
+    voter_precinct = models.CharField(
+        max_length=100,
+        blank=True
+    )
+    voter_polling_place = models.CharField(
+        max_length=100,
         blank=True
     )
     status = models.CharField(
@@ -197,6 +216,8 @@ class Voter(CRMBase):
         'Email',
         blank=True,
         max_length=254
+    )
+    data_export_date = models.DateField(
     )
 
     # TODO: Add point geom field

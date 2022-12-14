@@ -63,7 +63,8 @@ class Command(BaseCommand):
                 elif row[11] in ('NON', 'NF'):
                     voter['political_party'] = PoliticalParty.objects.get(name='Non-Affiliated')
                 else:
-                    voter['political_party'] = 'Other'
+                    voter['political_party'] = PoliticalParty.objects.get(name='Other')
+                    print(f'Party: {row[11]}')
                 voter['physical_address_street_number'] = row[12]
                 voter['physical_address_street_number_suffix'] = row[13]
                 voter['physical_address_street_name'] = row[14]
@@ -72,24 +73,25 @@ class Command(BaseCommand):
                 voter['physical_address_city'] = row[17]
                 voter['state'] = Boundary.objects.get(name='Pennsylvania', level='state')
                 voter['physical_address_zip_code'] = row[19]
-                #voter['mailing_address'] = row[20]
-                #voter['mailing_address_supplemental'] = row[21]
-                #voter['mailing_address_city'] = row[22]
-                #voter['mailing_address_state'] = row[23]
-                #voter['mailing_address_zip_code'] = row[24]
-                #voter['last_election_date'] = row[25]
-                #voter['voter_precinct'] = row[26]
-                #voter['voter_polling_place'] = row[27]
-                #voter['last_voting_date'] = row[28]
+                voter['mailing_address'] = row[20]
+                voter['mailing_address_supplemental'] = row[21]
+                voter['mailing_address_city'] = row[22]
+                voter['mailing_address_state'] = row[23]
+                voter['mailing_address_zip_code'] = row[24]
+                voter['last_election_date'] = parse(row[25]).date().isoformat()  # TODO: Catch errors, set null
+                voter['voter_precinct'] = row[26]
+                voter['voter_polling_place'] = row[27]
+                voter['last_voting_date'] = parse(row[28]).date().isoformat()
                 voter['phone_number'] = row[-3]
                 voter['county'] = Boundary.objects.get(name='Berks', level='county')
-                #voter['data_export_date'] = '10/04/2022'
-                print(voter)
+                voter['data_export_date'] = '2022-10-24'
 
-                Voter.objects.get_or_create(
+
+                Voter.objects.update_or_create(
                     id=voter.pop('id'),
                     defaults=voter
                 )
+                print(voter)
 
         end_time = timezone.now()
         self.stdout.write(
