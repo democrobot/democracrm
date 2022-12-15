@@ -1,10 +1,12 @@
 from django.contrib import admin
 
 
-from .models import (PoliticalParty, Voter,
-                     GoverningBody, PoliticalSubdivision, PublicOfficial, PublicOfficialPosition, PublicOfficialGroup,
-                     PublicOffice, Committee, Legislation, LegislativeSession,
-                     SupportLevel, InterpersonalTie)
+from .models import (
+    PoliticalParty, Voter,
+    GoverningBody, PoliticalSubdivision, PublicOfficial, PublicOfficialPosition, PublicOfficialGroup,
+    PublicOffice, Committee, Legislation, LegislationGroup, LegislativeSession,
+    SupportLevel, InterpersonalTie
+)
 
 
 @admin.register(PoliticalParty)
@@ -14,7 +16,7 @@ class PoliticalPartyAdmin(admin.ModelAdmin):
 
 @admin.register(Voter)
 class VoterAdmin(admin.ModelAdmin):
-    list_display = ['full_name', 'id', 'status', 'political_party', 'short_physical_address',
+    list_display = ['full_name', 'id', 'status', 'political_party', 'full_physical_address',
                     'county', 'email_address', 'phone_number']
     readonly_fields = ('uuid',)
 
@@ -50,7 +52,7 @@ class PublicOfficialPositionAdmin(admin.ModelAdmin):
     list_filter = ['is_elected', 'is_leadership', 'public_office', 'public_official__political_party']
     #ordering = ['last_name', 'first_name']
     search_help_text = 'Search on last name, district, leadership title, and notes'
-    search_fields = ['political_subdivision__district', 'leadership_title', 'notes']
+    search_fields = ['public_official__last_name', 'political_subdivision__district', 'leadership_title', 'notes']
 
     @admin.display(description='Political Party')
     def political_party(self, obj):
@@ -78,6 +80,11 @@ class LegislativeSessionAdmin(admin.ModelAdmin):
 @admin.register(Legislation)
 class LegislationAdmin(admin.ModelAdmin):
     list_display = ['name', 'number', 'url', 'status']
+
+
+@admin.register(LegislationGroup)
+class LegislationGroupAdmin(admin.ModelAdmin):
+    list_display = ['name']
 
 
 @admin.register(SupportLevel)

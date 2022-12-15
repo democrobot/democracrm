@@ -176,17 +176,19 @@ class Person(CRMBase):
     class Meta:
         verbose_name_plural = 'People'
 
+    def __str__(self):
+        return self.user_account.get_full_name()
+
     def first_name(self):
-        return self.user.first_name
+        return self.user_account.first_name
 
     def last_name(self):
-        return self.user.last_name
+        return self.user_account.last_name
 
     def full_name(self):
-        return f'{self.user.first_name} {self.user.last_name}'
+        return f'{self.user_account.first_name} {self.user_account.last_name}'
 
-    def __str__(self):
-        return self.user.get_full_name()
+
 
 
 

@@ -3,13 +3,19 @@
 {% block content %}
 <h2>Lobbying: Official Profile</h2>
 
+<img src="{{ public_official.official_profile_photo_url }}" />
 <h3>{{ public_official.full_name }}</h3>
+{% for position in public_official.publicofficialposition_set.all %}
+    {{ position.title }}
+{% endfor %}
 
 <h4>Profile Info</h4>
 <ul>
-    <li>Public Office: {{ public_official.office }}</li>
+{% for position in public_official.publicofficialposition_set.all %}
+    <li>Public Office: <a href="{{ position.official_profile_url }}">{{ position }}</a> ({{ position.start_date }} to present)</li>
+{% endfor %}
     <li>Elected Official: {{ public_official.is_elected }}</li>
-    <li>Political Party: {{ public_official.party }}</li>
+    <li>Political Party: {{ public_official.political_party }}</li>
 </ul>
 
 <h4>Current Support Levels</h4>

@@ -32,6 +32,7 @@ class Command(BaseCommand):
             print('Boundary not found!')
         with open(data_file, "r") as csv_file:
             data = list(csv.reader(csv_file, delimiter="\t"))
+            row_count = 0
             for row in data:
                 voter = {}
 
@@ -65,6 +66,7 @@ class Command(BaseCommand):
                 else:
                     voter['political_party'] = PoliticalParty.objects.get(name='Other')
                     print(f'Party: {row[11]}')
+                voter['political_party_code'] = row[11]
                 voter['physical_address_street_number'] = row[12]
                 voter['physical_address_street_number_suffix'] = row[13]
                 voter['physical_address_street_name'] = row[14]
@@ -78,22 +80,24 @@ class Command(BaseCommand):
                 voter['mailing_address_city'] = row[22]
                 voter['mailing_address_state'] = row[23]
                 voter['mailing_address_zip_code'] = row[24]
-                voter['last_election_date'] = parse(row[25]).date().isoformat()  # TODO: Catch errors, set null
+                voter['last_election_date'] = parse(row[25]).date().isoformat() if row[25] else None
                 voter['voter_precinct'] = row[26]
                 voter['voter_polling_place'] = row[27]
                 voter['last_voting_date'] = parse(row[28]).date().isoformat()
                 voter['phone_number'] = row[-3]
-                voter['county'] = Boundary.objects.get(name='Berks', level='county')
+                voter['county'] = Boundary.objects.get(name=row[-2].title(), level='county')
                 voter['data_export_date'] = '2022-10-24'
-
 
                 Voter.objects.update_or_create(
                     id=voter.pop('id'),
                     defaults=voter
                 )
                 print(voter)
+                row_count += 1
 
         end_time = timezone.now()
+        total_time = (end_time - start_time).total_seconds()
+        time_per_record = total_time / row_count
         self.stdout.write(
             self.style.SUCCESS(
-                f"Loading JSON took: {(end_time - start_time).total_seconds()} seconds."))
+                f"Loading data took: {total_time} seconds for {row_count} records at {time_per_record} sec./record."))

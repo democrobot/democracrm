@@ -12,32 +12,32 @@
         <th>Opposes</th>
         <th>Undecided</th>
         <th>Total Needed (#)</th>
-        <th>Total Needed (%)</th>
+        <th>Remaining Goal</th>
     </thead>
     <tbody>
         <tr>
             <td>Governor</td>
-            <td>1</td>
+            <td>{{ governor_supporters.count }}</td>
+            <td>{{ governor_opponents.count }}</td>
             <td>0</td>
-            <td>0</td>
             <td>1</td>
-            <td>100.0%</td>
+            <td>{{ governor_goal }}</td>
         </tr>
         <tr>
             <td>State Senate</td>
-            <td>1</td>
+            <td>0</td>
             <td>0</td>
             <td>0</td>
             <td>51</td>
-            <td>51.0%</td>
+            <td>51</td>
         </tr>
         <tr>
             <td>State House</td>
-            <td>1</td>
-            <td>0</td>
+            <td>{{ house_supporters.count }}</td>
+            <td>{{ house_opponents.count }}</td>
             <td>0</td>
             <td>102</td>
-            <td>51.0%</td>
+            <td>{{ house_goal }}</td>
         </tr>
     </tbody>
 </table>
@@ -47,7 +47,7 @@
 <ul>
 {% for level in campaign.target_supporters %}
     <li>
-    {{ level.official.full_name_with_title }} <b>{{ level.campaign_support | lower }}</b> the {{ level.campaign }} campaign and
+    {{ level.public_official.full_name_with_title }} <b>{{ level.campaign_support | lower }}</b> the {{ level.campaign }} campaign and
     <b>{{ level.legislation_support | lower }}</b> the {{ level.legislation }} ({{ level.legislation.number }}) bill
     </li>
 {% endfor %}
@@ -58,7 +58,7 @@
 <ul>
 {% for level in campaign.target_opposers %}
     <li>
-    {{ level.official.full_name_with_title }} <b>{{ level.campaign_support | lower }}</b> the {{ level.campaign }} campaign and
+    {{ level.public_official.full_name_with_title }} <b>{{ level.campaign_support | lower }}</b> the {{ level.campaign }} campaign and
     <b>{{ level.legislation_support | lower }}</b> the {{ level.legislation }} ({{ level.legislation.number }}) bill
     </li>
 {% endfor %}

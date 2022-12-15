@@ -61,6 +61,10 @@ class Voter(CRMBase):
         PoliticalParty,
         on_delete=models.RESTRICT
     )
+    # Store original party code to ensure all party mappings can be made
+    political_party_code = models.CharField(
+        max_length=50
+    )
     prefix_name = models.CharField(
         'Prefix Name',
         blank=True,
@@ -163,6 +167,10 @@ class Voter(CRMBase):
         related_name='municipal_voters',
         on_delete=models.SET_NULL
     )
+    # Store original municipality code to ensure all municipality mappings can be made
+    municipality_code = models.CharField(
+        max_length=50
+    )
     county = models.ForeignKey(
         Boundary,
         blank=True,
@@ -255,12 +263,12 @@ class Voter(CRMBase):
         street_number = self.physical_address_street_number
         street_number_suffix = self.physical_address_street_number_suffix
         street_name = self.physical_address_street_name
-        city = self.physical_city
-        state = self.physical_state
-        zip_code = self.physical_zip_code
+        city = self.physical_address_city
+        state = self.state
+        zip_code = self.physical_address_zip_code
 
         # TODO: Add unit and supplementals
-        address = f'{street_number}{street_number_suffix} {street_name} {city} {state} {zip_code}'
+        address = f'{street_number}{street_number_suffix} {street_name} {city} {str(state).upper()} {zip_code}'
 
         return address
 
@@ -565,11 +573,11 @@ class PublicOfficialPosition(CRMBase):
         on_delete=models.PROTECT
     )
     # TODO: Create term field as range? Might not work for appointed officials.
-    service_start = models.DateField(
+    start_date = models.DateField(
         null=True,
         blank=True
     )
-    service_end = models.DateField(
+    end_date = models.DateField(
         null=True,
         blank=True
     )
@@ -817,6 +825,12 @@ class LegislationGroup(CRMBase):
     notes = models.TextField(
         blank=True
     )
+
+    class Meta:
+        verbose_name_plural = 'Legislation Group'
+
+    def __str__(self):
+        return self.name
 
 
 class SupportLevel(CRMBase):
