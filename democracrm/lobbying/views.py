@@ -1,5 +1,7 @@
 from django.shortcuts import render
 
+from lobbying.models import InterpersonalTie
+
 from .models import PublicOfficial, SupportLevel
 
 
@@ -17,5 +19,12 @@ def officials_directory(request):
 def official_profile(request, official_id):
     public_official = PublicOfficial.objects.get(id=official_id)
     support_levels = SupportLevel.objects.filter(public_official=official_id)
-    context = {'public_official': public_official, 'support_levels': support_levels}
+    interpersonal_ties = InterpersonalTie.objects.filter(public_official1=official_id)
+    contacts = PublicOfficial.contacts
+    context = {
+        'public_official': public_official,
+        'support_levels': support_levels,
+        'interpersonal_ties': interpersonal_ties,
+        'contacts': contacts
+    }
     return render(request, 'lobbying/public_official_profile.html', context=context)

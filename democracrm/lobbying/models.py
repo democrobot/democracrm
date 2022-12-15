@@ -503,6 +503,10 @@ class PublicOfficial(CRMBase):
     official_profile_photo_url = models.URLField(
         blank=True
     )
+    contacts = models.ManyToManyField(
+        'contacts.Contact',
+        blank=True
+    )
     notes = models.TextField(
         blank=True
     )

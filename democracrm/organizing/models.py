@@ -107,6 +107,12 @@ class Campaign(CRMBase):
     status = models.CharField(default='brainstorming', max_length=255, choices=STATUS_CHOICES)
     targets = models.ManyToManyField('lobbying.PublicOffice', blank=True)
     # TODO: Add ballot title, legislation view, election date, and other details
+    legislation = models.ForeignKey(
+        'lobbying.LegislationGroup',
+        null=True,
+        blank=True,
+        on_delete=models.PROTECT
+    )
     is_public = models.BooleanField(default=False)
 
     class Meta:

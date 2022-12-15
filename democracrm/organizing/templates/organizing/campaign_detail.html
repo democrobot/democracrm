@@ -4,8 +4,13 @@
 
 {% block section_content %}
 <h3>{{ campaign.name }}</h3>
-
-<table border="1">
+<div class="row">
+  <div class="col">
+  <h4>Description</h4>
+  {{ campaign.description }}
+  </div>
+  <div class="col">
+  <table>
     <thead>
         <th>Office</th>
         <th>Supports</th>
@@ -42,38 +47,68 @@
     </tbody>
 </table>
 
-<h4>Supporters ({{ campaign.target_supporters_count }})</h4>
+<div class="accordion" id="accordionExample">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingOne">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+        Supporters &nbsp; <span class="badge text-bg-success">{{ campaign.target_supporters_count }}</span>
+      </button>
+    </h2>
+    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+          <ul>
+            {% for level in campaign.target_supporters %}
+            <li>
+            <a href="/lobbying/public-official/{{ level.public_official.id }}">{{ level.public_official.full_name_with_title }}</a> <b>{{ level.campaign_support | lower }}</b> the {{ level.campaign }} campaign and
+            <b>{{ level.legislation_support | lower }}</b> the {{ level.campaign.legislation }} bill(s)
+            </li>
+            {% endfor %}
+          </ul>
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingThree">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+          Undecided &nbsp; <span class="badge text-bg-secondary">{{ campaign.target_undecided_count }}</span>
+      </button>
+    </h2>
+    <div id="collapseThree" class="accordion-collapse collapse show" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <ul>
+        {% for level in campaign.target_undecided %}
+            <li>
+            <a href="/lobbying/public-official/{{ level.public_official.id }}">{{ level.public_official.full_name_with_title }}</a> is <b>{{ level.campaign_support | lower }}</b> the {{ level.campaign }} campaign and
+            <b>{{ level.legislation_support | lower }}</b> the {{ level.campaign.legislation }} bill(s)
+            </li>
+        {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingTwo">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          Opposers &nbsp; <span class="badge text-bg-danger">{{ campaign.target_opposers_count }}</span>
+      </button>
+    </h2>
+    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <ul>
+        {% for level in campaign.target_opposers %}
+            <li>
+            <a href="/lobbying/public-official/{{ level.public_official.id }}">{{ level.public_official.full_name_with_title }}</a> <b>{{ level.campaign_support | lower }}</b> the {{ level.campaign }} campaign and
+            <b>{{ level.legislation_support | lower }}</b> the {{ level.campaign.legislation }} bill(s)
+            </li>
+        {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
 
-<ul>
-{% for level in campaign.target_supporters %}
-    <li>
-    {{ level.public_official.full_name_with_title }} <b>{{ level.campaign_support | lower }}</b> the {{ level.campaign }} campaign and
-    <b>{{ level.legislation_support | lower }}</b> the {{ level.legislation }} ({{ level.legislation.number }}) bill
-    </li>
-{% endfor %}
-</ul>
+</div>
 
-<h4>Opposers ({{ campaign.target_opposers_count }})</h4>
-
-<ul>
-{% for level in campaign.target_opposers %}
-    <li>
-    {{ level.public_official.full_name_with_title }} <b>{{ level.campaign_support | lower }}</b> the {{ level.campaign }} campaign and
-    <b>{{ level.legislation_support | lower }}</b> the {{ level.legislation }} ({{ level.legislation.number }}) bill
-    </li>
-{% endfor %}
-</ul>
-
-<h4>Undecided ({{ campaign.target_undecided_count }})</h4>
-
-<ul>
-{% for level in campaign.target_undecided %}
-    <li>
-    {{ level.official.full_name_with_title }} <b>{{ level.campaign_support | lower }}</b> the {{ level.campaign }} campaign and
-    <b>{{ level.legislation_support | lower }}</b> the {{ level.legislation }} ({{ level.legislation.number }}) bill
-    </li>
-{% endfor %}
-</ul>
-
+</div>
 
 {% endblock %}

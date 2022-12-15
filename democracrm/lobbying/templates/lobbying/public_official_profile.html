@@ -18,13 +18,38 @@
     <li>Political Party: {{ public_official.political_party }}</li>
 </ul>
 
+<h4>Interpersonal Ties</h4>
+<ul>
+{% for tie in interpersonal_ties %}
+    <li>{{ tie.tie_strength.title }} tie to <a href="/lobbying/public-official/{{ tie.public_official2.id }}">{{ tie.public_official2 }}</a> ({{ tie.notes }})</li>
+{% endfor %}
+</ul>
+
 <h4>Current Support Levels</h4>
 <ul>
 {% for level in support_levels %}
     <li>
-    {{ level.campaign_support | lower | capfirst }} the {{ level.campaign }} campaign and
-    {{ level.legislation_support | lower }} the {{ level.legislation }} ({{ level.legislation.number }}) bill
+    {% if level.campaign_support == 'Strongly Supports' or level.campaign_support == 'Supports' %}
+        <span class="badge text-bg-success">{{ level.campaign_support | lower | capfirst }}</span>
+    {% elif level.campaign_support == 'Undecided On' %}
+        <span class="badge text-bg-secondary">{{ level.campaign_support | lower | capfirst }}</span>
+    {% elif level.campaign_support == 'Opposes' or level.campaign_support == 'Strongly Opposes' %}
+        <span class="badge text-bg-danger">{{ level.campaign_support | lower | capfirst }}</span>
+    {% endif %}
+        the <a href="/organizing/campaigns/{{ level.campaign.id }}">{{ level.campaign }} campaign</a> and
+    {% if level.legislation_support == 'Strongly Supports' or level.legislation_support == 'Supports' %}
+        <span class="badge text-bg-success">{{ level.legislation_support | lower }}</span>
+    {% elif level.legislation_support == 'Undecided On' %}
+        <span class="badge text-bg-secondary">{{ level.legislation_support | lower }}</span>
+    {% elif level.legislation_support == 'Strongly Opposes' or level.legislation_support == 'Opposes' %}
+        <span class="badge text-bg-danger">{{ level.legislation_support | lower }}</span>
+    {% endif %} the {{ level.campaign.legislation }} bills
     </li>
 {% endfor %}
 </ul>
+
+<h4>Notes</h4>
+
+<p>{{ public_official.notes }}</p>
+
 {% endblock %}
