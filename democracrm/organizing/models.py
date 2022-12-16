@@ -118,7 +118,22 @@ class Campaign(CRMBase):
     class Meta:
         ordering = ['category', '-priority', 'name']
 
+    def __str__(self):
+        return self.name
+
+    def priority_label(self):
+        labels = {
+            5: 'top',
+            4: 'high',
+            3: 'medium',
+            2: 'low',
+            1: 'none'
+        }
+        return labels[self.priority]
+
     # TODO: Add target goals for each public office for legislation passage
+
+    # TODO: Should these methods be in the SupportLevel model?
 
     def target_supporters(self):
         return self.supportlevel_set.filter(
@@ -147,9 +162,6 @@ class Campaign(CRMBase):
             supporters = self.supportlevel_set.filter()
             analysis[target_name] = []
         return analysis
-
-    def __str__(self):
-        return self.name
 
 
 class Chapter(CRMBase):
