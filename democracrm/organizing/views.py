@@ -13,6 +13,14 @@ def base(request):
     return render(request, 'organizing/base.html', {})
 
 
+def platform(request):
+    campaigns = Campaign.objects.all()
+    context = {
+        'campaigns': campaigns,
+    }
+    return render(request, 'organizing/platform.html', context)
+
+
 def campaign_list(request):
     campaigns = Campaign.objects.all()
     context = {'campaigns': campaigns}
