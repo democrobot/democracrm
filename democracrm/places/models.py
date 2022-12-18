@@ -42,12 +42,10 @@ class Boundary(CRMTreeBase):
         return self.name
 
 
-class RegionGroup(CRMBase):
+class RegionGroup(CRMTreeBase):
     """
-    Group of Region objects in a one-to-many topology.
+    A hierarchical group of Region objects in a one-to-many topology.
     """
-
-    # TODO: Should it be hierarchical?
 
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
@@ -77,12 +75,10 @@ class Region(CRMBase):
         return self.name
 
 
-class SiteGroup(CRMBase):
+class SiteGroup(CRMTreeBase):
     """
-    Group of Site objects in a one-to-many topology.
+    A hierarchical group of Site objects in a one-to-many topology.
     """
-
-    # TODO: Should it be hierarchical?
 
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)

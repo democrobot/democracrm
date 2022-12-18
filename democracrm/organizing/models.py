@@ -85,6 +85,14 @@ class Campaign(CRMBase):
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     category = models.ForeignKey(PlatformCategory, null=True, blank=True, on_delete=models.PROTECT)
+    start_date = models.DateField(
+        null=True,
+        blank=True
+    )
+    end_date = models.DateField(
+        null=True,
+        blank=True
+    )
     # FIXME: Update to Django choices model
     PRIORITY_CHOICES = (
         (5, 'Top'),
@@ -130,6 +138,12 @@ class Campaign(CRMBase):
             1: 'none'
         }
         return labels[self.priority]
+
+    def status_card(self):
+        if self.status == 'in-progress':
+            return 'text-bg-success'
+        else:
+            return 'text-bg-light'
 
     # TODO: Add target goals for each public office for legislation passage
 

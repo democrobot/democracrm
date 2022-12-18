@@ -27,6 +27,10 @@ def campaign_list(request):
     return render(request, 'organizing/campaign_list.html', context)
 
 
+def campaign_timeline(request, campaign_id):
+    return render(request, 'organizing/campaign_timeline.html', {})
+
+
 def campaign_detail(request, campaign_id):
     campaign = Campaign.objects.get(id=campaign_id)
     state_house = PublicOffice.objects.get(name='PA State House')
