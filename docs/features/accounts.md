@@ -1,4 +1,4 @@
-# Accounts
+# Features: Accounts
 
 The first step in DemocraCRM is setting up the accounts. There are two types of
 accounts:

@@ -1,4 +1,4 @@
-# Contacts
+# Features: Contacts
 
 Managing contact information is a vital part of both organizing and lobbying activities, so having comprehensive tools
 for contact management in DemocraCRM is essential. To keep contact information as fresh as possible across the platform,

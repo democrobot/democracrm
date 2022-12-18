@@ -1,4 +1,4 @@
-# Places
+# Features: Places
 
 By nature, politics is place-based, and thus reform efforts are, as well. DemocraCRM provides powerful spatial
 functionality to help structure and support both the organizing and lobbying efforts.
@@ -45,13 +45,13 @@ the entire state.
 ### Organization Accounts
 
 All organizations that create a DemocraCRM account must select the highest boundary they will be campaigning in as their
-territory. This will help to provide focus on that area and the ones below it. So if your organization is working on
-reform efforts in the Pennsylvania State Government, the boundary would be the state of Pennsylvania.
+territory. This will help to provide spatial focus on that area and the ones below it. So if your organization is
+working on reform efforts in Pennsylvania State Government, the boundary would be the state of Pennsylvania.
 
 !!! note
 
     An organization can change its territory at any time, however it would be important to be aware of and ideally
-    collaborate with neighboring organizations, if possible.
+    collaborate with neighboring organizations that work at that level, if possible.
 
 ### Regions
 
@@ -79,7 +79,7 @@ when created.
 
 !!! warning
 
-    Regions assigned to chapters will be validated to ensure they do not overlap with the regions of existing chapters.
+    Regions assigned to chapters will be validated to ensure they do not overlap with the regions of other chapters.
 
 ## Region Groups
 
@@ -97,4 +97,6 @@ Site Groups are available to help organize Sites, when necessary.
 
 ## Locations
 
-Locations are areas within a Site. They can be hierarchical.
+Locations are areas within a Site, and they can be hierarchical. As an example, if an organization frequents a capitol
+building to meet with public officials and stage actions in specific areas of the building, locations can be used to
+divide up the building by floor, office suite, entrances, or whatever helps for planning purposes.

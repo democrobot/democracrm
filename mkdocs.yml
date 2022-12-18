@@ -25,6 +25,8 @@ extra:
       link: https://www.twitter.com/democracrm
 markdown_extensions:
   - admonition
+  - attr_list
+  - md_in_html
 nav:
     - Introduction: 'index.md'
     - Installation:
@@ -42,6 +44,7 @@ nav:
       - Platform & Campaigns: 'getting-started/platform-campaigns.md'
       - People & Places: 'getting-started/people-places.md'
     - Features:
+      - Overview: 'features/overview.md'
       - Accounts: 'features/accounts.md'
       - Contacts: 'features/contacts.md'
       - Places: 'features/places.md'
@@ -58,4 +61,5 @@ nav:
     - Development:
       - Documentation: 'development/documentation.md'
     - Release Notes
+    - Glossary: 'glossary.md'
     - License: 'license.md'

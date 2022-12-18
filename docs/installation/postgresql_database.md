@@ -1,4 +1,4 @@
-# Step 2: Installating PostgreSQL Database Server
+# Installation Step 2: PostgreSQL Database Server
 
 !!! info
 
