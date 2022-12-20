@@ -13,7 +13,7 @@ progress on proposed legislation that meets the campaign objectives.
 DemocraCRM differs from other common activism CRMs such as [NationBuilder](https://www.nationbuilder.com) and
 [Action Network](https://actionnetwork.org) because it focuses specifically on practices and processes dedicated to
 getting legislation passed. While these other services provide excellent value for many groups, we needed a specific
-set of tools to do our jobs as effectively as possible and could evolve with our needs.
+set of tools to do our jobs as effectively as possible and could quickly evolve with our needs.
 
 ## The Platform
 
@@ -30,5 +30,5 @@ provides, freeing them up to focus on what they do best.
 
 DemocraCRM is currently being developed by a team within [March on Harrisburg](https://www.mohpa.org), a
 Pennsylvania-based nonprofit with a mission to "Make Corruption Illegal and Take our Democracy to Where It’s Never
-Been." Our hope is to recruit allied organizations to help build this platform into something that empower everyone
+Been." Our hope is to recruit allied organizations to help build this platform into something that empowers everyone
 working towards that same goal, in every state in the US and possibly beyond.
