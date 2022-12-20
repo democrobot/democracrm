@@ -17,10 +17,10 @@ set of tools to do our jobs as effectively as possible and could quickly evolve 
 
 ## The Platform
 
-Many additional features area being developed to support these efforts by making the platform a collaborative place for
+Many additional features are being developed to support these efforts by making the platform a collaborative place for
 organizations to share information and work together towards common legislative goals. Each organization will have a
 workspace account where its activities are performed within, and platform users can join workspaces
-and participate in those organizations' efforts. This is similar to Slack, for example.
+and participate in those organizations' efforts. This is similar to [Slack](https://www.slack.com), for example.
 
 Organizations can share and collaborate on data and content together, such as on a piece legislation that is
 mutually beneficial to each's reform goals. They will also benefit from centralized data and services that the platform
