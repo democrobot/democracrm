@@ -1,0 +1,11 @@
+Django
+psycopg2
+requests
+django-hosts
+django-guardian
+coverage
+dateutils
+mkdocs-material
+pygeocodio
+sentry-sdk
+django-tree-queries

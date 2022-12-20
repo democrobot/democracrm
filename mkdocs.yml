@@ -59,6 +59,7 @@ nav:
       - Core:
         - Geographic Boundaries: 'models/core/geographic_boundaries.md'
     - Development:
+      - URL Scheme: 'development/url_scheme.md'
       - Documentation: 'development/documentation.md'
     - Release Notes
     - Glossary: 'glossary.md'

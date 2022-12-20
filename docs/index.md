@@ -33,4 +33,6 @@ Pennsylvania-based nonprofit with a mission to "Make Corruption Illegal and Take
 Been." Our hope is to recruit allied organizations to help build this platform into something that empower everyone
 working towards that same goal, in every state in the US and possibly beyond.
 
-If you're interested, please reach out via [connect@democracrm.org](mailto:connect@democracrm.org).
+If you're interested, please reach out via [connect@democracrm.org](mailto:connect@democracrm.org) or on the
+[GitHub project page](https://www.github.com/democracrm/democracrm).
+

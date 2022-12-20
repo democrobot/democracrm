@@ -10,48 +10,67 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container">
-    <a class="navbar-brand" href="#">DemocraCRM</a>
+    <a class="navbar-brand" href="/">DemocraCRM</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/">Home</a>
+          <a class="nav-link active" aria-current="page" href="/mohpa/">Dashboard</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
+        <!-- li class="nav-item">
+          <a class="nav-link" href="/mohpa/people/">People</a>
+        </li -->
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown
+          <a class="nav-link dropdown-toggle" href="#" id="navbarOrganizing" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Organizing
           </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
+          <ul class="dropdown-menu" aria-labelledby="navbarOrganizing">
+            <li><a class="dropdown-item" href="/mohpa/organizing/people/">People</a></li>
+            <li><a class="dropdown-item" href="/mohpa/organizing/places/">Places</a></li>
+            <li><a class="dropdown-item" href="/mohpa/organizing/events/">Events</a></li>
+            <li><a class="dropdown-item" href="/mohpa/organizing/campaigns/">Campaigns</a></li>
+            <li><a class="dropdown-item" href="/mohpa/organizing/organizations/">Organizations</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="#">Something else here</a></li>
           </ul>
         </li>
-        <li class="nav-item">
-          <a class="nav-link disabled">Disabled</a>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarLobbying" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Lobbying
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarLobbying">
+            <li><a class="dropdown-item" href="/mohpa/lobbying/governing-bodies/">Governing Bodies</a></li>
+            <li><a class="dropdown-item" href="/mohpa/lobbying/public-offices/">Public Offices</a></li>
+            <li><a class="dropdown-item" href="/mohpa/lobbying/public-officials/">Public Officials</a></li>
+            <li><a class="dropdown-item" href="/mohpa/lobbying/legislation/">Legislation</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarCommunicating" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Communicating
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarCommunicating">
+            <li><a class="dropdown-item" href="/mohpa/people/">Mailing Lists</a></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+          </ul>
         </li>
       </ul>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
+      <div style="color: #FFFFFF;">
+      {% if user.is_authenticated %}
+        Hi {{ user.email }}! <a href="/admin/logout">Admin Logout</a>
+      {% else %}
+        You are not logged in: <a href="/admin">Admin Login</a>
+      {% endif %}
+      </div>
     </div>
   </div>
 </nav>
 
-<div align="right">
-{% if user.is_authenticated %}
-  Hi {{ user.email }}! <a href="/admin/logout">Admin Logout</a>
-{% else %}
-  You are not logged in: <a href="/admin">Admin Login</a>
-{% endif %}
-</div>
+
 
 <div class="container">
 {% block content %}

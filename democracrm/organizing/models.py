@@ -17,7 +17,7 @@ class Organization(CRMBase):
 
     # TODO: Identify how we can track both allies and opponents
     # TODO: Provide org. groups?
-
+    org_account = models.ForeignKey(OrganizationAccount, on_delete=models.PROTECT)
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     # FIXME: Update to Django choices model
@@ -57,20 +57,19 @@ class Platform(CRMBase):
         return f'{self.org_account} Platform'
 
 
-class PlatformCategory(CRMBase):
+class CampaignCategory(CRMBase):
     """
-    Platform categories can be used to optionally organize campaigns. Must be
-    enabled in the platform settings before using.
+    Campaign categories can be used to optionally organize campaigns.
     """
 
-    platform = models.ForeignKey(Platform, on_delete=models.PROTECT)
+    org_account = models.ForeignKey(OrganizationAccount, on_delete=models.PROTECT)
     name = models.CharField(max_length=255)
     # TODO: The order field currently is not significant
     order = models.IntegerField(default=1)
 
     class Meta:
         ordering = ['order']
-        verbose_name_plural = "Platform Categories"
+        verbose_name_plural = "Campaign Categories"
 
     def __str__(self):
         return self.name
@@ -81,7 +80,7 @@ class Campaign(CRMBase):
     Campaigns are used to define, organize, and track specific lobbying efforts.
     """
 
-    platform = models.ForeignKey(Platform, on_delete=models.PROTECT)
+    org_account = models.ForeignKey(OrganizationAccount, on_delete=models.PROTECT)
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     category = models.ForeignKey(PlatformCategory, null=True, blank=True, on_delete=models.PROTECT)
