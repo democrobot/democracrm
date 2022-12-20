@@ -4,8 +4,7 @@ from .models import (
     Organization,
     Person,
     Chapter,
-    Platform,
-    PlatformCategory,
+    CampaignCategory,
     Campaign,
 )
 
@@ -15,14 +14,9 @@ class OrganizationAdmin(admin.ModelAdmin):
     list_display = ['name', 'relationship', 'url']
 
 
-@admin.register(Platform)
-class PlatformAdmin(admin.ModelAdmin):
-    list_display = ['title', 'org_account']
-
-
-@admin.register(PlatformCategory)
+@admin.register(CampaignCategory)
 class PlatformCategoryAdmin(admin.ModelAdmin):
-    list_display = ['name', 'platform', 'order']
+    list_display = ['name', 'order']
 
 
 @admin.register(Campaign)

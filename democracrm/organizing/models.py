@@ -83,7 +83,7 @@ class Campaign(CRMBase):
     org_account = models.ForeignKey(OrganizationAccount, on_delete=models.PROTECT)
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
-    category = models.ForeignKey(PlatformCategory, null=True, blank=True, on_delete=models.PROTECT)
+    category = models.ForeignKey(CampaignCategory, null=True, blank=True, on_delete=models.PROTECT)
     start_date = models.DateField(
         null=True,
         blank=True

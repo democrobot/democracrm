@@ -10,8 +10,7 @@ from .models import (
     Organization,
     Person,
     Chapter,
-    Platform,
-    PlatformCategory,
+    CampaignCategory,
     Campaign,
 )
 
@@ -19,7 +18,9 @@ from .models import (
 class OrganizationTests(TestCase):
 
     def test_organization_creation(self):
+        org_account = init_org_account()
         organization = Organization(
+            org_account=org_account,
             name='March on Harrisburg',
             url='https://www.mohpa.org'
         )
@@ -27,33 +28,20 @@ class OrganizationTests(TestCase):
         self.assertIsInstance(organization, Organization)
 
 
-class PlatformTests(TestCase):
-
-    def test_platform_creation(self):
-        org_account = init_org_account()
-        platform = Platform(title='Test Platform', org_account=org_account)
-        platform.save()
-        self.assertIsInstance(platform, Platform)
-
-
-class PlatformCategoryTests(TestCase):
+class CampaignCategoryTests(TestCase):
 
     def test_platform_category_creation(self):
         org_account = init_org_account()
-        platform = Platform(title='Test Platform', org_account=org_account)
-        platform.save()
-        category = PlatformCategory(platform=platform, name='Category', order=1)
+        category = CampaignCategory(org_account=org_account, name='Category', order=1)
         category.save()
-        self.assertIsInstance(category, PlatformCategory)
+        self.assertIsInstance(category, CampaignCategory)
 
 
 class CampaignTests(TestCase):
 
     def test_campaign_creation(self):
         org_account = init_org_account()
-        platform = Platform(title='Test Platform', org_account=org_account)
-        platform.save()
-        campaign = Campaign(platform=platform, name='Campaign', status='brainstorming')
+        campaign = Campaign(org_account=org_account, name='Campaign', status='brainstorming')
         campaign.save()
         self.assertIsInstance(campaign, Campaign)
 
@@ -94,17 +82,9 @@ def init_org_account():
     return org_account
 
 
-def init_platform():
-    org_account = init_org_account()
-    platform = Platform.objects.create(title='Test Platform', org_account=org_account)
-    platform.save()
-
-    return platform
-
-
 def init_campaign():
-    platform = init_platform()
-    campaign = Campaign.objects.create(name='Test Campaign', platform=platform)
+    org_account = init_org_account()
+    campaign = Campaign.objects.create(name='Test Campaign', org_account=org_account)
     campaign.save()
 
     return campaign
