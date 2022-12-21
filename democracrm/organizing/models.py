@@ -3,7 +3,7 @@ from django.contrib.gis.db.models import Q
 
 from accounts.models import UserAccount, OrganizationAccount
 from contacts.models import Contact
-from core.models import CRMBase
+from core.models import CRMBase, OrgAcctMixin
 # from lobbying.models import Voter, PublicOffice  # FIXME: Circular reference issue
 from places.models import Region
 
@@ -12,7 +12,7 @@ class Organization(CRMBase):
     """
     External organizations can be represented this way to track activity at an
     organizational level. If the real-life organization joins the platform, it
-    can be associated with the existing object has a proxy for interaction.
+    can be associated with the existing object as a proxy for interaction.
     """
 
     # TODO: Identify how we can track both allies and opponents
@@ -36,25 +36,6 @@ class Organization(CRMBase):
 
     def __str__(self):
         return self.name
-
-
-class Platform(CRMBase):
-    """
-    The platform is the full collection of campaigns that an organization is
-    lobbying for, and it used to display, manage, and strategize lobbying efforts.
-    """
-
-    # TODO: Should be a singleton instance for the install, created on account
-    # initialization
-
-    org_account = models.ForeignKey(OrganizationAccount, on_delete=models.PROTECT)
-    # TODO: Change title to name
-    title = models.CharField(blank=True, max_length=255)
-    description = models.TextField(blank=True)
-    categories_enabled = models.BooleanField(default=False)
-
-    def __str__(self):
-        return f'{self.org_account} Platform'
 
 
 class CampaignCategory(CRMBase):
