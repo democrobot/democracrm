@@ -42,7 +42,7 @@ class CRMTreeBase(CRMBase, TreeNode):
         abstract = True
 
 
-class OrgAcctMixin(models.Model):
+class OrgAccountMixin(models.Model):
     """
     Links an object to an organization account.
     """

@@ -3,12 +3,12 @@ from django.contrib.gis.db.models import Q
 
 from accounts.models import UserAccount, OrganizationAccount
 from contacts.models import Contact
-from core.models import CRMBase, OrgAcctMixin
+from core.models import CRMBase, OrgAccountMixin
 # from lobbying.models import Voter, PublicOffice  # FIXME: Circular reference issue
 from places.models import Region
 
 
-class Organization(CRMBase):
+class Organization(CRMBase, OrgAccountMixin):
     """
     External organizations can be represented this way to track activity at an
     organizational level. If the real-life organization joins the platform, it
@@ -17,7 +17,6 @@ class Organization(CRMBase):
 
     # TODO: Identify how we can track both allies and opponents
     # TODO: Provide org. groups?
-    org_account = models.ForeignKey(OrganizationAccount, on_delete=models.PROTECT)
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     # FIXME: Update to Django choices model
@@ -38,12 +37,11 @@ class Organization(CRMBase):
         return self.name
 
 
-class CampaignCategory(CRMBase):
+class CampaignCategory(CRMBase, OrgAccountMixin):
     """
     Campaign categories can be used to optionally organize campaigns.
     """
 
-    org_account = models.ForeignKey(OrganizationAccount, on_delete=models.PROTECT)
     name = models.CharField(max_length=255)
     # TODO: The order field currently is not significant
     order = models.IntegerField(default=1)
@@ -56,12 +54,11 @@ class CampaignCategory(CRMBase):
         return self.name
 
 
-class Campaign(CRMBase):
+class Campaign(CRMBase, OrgAccountMixin):
     """
     Campaigns are used to define, organize, and track specific lobbying efforts.
     """
 
-    org_account = models.ForeignKey(OrganizationAccount, on_delete=models.PROTECT)
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     category = models.ForeignKey(CampaignCategory, null=True, blank=True, on_delete=models.PROTECT)
@@ -158,27 +155,25 @@ class Campaign(CRMBase):
         return analysis
 
 
-class Chapter(CRMBase):
+class Chapter(CRMBase, OrgAccountMixin):
     """
     Regional chapters
     """
 
     name = models.CharField(max_length=255)
-    org_account = models.ForeignKey(OrganizationAccount, on_delete=models.PROTECT)
     region = models.ForeignKey(Region, on_delete=models.PROTECT)
 
     def __str__(self):
         return self.name
 
 
-class Person(CRMBase):
+class Person(CRMBase, OrgAccountMixin):
     """
     Provides a record for each person an organization interacts with, linking
     to many other key objects in the CRM.
     """
 
     user_account = models.ForeignKey(UserAccount, blank=True, on_delete=models.PROTECT)
-    org_account = models.ForeignKey(OrganizationAccount, on_delete=models.PROTECT)
     chapter = models.ForeignKey(Chapter, null=True, blank=True, on_delete=models.PROTECT)
     contact = models.ForeignKey(Contact, null=True, blank=True, on_delete=models.PROTECT)
     voter = models.ForeignKey('lobbying.Voter', null=True, blank=True, on_delete=models.PROTECT)
