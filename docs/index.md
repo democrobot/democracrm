@@ -15,7 +15,13 @@ DemocraCRM differs from other common activism CRMs such as [NationBuilder](https
 getting legislation passed. While these other services provide excellent value for many groups, we needed a specific
 set of tools to do our jobs as effectively as possible and could quickly evolve with our needs.
 
+
 ## The Platform
+
+!!! info
+
+    The docs are in a very early stage of development, with many areas just being placeholders at this point. To
+    get a quick sense of the planned functionality, start with the [list of features](/features/overview).
 
 Many additional features are being developed to support these efforts by making the platform a collaborative place for
 organizations to share information and work together towards common legislative goals. Each organization will have a

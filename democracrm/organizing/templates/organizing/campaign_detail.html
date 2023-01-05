@@ -59,7 +59,7 @@
           <ul>
             {% for level in campaign.target_supporters %}
             <li>
-            <a href="/lobbying/public-official/{{ level.public_official.id }}">{{ level.public_official.full_name_with_title }}</a> <b>{{ level.campaign_support | lower }}</b> the {{ level.campaign }} campaign and
+            <a href="/{{ slug }}/lobbying/public-officials/{{ level.public_official.id }}">{{ level.public_official.full_name_with_title }}</a> <b>{{ level.campaign_support | lower }}</b> the {{ level.campaign }} campaign and
             <b>{{ level.legislation_support | lower }}</b> the {{ level.campaign.legislation }} bill(s)
             </li>
             {% endfor %}
@@ -78,7 +78,7 @@
         <ul>
         {% for level in campaign.target_undecided %}
             <li>
-            <a href="/lobbying/public-official/{{ level.public_official.id }}">{{ level.public_official.full_name_with_title }}</a> is <b>{{ level.campaign_support | lower }}</b> the {{ level.campaign }} campaign and
+            <a href="/{{ slug }}/lobbying/public-officials/{{ level.public_official.id }}">{{ level.public_official.full_name_with_title }}</a> is <b>{{ level.campaign_support | lower }}</b> the {{ level.campaign }} campaign and
             <b>{{ level.legislation_support | lower }}</b> the {{ level.campaign.legislation }} bill(s)
             </li>
         {% endfor %}
@@ -97,7 +97,7 @@
         <ul>
         {% for level in campaign.target_opposers %}
             <li>
-            <a href="/lobbying/public-official/{{ level.public_official.id }}">{{ level.public_official.full_name_with_title }}</a> <b>{{ level.campaign_support | lower }}</b> the {{ level.campaign }} campaign and
+            <a href="/{{ slug }}/lobbying/public-officials/{{ level.public_official.id }}">{{ level.public_official.full_name_with_title }}</a> <b>{{ level.campaign_support | lower }}</b> the {{ level.campaign }} campaign and
             <b>{{ level.legislation_support | lower }}</b> the {{ level.campaign.legislation }} bill(s)
             </li>
         {% endfor %}

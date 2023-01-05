@@ -1,10 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from accounts.models import OrganizationAccount
 
 
 def index(request):
-    return render(request, 'core/index.html', {})
+    return redirect('/mohpa/', {})
 
 
 def organization_root(request, slug):

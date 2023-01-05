@@ -1,7 +1,7 @@
 {% extends "core/base.html" %}
 
 {% block content %}
-<h2>Lobbying: Official Profile</h2>
+<h2>Public Official Profile</h2>
 
 <img src="{{ public_official.official_profile_photo_url }}" />
 <h3>{{ public_official.full_name }}</h3>
@@ -16,12 +16,13 @@
 {% endfor %}
     <li>Elected Official: {{ public_official.is_elected }}</li>
     <li>Political Party: {{ public_official.political_party }}</li>
+    <li>Seeking Re-election: {{ public_official.is_seeking_reelection }}</li>
 </ul>
 
 <h4>Interpersonal Ties</h4>
 <ul>
 {% for tie in interpersonal_ties %}
-    <li>{{ tie.tie_strength.title }} tie to <a href="/lobbying/public-official/{{ tie.public_official2.id }}">{{ tie.public_official2 }}</a> ({{ tie.notes }})</li>
+    <li>{{ tie.tie_strength.title }} tie to <a href="/{{ slug }}/lobbying/public-officials/{{ tie.public_official2.id }}">{{ tie.public_official2 }}</a> ({{ tie.notes }})</li>
 {% endfor %}
 </ul>
 
@@ -36,7 +37,7 @@
     {% elif level.campaign_support == 'Opposes' or level.campaign_support == 'Strongly Opposes' %}
         <span class="badge text-bg-danger">{{ level.campaign_support | lower | capfirst }}</span>
     {% endif %}
-        the <a href="/organizing/campaigns/{{ level.campaign.id }}">{{ level.campaign }} campaign</a> and
+        the <a href="/{{ slug }}/organizing/campaigns/{{ level.campaign.id }}">{{ level.campaign }} campaign</a> and
     {% if level.legislation_support == 'Strongly Supports' or level.legislation_support == 'Supports' %}
         <span class="badge text-bg-success">{{ level.legislation_support | lower }}</span>
     {% elif level.legislation_support == 'Undecided On' %}

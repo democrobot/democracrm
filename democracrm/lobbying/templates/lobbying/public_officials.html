@@ -1,10 +1,10 @@
 {% extends "core/base.html" %}
 
 {% block content %}
-<h2>Lobbying: Public Officials</h2>
+<h2>Public Officials</h2>
 <ul>
 {% for public_official in public_officials %}
-    <li><a href="public-official/{{ public_official.id }}">{{ public_official }}</a></li>
+    <li><a href="{{ public_official.id }}">{{ public_official }}</a></li>
 {% endfor %}
 </ul>
 {% endblock %}

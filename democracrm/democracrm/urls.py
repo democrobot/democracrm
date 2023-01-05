@@ -22,6 +22,6 @@ urlpatterns = [
     path('', include('core.urls')),
     path('admin/', admin.site.urls),
     path('<slug:slug>/', views.organization_root),
-    path('lobbying/', include('lobbying.urls')),
-    path('organizing/', include('organizing.urls')),
+    path('<slug:slug>/lobbying/', include('lobbying.urls')),
+    path('<slug:slug>/organizing/', include('organizing.urls')),
 ]

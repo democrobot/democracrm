@@ -90,6 +90,9 @@ class Campaign(CRMBase, OrgAccountMixin):
         ('lost', 'Lost'),
     )
     status = models.CharField(default='brainstorming', max_length=255, choices=STATUS_CHOICES)
+    # TODO: Break out targets as progress milestones, and include other steps in the process (draft bill, committee
+    # approval, etc.
+
     targets = models.ManyToManyField('lobbying.PublicOffice', blank=True)
     # TODO: Add ballot title, legislation view, election date, and other details
     legislation = models.ForeignKey(
@@ -153,6 +156,15 @@ class Campaign(CRMBase, OrgAccountMixin):
             supporters = self.supportlevel_set.filter()
             analysis[target_name] = []
         return analysis
+
+
+class CampaignMilestone(CRMBase, OrgAccountMixin):
+    """
+
+    """
+
+    campaign = models.ForeignKey(Campaign, on_delete=models.PROTECT)
+    status = models.CharField(max_length=100 )
 
 
 class Chapter(CRMBase, OrgAccountMixin):

@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<h1>Campaign Dashboard</h1>
+<h1>Campaigns</h1>
 <div class="row row-cols-1 row-cols-md-3 g-4">
   {% for campaign in campaigns %}
   <div class="col">
@@ -11,7 +11,7 @@
       <div class="card-body">
         <h5 class="card-title">{{ campaign.name }}</h5>
         <p class="card-text">Short campaign description goes here.</p>
-        <a href="#" class="btn btn-primary">Learn More</a>
+        <a href="{{ campaign.id }}" class="btn btn-primary">View Campaign</a>
       </div>
       <div class="card-header">
         Priority: {{ campaign.priority_label | title }}

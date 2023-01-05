@@ -2,6 +2,7 @@ from django.contrib.gis.db.models import Q
 from django.shortcuts import render
 
 from .models import Campaign
+from accounts.models import OrganizationAccount
 from lobbying.models import PublicOffice, PublicOfficial, SupportLevel
 
 
@@ -13,25 +14,18 @@ def base(request):
     return render(request, 'organizing/base.html', {})
 
 
-def platform(request):
-    campaigns = Campaign.objects.all()
-    context = {
-        'campaigns': campaigns,
-    }
-    return render(request, 'organizing/platform.html', context)
-
-
-def campaign_list(request):
-    campaigns = Campaign.objects.all()
+def campaign_dashboard(request, slug):
+    org_account = OrganizationAccount.objects.get(slug=slug)
+    campaigns = Campaign.objects.filter(org_account=org_account)
     context = {'campaigns': campaigns}
-    return render(request, 'organizing/campaign_list.html', context)
+    return render(request, 'organizing/campaign_dashboard.html', context)
 
 
 def campaign_timeline(request, campaign_id):
     return render(request, 'organizing/campaign_timeline.html', {})
 
 
-def campaign_detail(request, campaign_id):
+def campaign_detail(request, campaign_id, slug):
     campaign = Campaign.objects.get(id=campaign_id)
     state_house = PublicOffice.objects.get(name='PA State House')
     state_senate = PublicOffice.objects.get(name='PA State Senate')
@@ -50,6 +44,7 @@ def campaign_detail(request, campaign_id):
     house_goal = house_needed - house_supporters.count()
     governor_goal = governor_needed - governor_supporters.count()
     context = {
+        'slug': slug,
         'campaign': campaign,
         'supporters': supporters,
         'house_supporters': house_supporters,
