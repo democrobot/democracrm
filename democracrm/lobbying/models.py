@@ -768,6 +768,18 @@ class Legislation(CRMBase):
         ADOPTED = 'adopted', _('Adopted')
         REJECTED = 'rejected', _('Rejected')
 
+    # Status fields for US Congress
+    #Introduced
+    #Committee Consideration
+    #Floor Consideration
+    #Failed One Chamber
+    #Passed One Chamber
+    #Passed Both Chambers
+    #Resolving Differences
+    #To President
+    #Veto Actions
+    #Became Law
+
     name = models.CharField(
         max_length=255
     )
