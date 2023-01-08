@@ -7,7 +7,9 @@ from places.models import Boundary
 
 
 from .models import (
+    OrganizationGroup,
     Organization,
+    PersonGroup,
     Person,
     Chapter,
     CampaignCategory,
@@ -17,9 +19,19 @@ from .models import (
 
 class OrganizationTests(TestCase):
 
+    def test_organization_group_creation(self):
+        org_account = init_org_account()
+        org_group = OrganizationGroup.objects.create(
+            org_account=org_account,
+            name = 'Test Group',
+            description='A test org. group'
+        )
+        org_group.save()
+        self.assertIsInstance(org_group, OrganizationGroup)
+
     def test_organization_creation(self):
         org_account = init_org_account()
-        organization = Organization(
+        organization = Organization.objects.create(
             org_account=org_account,
             name='March on Harrisburg',
             url='https://www.mohpa.org'
@@ -32,7 +44,7 @@ class CampaignCategoryTests(TestCase):
 
     def test_platform_category_creation(self):
         org_account = init_org_account()
-        category = CampaignCategory(org_account=org_account, name='Category', order=1)
+        category = CampaignCategory.objects.create(org_account=org_account, name='Category', order=1)
         category.save()
         self.assertIsInstance(category, CampaignCategory)
 
@@ -47,6 +59,9 @@ class CampaignTests(TestCase):
 
 
 class PersonTests(TestCase):
+
+    def test_person_group_creation(self):
+        self.fail()
 
     def test_person_creation(self):
         user_account = init_user_account()

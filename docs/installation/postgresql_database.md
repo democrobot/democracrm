@@ -49,7 +49,7 @@ quotes before submitting!
 Next, copy and paste the following commands below to create the `democracrm` database, and assign both ownership and
 all administrative privileges to the `democracrm` user:
 
-    CREATE DATABASE democracrm WITH OWNER democracrm ENCODING UTF8;
+    CREATE DATABASE democracrm WITH OWNER democracrm TEMPLATE template0 ENCODING UTF8;
     GRANT ALL PRIVILEGES ON DATABASE democracrm TO democracrm;
 
 !!! note

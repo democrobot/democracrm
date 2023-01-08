@@ -3,10 +3,18 @@ from django.contrib.gis.db.models import Q
 
 from accounts.models import UserAccount, OrganizationAccount
 from contacts.models import Contact
-from core.models import CRMBase, OrgAccountMixin
+from core.models import CRMBase, CRMTreeBase, OrgAccountMixin
 # from lobbying.models import Voter, PublicOffice  # FIXME: Circular reference issue
-from places.models import Region
+from places.models import Region, Site
 
+
+class OrganizationGroup(CRMTreeBase, OrgAccountMixin):
+    """
+    Provides hierarchical groupings of similar organizations.
+    """
+
+    name = models.CharField(max_length=255)
+    description = models.TextField(blank=True)
 
 class Organization(CRMBase, OrgAccountMixin):
     """
@@ -19,6 +27,7 @@ class Organization(CRMBase, OrgAccountMixin):
     # TODO: Provide org. groups?
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
+    group = models.ForeignKey(OrganizationGroup, null=True, blank=True, on_delete=models.RESTRICT)
     # FIXME: Update to Django choices model
     RELATIONSHIP_CHOICES = (
         ('ally', 'Ally'),
@@ -29,6 +38,9 @@ class Organization(CRMBase, OrgAccountMixin):
     url = models.URLField(blank=True)
     notes = models.TextField(blank=True)
     region = models.ForeignKey(Region, null=True, blank=True, on_delete=models.PROTECT)
+    site = models.ForeignKey(Site, null=True, blank=True, on_delete=models.PROTECT)
+    # contacts
+
     # TODO: Should organizations have boundaries or regions?
     # TODO: Can they be used to manage endorsement?
     # Sites, contacts, and social media accounts can be linked to organizations, as well
@@ -164,7 +176,7 @@ class CampaignMilestone(CRMBase, OrgAccountMixin):
     """
 
     campaign = models.ForeignKey(Campaign, on_delete=models.PROTECT)
-    status = models.CharField(max_length=100 )
+    status = models.CharField(max_length=100)
 
 
 class Chapter(CRMBase, OrgAccountMixin):
@@ -179,16 +191,26 @@ class Chapter(CRMBase, OrgAccountMixin):
         return self.name
 
 
+class PersonGroup(CRMTreeBase, OrgAccountMixin):
+    """
+    Provides hierarchical groups that people can be included within.
+    """
+
+    name = models.CharField(max_length=100)
+    description = models.TextField(blank=True)
+
+
 class Person(CRMBase, OrgAccountMixin):
     """
-    Provides a record for each person an organization interacts with, linking
+    Provides a record for each person participating in the organization, centrally linking
     to many other key objects in the CRM.
     """
 
-    user_account = models.ForeignKey(UserAccount, blank=True, on_delete=models.PROTECT)
+    user_account = models.ForeignKey(UserAccount, null=True, blank=True, on_delete=models.PROTECT)
     chapter = models.ForeignKey(Chapter, null=True, blank=True, on_delete=models.PROTECT)
     contact = models.ForeignKey(Contact, null=True, blank=True, on_delete=models.PROTECT)
     voter = models.ForeignKey('lobbying.Voter', null=True, blank=True, on_delete=models.PROTECT)
+    groups = models.ManyToManyField(PersonGroup)
     notes = models.TextField(blank=True)
     # TODO: board member? other role tracking?
 
@@ -196,7 +218,10 @@ class Person(CRMBase, OrgAccountMixin):
         verbose_name_plural = 'People'
 
     def __str__(self):
-        return self.user_account.get_full_name()
+        if self.user_account:
+            return self.user_account.get_full_name()
+        else:
+            return 'Unknown - Link a Record!'
 
     def first_name(self):
         return self.user_account.first_name

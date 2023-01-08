@@ -1,7 +1,0 @@
-Django
-django-tree-queries
-sentry-sdk
-coverage
-psycopg2-binary
-requests
-pygeocodio

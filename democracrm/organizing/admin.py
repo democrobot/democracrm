@@ -1,12 +1,18 @@
 from django.contrib import admin
 
 from .models import (
+    OrganizationGroup,
     Organization,
     Person,
     Chapter,
     CampaignCategory,
     Campaign,
 )
+
+
+@admin.register(OrganizationGroup)
+class OrganizationGroupAdmin(admin.ModelAdmin):
+    list_display = ['name']
 
 
 @admin.register(Organization)

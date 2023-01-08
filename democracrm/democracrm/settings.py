@@ -114,7 +114,7 @@ WSGI_APPLICATION = 'democracrm.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'HOST': '192.168.1.5',
+        'HOST': '192.168.1.231',
         'PORT': '5432',
         'NAME': 'democracrm',
         'USER': 'democracrm',
