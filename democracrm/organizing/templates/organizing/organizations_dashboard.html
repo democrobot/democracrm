@@ -1,0 +1,14 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+
+<h1>Organizations</h1>
+<ul>
+{% for organization in organizations %}
+    <li><a href="{{ organization.id }}">{{ organization }}</a>
+        
+    </li>
+{% endfor %}
+</ul>
+
+{% endblock %}

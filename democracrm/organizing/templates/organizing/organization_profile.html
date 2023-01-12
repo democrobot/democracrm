@@ -1,0 +1,17 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+
+<h1>Organizations</h1>
+<h2>{{ organization }}</h2>
+<ul>
+    <li><a href="{{ organization.url }}">{{ organization.url }}</a></li>
+</ul>
+
+<h3>Description</h3>
+<p>{{ organization.description }}</p>
+
+<h3>Notes</h3>
+<p>{{ organization.notes }}</p>
+
+{% endblock %}

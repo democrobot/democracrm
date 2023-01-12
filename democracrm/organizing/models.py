@@ -1,5 +1,6 @@
 from django.contrib.gis.db import models
 from django.contrib.gis.db.models import Q
+from django.utils.translation import gettext_lazy as _
 
 from accounts.models import UserAccount, OrganizationAccount
 from contacts.models import Contact
@@ -15,6 +16,13 @@ class OrganizationGroup(CRMTreeBase, OrgAccountMixin):
 
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
+
+    class Meta:
+        verbose_name_plural = 'Organization Groups'
+
+    def __str__(self):
+        return self.name
+
 
 class Organization(CRMBase, OrgAccountMixin):
     """
@@ -178,6 +186,12 @@ class CampaignMilestone(CRMBase, OrgAccountMixin):
     campaign = models.ForeignKey(Campaign, on_delete=models.PROTECT)
     status = models.CharField(max_length=100)
 
+    class Meta:
+        verbose_name_plural = 'Campaign Milestones'
+    
+    def __str__(self):
+        return self.status
+
 
 class Chapter(CRMBase, OrgAccountMixin):
     """
@@ -198,6 +212,12 @@ class PersonGroup(CRMTreeBase, OrgAccountMixin):
 
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True)
+
+    class Meta:
+        verbose_name_plural = 'Person Group'
+    
+    def __str__(self):
+        return self.name
 
 
 class Person(CRMBase, OrgAccountMixin):
@@ -233,6 +253,59 @@ class Person(CRMBase, OrgAccountMixin):
         return f'{self.user_account.first_name} {self.user_account.last_name}'
 
 
+class Relationship(CRMBase):
+    """
+    Track relationships between people and organizations.
+    """
 
-
-
+    class RelationshipClass(models.TextChoices):
+        PERSON_TO_PERSON = 'person_to_person', _('Person to Person')
+        PERSON_TO_ORG = 'person_to_org', _('Person to Organization')
+        ORG_TO_ORG = 'org_to_org', _('Organization to Organization')
+    
+    #class RelationshipType(models.TextChoices):
+    [
+        # Person to person:
+        'Assistant to',
+        'Assisted by',
+        'Child of',
+        'Friend of',
+        'Manager of',
+        'Mentee of',
+        'Mentor of',
+        'Parent of',
+        'Partner of',
+        'Reports to',
+        'Sibling of',
+        'Spouse of',
+        'Student of',
+        'Teacher of',
+        # Person to organization:
+        'Alum of',
+        'Board member of',
+        'Consultant to',
+        'Employee of',
+        'Member of',
+        'Primary contact of',
+        'Resident of',
+        'Student at',
+        'Candidate of',
+        'Treasurer of',
+        # Organization to person
+        'Alum',
+        'Board member',
+        'Employer of',
+        'Member',
+        'Primary contact',
+        'Resident',
+        'School of',
+        'Candidate',
+        'Treasurer',
+        # Organization to organization
+        'Affiliate',
+        'Chapter',
+        'Chapter of',
+        'Organization partner',
+        'Parent company of',
+        'Subsidiary of',
+    ]

@@ -3,10 +3,12 @@ from django.contrib import admin
 from .models import (
     OrganizationGroup,
     Organization,
-    Person,
-    Chapter,
     CampaignCategory,
     Campaign,
+    CampaignMilestone,
+    Chapter,
+    PersonGroup,
+    Person
 )
 
 
@@ -17,11 +19,11 @@ class OrganizationGroupAdmin(admin.ModelAdmin):
 
 @admin.register(Organization)
 class OrganizationAdmin(admin.ModelAdmin):
-    list_display = ['name', 'relationship', 'url']
+    list_display = ['name', 'group', 'relationship', 'region', 'url']
 
 
 @admin.register(CampaignCategory)
-class PlatformCategoryAdmin(admin.ModelAdmin):
+class CampaignCategoryAdmin(admin.ModelAdmin):
     list_display = ['name', 'order']
 
 
@@ -31,12 +33,25 @@ class CampaignAdmin(admin.ModelAdmin):
     save_as = True
 
 
-@admin.register(Person)
-class PersonAdmin(admin.ModelAdmin):
-    list_display = ['full_name', 'user_account', 'last_name', 'first_name', 'org_account']
+@admin.register(CampaignMilestone)
+class CampaignMilestoneAdmin(admin.ModelAdmin):
+    list_display = ['campaign', 'status']
 
 
 @admin.register(Chapter)
 class ChapterAdmin(admin.ModelAdmin):
     list_display = ['name', 'org_account', 'region']
+
+
+@admin.register(PersonGroup)
+class PersonGroupAdmin(admin.ModelAdmin):
+    list_display = ['name']
+
+
+@admin.register(Person)
+class PersonAdmin(admin.ModelAdmin):
+    list_display = ['full_name', 'user_account', 'last_name', 'first_name', 'org_account']
+
+
+
 
