@@ -44,6 +44,7 @@ class Organization(CRMBase, OrgAccountMixin):
     )
     # TODO: Re-work this into ties?
     # relationship = models.CharField(default='unknown', max_length=255, choices=RELATIONSHIP_CHOICES)
+    relationships = models.ManyToManyField('Relationship', blank=True)
     url = models.URLField(blank=True)
     notes = models.TextField(blank=True)
     region = models.ForeignKey(Region, null=True, blank=True, on_delete=models.PROTECT)
@@ -231,7 +232,8 @@ class Person(CRMBase, OrgAccountMixin):
     chapter = models.ForeignKey(Chapter, null=True, blank=True, on_delete=models.PROTECT)
     contact = models.ForeignKey(Contact, null=True, blank=True, on_delete=models.PROTECT)
     voter = models.ForeignKey('lobbying.Voter', null=True, blank=True, on_delete=models.PROTECT)
-    groups = models.ManyToManyField(PersonGroup)
+    groups = models.ManyToManyField(PersonGroup, blank=True)
+    relationships = models.ManyToManyField('Relationship', blank=True)
     notes = models.TextField(blank=True)
     # TODO: board member? other role tracking?
 
@@ -264,8 +266,8 @@ class Relationship(CRMBase):
         ORGANIZATION = 'organization', _('Organization')
     
     type = models.CharField(max_length=50)
-    person = models.ForeignKey(Person, null=True, blank=True, on_delete=models.PROTECT)
-    organization = models.ForeignKey(Organization, null=True, blank=True, on_delete=models.PROTECT)
+    person_subject = models.ForeignKey(Person, null=True, blank=True, on_delete=models.PROTECT)
+    org_subject = models.ForeignKey(Organization, null=True, blank=True, on_delete=models.PROTECT)
 
     class Meta:
         verbose_name_plural = 'Relationships'
