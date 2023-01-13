@@ -14,6 +14,7 @@ from .models import (
     Chapter,
     CampaignCategory,
     Campaign,
+    Relationship,
 )
 
 

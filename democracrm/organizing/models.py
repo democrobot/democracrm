@@ -42,7 +42,8 @@ class Organization(CRMBase, OrgAccountMixin):
         ('opponent', 'Opponent'),
         ('unknown', 'Unknown'),
     )
-    relationship = models.CharField(default='unknown', max_length=255, choices=RELATIONSHIP_CHOICES)
+    # TODO: Re-work this into ties?
+    # relationship = models.CharField(default='unknown', max_length=255, choices=RELATIONSHIP_CHOICES)
     url = models.URLField(blank=True)
     notes = models.TextField(blank=True)
     region = models.ForeignKey(Region, null=True, blank=True, on_delete=models.PROTECT)
@@ -258,54 +259,75 @@ class Relationship(CRMBase):
     Track relationships between people and organizations.
     """
 
-    class RelationshipClass(models.TextChoices):
-        PERSON_TO_PERSON = 'person_to_person', _('Person to Person')
-        PERSON_TO_ORG = 'person_to_org', _('Person to Organization')
-        ORG_TO_ORG = 'org_to_org', _('Organization to Organization')
+    class RelationshipTarget(models.TextChoices):
+        PERSON = 'person', _('Person')
+        ORGANIZATION = 'organization', _('Organization')
     
-    #class RelationshipType(models.TextChoices):
-    [
-        # Person to person:
-        'Assistant to',
-        'Assisted by',
-        'Child of',
-        'Friend of',
-        'Manager of',
-        'Mentee of',
-        'Mentor of',
-        'Parent of',
-        'Partner of',
-        'Reports to',
-        'Sibling of',
-        'Spouse of',
-        'Student of',
-        'Teacher of',
-        # Person to organization:
-        'Alum of',
-        'Board member of',
-        'Consultant to',
-        'Employee of',
-        'Member of',
-        'Primary contact of',
-        'Resident of',
-        'Student at',
-        'Candidate of',
-        'Treasurer of',
-        # Organization to person
-        'Alum',
-        'Board member',
-        'Employer of',
-        'Member',
-        'Primary contact',
-        'Resident',
-        'School of',
-        'Candidate',
-        'Treasurer',
-        # Organization to organization
-        'Affiliate',
-        'Chapter',
-        'Chapter of',
-        'Organization partner',
-        'Parent company of',
-        'Subsidiary of',
-    ]
+    type = models.CharField(max_length=50)
+    person = models.ForeignKey(Person, null=True, blank=True, on_delete=models.PROTECT)
+    organization = models.ForeignKey(Organization, null=True, blank=True, on_delete=models.PROTECT)
+
+    class Meta:
+        verbose_name_plural = 'Relationships'
+    
+    def __str__(self):
+        if self.person:
+            subject = self.person
+        elif self.organization:
+            subject = self.organization
+        return f'{self.type} {self.subject}' 
+
+    def person_choices(self):
+        choices = [
+            # Person to person:
+            'Assistant to',
+            'Assisted by',
+            'Child of',
+            'Friend of',
+            'Manager of',
+            'Mentee of',
+            'Mentor of',
+            'Parent of',
+            'Partner of',
+            'Reports to',
+            'Sibling of',
+            'Spouse of',
+            'Student of',
+            'Teacher of',
+            # Person to organization:
+            'Alum of',
+            'Board member of',
+            'Consultant to',
+            'Employee of',
+            'Member of',
+            'Primary contact of',
+            'Resident of',
+            'Student at',
+            'Candidate of',
+            'Treasurer of'
+        ]
+
+        return choices.sorted()
+
+    def organization_choices(self):
+        choices = [
+            # Organization to person
+            'Alum',
+            'Board member',
+            'Employer of',
+            'Member',
+            'Primary contact',
+            'Resident',
+            'School of',
+            'Candidate',
+            'Treasurer',
+            # Organization to organization
+            'Affiliate',
+            'Chapter',
+            'Chapter of',
+            'Organization partner',
+            'Parent company of',
+            'Subsidiary of',
+        ]
+
+        return choices

@@ -3,4 +3,7 @@
 {% block content %}
 <h2>Person Profile</h2>
 <h3>{{ person }}</h3>
+<ul>
+    <li>{{ person.user_account.email }}</li>
+</ul>
 {% endblock %}
