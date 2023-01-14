@@ -102,8 +102,26 @@ class RelationshipTests(TestCase):
         relationship.outgoing_field = 'person1'
         relationship.incoming_field = 'organization2'
         relationship.save()
-        print(person.outgoing_relations.all())
-        print(organization.incoming_relations.all())
+        self.assertIsInstance(relationship, Relationship)
+
+    def test_relationship_sets(self):
+        org_account = init_org_account()
+        contact = Contact.objects.create(first_name='Jane', last_name='Doe')
+        contact.save()
+        person = Person.objects.create(org_account=org_account, contact=contact)
+        person.save()
+        organization = Organization.objects.create(
+            org_account=org_account,
+            name='March on Harrisburg'
+        )
+        organization.save()
+        relationship = Relationship.objects.create(person1=person, organization2=organization, type='Member of')
+        relationship.outgoing_field = 'person1'
+        relationship.incoming_field = 'organization2'
+        relationship.save()
+        self.assertIn(relationship, person.outgoing_relations.all())
+        self.assertIn(relationship, organization.incoming_relations.all())
+    
 
 
 def init_org_account():

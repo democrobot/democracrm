@@ -332,3 +332,18 @@ class Relationship(CRMBase):
         for pair in pairs:
             if pair.get(self.outgoing_field) == self.type:
                 return pair
+
+    def clean(self):
+        if self.person1:
+            self.outgoing_field = 'person1'
+        elif self.organization1:
+            self.outgoing_field = 'organization1'
+        # Handle error here
+
+        if self.person2:
+            self.outgoing_field = 'person2'
+        elif self.organization2:
+            self.outgoing_field = 'organization2'
+        # Handle error here
+
+        
