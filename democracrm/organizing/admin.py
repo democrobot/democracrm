@@ -19,7 +19,7 @@ class OrganizationGroupAdmin(admin.ModelAdmin):
 
 @admin.register(Organization)
 class OrganizationAdmin(admin.ModelAdmin):
-    list_display = ['name', 'group', 'relationship', 'region', 'url']
+    list_display = ['name', 'group', 'region', 'url']
 
 
 @admin.register(CampaignCategory)

@@ -242,7 +242,9 @@ class Person(CRMBase, OrgAccountMixin):
 
     def __str__(self):
         if self.user_account:
-            return self.user_account.get_full_name()
+            return self.user_account.full_name()
+        elif self.contact:
+            return self.contact.full_name()
         else:
             return 'Unknown - Link a Record!'
 
@@ -253,7 +255,13 @@ class Person(CRMBase, OrgAccountMixin):
         return self.user_account.last_name
 
     def full_name(self):
-        return f'{self.user_account.first_name} {self.user_account.last_name}'
+        if self.user_account:
+            first_name = self.user_account.first_name
+            last_name = self.user_account.last_name
+        elif self.contact:
+            first_name = self.contact.first_name
+            last_name = self.contact.last_name
+        return f'{first_name} {last_name}'
 
 
 class Relationship(CRMBase):
@@ -266,70 +274,61 @@ class Relationship(CRMBase):
         ORGANIZATION = 'organization', _('Organization')
     
     type = models.CharField(max_length=50)
-    person_subject = models.ForeignKey(Person, null=True, blank=True, on_delete=models.PROTECT)
-    org_subject = models.ForeignKey(Organization, null=True, blank=True, on_delete=models.PROTECT)
+    # We need a structured way to perform bi-directional representation of the relationship, based on field orders
+    person1 = models.ForeignKey(Person, related_name='outgoing_relations', null=True, blank=True, on_delete=models.PROTECT)
+    person2 = models.ForeignKey(Person, related_name='incoming_relations', null=True, blank=True, on_delete=models.PROTECT)
+    organization1 = models.ForeignKey(Organization, related_name='outgoing_relations', null=True, blank=True, on_delete=models.PROTECT)
+    organization2 = models.ForeignKey(Organization, related_name='incoming_relations', null=True, blank=True, on_delete=models.PROTECT)
+    # TODO: Perform validation
+    outgoing_field = models.CharField(max_length=50)
+    incoming_field = models.CharField(max_length=50)
 
     class Meta:
         verbose_name_plural = 'Relationships'
     
     def __str__(self):
-        if self.person:
-            subject = self.person
-        elif self.organization:
-            subject = self.organization
-        return f'{self.type} {self.subject}' 
+        subjects = [subject for subject in (self.person1, self.person2, self.organization1, self. organization2) if subject]
+        print(subjects)
+        return f'"{self.get_types()}" relationship between {subjects[0]} and {subjects[1]}' 
 
-    def person_choices(self):
-        choices = [
+    def get_types(self):
+
+        pairs = [
             # Person to person:
-            'Assistant to',
-            'Assisted by',
-            'Child of',
-            'Friend of',
-            'Manager of',
-            'Mentee of',
-            'Mentor of',
-            'Parent of',
-            'Partner of',
-            'Reports to',
-            'Sibling of',
-            'Spouse of',
-            'Student of',
-            'Teacher of',
+            {'person1': 'Assistant to', 'person2': 'Assisted by'},
+            {'person1': 'Assisted by', 'person2': 'Assistant to'},
+            {'person1': 'Child of', 'person2': 'Parent of'},
+            {'person1': 'Friend of', 'person2': 'Friend of'},
+            {'person1': 'Manager of', 'person2': 'Reports to'},
+            {'person1': 'Mentee of', 'person2': 'Mentor of'},
+            {'person1': 'Mentor of', 'person2': 'Mentee of'},
+            {'person1': 'Parent of', 'person2': 'Child of'},
+            {'person1': 'Partner of', 'person2': 'Partner of'},
+            {'person1': 'Reports to', 'person2': 'Manager of'},
+            {'person1': 'Sibling of', 'person2': 'Sibling of'},
+            {'person1': 'Spouse of', 'person2': 'Spouse of'},
+            {'person1': 'Student of', 'person2': 'Teacher of'},
+            {'person1': 'Teacher of', 'person2': 'Student of'},
             # Person to organization:
-            'Alum of',
-            'Board member of',
-            'Consultant to',
-            'Employee of',
-            'Member of',
-            'Primary contact of',
-            'Resident of',
-            'Student at',
-            'Candidate of',
-            'Treasurer of'
+            {'person1': 'Alum of', 'organization1': 'Alum'},
+            {'person1': 'Board member of', 'organization1': 'Board member'},
+            {'person1': 'Consultant to', 'organization1': 'Client of'},
+            {'person1': 'Employee of', 'organization1': 'Employer of'},
+            {'person1': 'Member of', 'organization1': 'Member'},
+            {'person1': 'Primary contact of', 'organization1': 'Primary contact'},
+            {'person1': 'Resident of', 'organization1': 'Resident'},
+            {'person1': 'Student at', 'organization1': 'School of'},
+            {'person1': 'Candidate of', 'organization1': 'Candidate'},
+            {'person1': 'Treasurer of', 'organization1': 'Treasurer'},
+            # Organization to organization TODO: Finish mappings
+            #{'organization1': 'Affiliate', 'organization2': },
+            #{'organization1': 'Chapter', 'organization2': },
+            #{'organization1': 'Chapter of', 'organization2': },
+            {'organization1': 'Organization partner', 'organization2': 'Organization partner'},
+            {'organization1': 'Parent company of', 'organization2': 'Subsidiary of'},
+            {'organization1': 'Subsidiary of', 'organization2': 'Parent company of'},
         ]
 
-        return choices.sorted()
-
-    def organization_choices(self):
-        choices = [
-            # Organization to person
-            'Alum',
-            'Board member',
-            'Employer of',
-            'Member',
-            'Primary contact',
-            'Resident',
-            'School of',
-            'Candidate',
-            'Treasurer',
-            # Organization to organization
-            'Affiliate',
-            'Chapter',
-            'Chapter of',
-            'Organization partner',
-            'Parent company of',
-            'Subsidiary of',
-        ]
-
-        return choices
+        for pair in pairs:
+            if pair.get(self.outgoing_field) == self.type:
+                return pair

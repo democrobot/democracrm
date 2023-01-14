@@ -79,7 +79,7 @@ class ChapterTests(TestCase):
     def test_chapter_creation(self):
         user_account = init_user_account()
         org_account = init_org_account()
-        chapter = Chapter(name='Test Chapter', org_account=org_account)
+        chapter = Chapter.objects.create(name='Test Chapter', org_account=org_account)
         self.assertIsInstance(chapter, Chapter)
 
 
@@ -87,19 +87,26 @@ class RelationshipTests(TestCase):
 
     def test_relationship_creation(self):
         org_account = init_org_account()
-        person = Person.objects.create(org_account=org_account)
+        contact = Contact.objects.create(first_name='Jane', last_name='Doe')
+        person = Person.objects.create(org_account=org_account, contact=contact)
         organization = Organization.objects.create(
             org_account=org_account,
             name='March on Harrisburg'
         )
+        relationship = Relationship.objects.create(person1=person, organization2=organization, type='Member of')
+        relationship.outgoing_field = 'person1'
+        relationship.incoming_field = 'organization2'
+        relationship.save()
+        print(person.outgoing_relations.all())
+        print(organization.incoming_relations.all())
 
 
 def init_org_account():
-    boundary = Boundary(name='Pennsylvania')
+    boundary = Boundary.objects.create(name='Pennsylvania')
     boundary.save()
-    org_contact = Contact(first_name='Test', last_name='Contact')
+    org_contact = Contact.objects.create(first_name='Test', last_name='Contact')
     org_contact.save()
-    org_account = OrganizationAccount(
+    org_account = OrganizationAccount.objects.create(
         name='March on Harrisburg',
         territory=boundary,
         #primary_contact=org_contact
