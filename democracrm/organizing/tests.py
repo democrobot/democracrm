@@ -3,7 +3,7 @@ from django.test import TestCase
 from accounts.models import OrganizationAccount
 from accounts.tests import init_user_account
 from contacts.models import Contact
-from places.models import Boundary
+from places.models import Boundary, Region
 
 
 from .models import (
@@ -77,9 +77,11 @@ class PersonTests(TestCase):
 class ChapterTests(TestCase):
 
     def test_chapter_creation(self):
-        user_account = init_user_account()
         org_account = init_org_account()
-        chapter = Chapter.objects.create(name='Test Chapter', org_account=org_account)
+        region = Region.objects.create(name='Central Pennsylvania')
+        region.save()
+        chapter = Chapter.objects.create(org_account=org_account, name='Test Chapter', region=region)
+        chapter.save()
         self.assertIsInstance(chapter, Chapter)
 
 
@@ -88,11 +90,14 @@ class RelationshipTests(TestCase):
     def test_relationship_creation(self):
         org_account = init_org_account()
         contact = Contact.objects.create(first_name='Jane', last_name='Doe')
+        contact.save()
         person = Person.objects.create(org_account=org_account, contact=contact)
+        person.save()
         organization = Organization.objects.create(
             org_account=org_account,
             name='March on Harrisburg'
         )
+        organization.save()
         relationship = Relationship.objects.create(person1=person, organization2=organization, type='Member of')
         relationship.outgoing_field = 'person1'
         relationship.incoming_field = 'organization2'

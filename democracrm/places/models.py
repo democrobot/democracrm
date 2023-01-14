@@ -66,7 +66,7 @@ class Region(CRMBase):
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     boundaries = models.ManyToManyField(Boundary, blank=True)
-    group = models.ForeignKey(RegionGroup, blank=True, on_delete=models.PROTECT)
+    group = models.ForeignKey(RegionGroup, null=True, blank=True, on_delete=models.PROTECT)
 
     class Meta:
         verbose_name_plural = 'Regions'
