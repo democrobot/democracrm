@@ -288,7 +288,6 @@ class Relationship(CRMBase):
     
     def __str__(self):
         subjects = [subject for subject in (self.person1, self.person2, self.organization1, self. organization2) if subject]
-        print(subjects)
         return f'"{self.get_types()}" relationship between {subjects[0]} and {subjects[1]}' 
 
     def get_types(self):
@@ -310,16 +309,16 @@ class Relationship(CRMBase):
             {'person1': 'Student of', 'person2': 'Teacher of'},
             {'person1': 'Teacher of', 'person2': 'Student of'},
             # Person to organization:
-            {'person1': 'Alum of', 'organization1': 'Alum'},
-            {'person1': 'Board member of', 'organization1': 'Board member'},
-            {'person1': 'Consultant to', 'organization1': 'Client of'},
-            {'person1': 'Employee of', 'organization1': 'Employer of'},
-            {'person1': 'Member of', 'organization1': 'Member'},
-            {'person1': 'Primary contact of', 'organization1': 'Primary contact'},
-            {'person1': 'Resident of', 'organization1': 'Resident'},
-            {'person1': 'Student at', 'organization1': 'School of'},
-            {'person1': 'Candidate of', 'organization1': 'Candidate'},
-            {'person1': 'Treasurer of', 'organization1': 'Treasurer'},
+            {'person1': 'Alum of', 'organization2': 'Alum'},
+            {'person1': 'Board member of', 'organization2': 'Board member'},
+            {'person1': 'Consultant to', 'organization2': 'Client of'},
+            {'person1': 'Employee of', 'organization2': 'Employer of'},
+            {'person1': 'Member of', 'organization2': 'Member'},
+            {'person1': 'Primary contact of', 'organization2': 'Primary contact'},
+            {'person1': 'Resident of', 'organization2': 'Resident'},
+            {'person1': 'Student at', 'organization2': 'School of'},
+            {'person1': 'Candidate of', 'organization2': 'Candidate'},
+            {'person1': 'Treasurer of', 'organization2': 'Treasurer'},
             # Organization to organization TODO: Finish mappings
             #{'organization1': 'Affiliate', 'organization2': },
             #{'organization1': 'Chapter', 'organization2': },

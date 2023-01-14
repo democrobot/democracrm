@@ -103,6 +103,9 @@ class RelationshipTests(TestCase):
         relationship.incoming_field = 'organization2'
         relationship.save()
         self.assertIsInstance(relationship, Relationship)
+        self.assertEquals(relationship.type, 'Member of')
+        self.assertEquals(relationship.outgoing_field, 'person1')
+        self.assertEquals(relationship.incoming_field, 'organization2')
 
     def test_relationship_sets(self):
         org_account = init_org_account()
@@ -121,6 +124,25 @@ class RelationshipTests(TestCase):
         relationship.save()
         self.assertIn(relationship, person.outgoing_relations.all())
         self.assertIn(relationship, organization.incoming_relations.all())
+
+    def test_relationship_outgoing(self):
+        org_account = init_org_account()
+        contact = Contact.objects.create(first_name='Jane', last_name='Doe')
+        contact.save()
+        person = Person.objects.create(org_account=org_account, contact=contact)
+        person.save()
+        organization = Organization.objects.create(
+            org_account=org_account,
+            name='March on Harrisburg'
+        )
+        organization.save()
+        relationship = Relationship.objects.create(person1=person, organization2=organization, type='Member of')
+        relationship.outgoing_field = 'person1'
+        relationship.incoming_field = 'organization2'
+        relationship.save()
+        loaded_relationship = person.outgoing_relations.get(id=relationship.id)
+        print(f'\nRelationship 1: {relationship.id} ({id(relationship)})\nRelationship 2: {loaded_relationship.id} ({id(loaded_relationship)})')
+        self.assertEquals(relationship, loaded_relationship)
     
 
 
