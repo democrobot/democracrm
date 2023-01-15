@@ -99,8 +99,7 @@ class RelationshipTests(TestCase):
         )
         organization.save()
         relationship = Relationship.objects.create(person1=person, organization2=organization, type='Member of')
-        relationship.outgoing_field = 'person1'
-        relationship.incoming_field = 'organization2'
+        relationship.clean()
         relationship.save()
         self.assertIsInstance(relationship, Relationship)
         self.assertEquals(relationship.type, 'Member of')
@@ -119,32 +118,33 @@ class RelationshipTests(TestCase):
         )
         organization.save()
         relationship = Relationship.objects.create(person1=person, organization2=organization, type='Member of')
-        relationship.outgoing_field = 'person1'
-        relationship.incoming_field = 'organization2'
+        relationship.clean()
         relationship.save()
         self.assertIn(relationship, person.outgoing_relations.all())
         self.assertIn(relationship, organization.incoming_relations.all())
 
-    def test_relationship_outgoing(self):
+    def test_relationship_bidirectional_access(self):
         org_account = init_org_account()
-        contact = Contact.objects.create(first_name='Jane', last_name='Doe')
-        contact.save()
-        person = Person.objects.create(org_account=org_account, contact=contact)
-        person.save()
-        organization = Organization.objects.create(
-            org_account=org_account,
-            name='March on Harrisburg'
-        )
-        organization.save()
-        relationship = Relationship.objects.create(person1=person, organization2=organization, type='Member of')
-        relationship.outgoing_field = 'person1'
-        relationship.incoming_field = 'organization2'
+        contact1 = Contact.objects.create(first_name='Jane', last_name='Doe')
+        contact1.save()
+        person1 = Person.objects.create(org_account=org_account, contact=contact1)
+        person1.save()
+        contact2 = Contact.objects.create(first_name='Mary', last_name='Lou')
+        contact2.save()
+        person2 = Person.objects.create(org_account=org_account, contact=contact2)
+        person2.save()
+        relationship = Relationship.objects.create(person1=person1, person2=person2, type='Teacher of')
+        relationship.clean()
         relationship.save()
-        loaded_relationship = person.outgoing_relations.get(id=relationship.id)
-        print(f'\nRelationship 1: {relationship.id} ({id(relationship)})\nRelationship 2: {loaded_relationship.id} ({id(loaded_relationship)})')
-        self.assertEquals(relationship, loaded_relationship)
+        outgoing_entity = relationship.outgoing_field
+        outgoing_relationship = person1.outgoing_relations.get(id=relationship.id)
+        incoming_entity = relationship.incoming_field
+        incoming_relationship = person2.incoming_relations.get(id=relationship.id)
+        self.assertEquals(relationship, outgoing_relationship)
+        self.assertEquals(outgoing_relationship.outgoing_type(), 'Teacher of')
+        self.assertEquals(relationship, incoming_relationship)
+        self.assertEquals(incoming_relationship.incoming_type(), 'Student of')
     
-
 
 def init_org_account():
     boundary = Boundary.objects.create(name='Pennsylvania')

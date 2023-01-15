@@ -330,19 +330,37 @@ class Relationship(CRMBase):
 
         for pair in pairs:
             if pair.get(self.outgoing_field) == self.type:
+                print(pair)
                 return pair
+        
+    def outgoing_type(self):
+        outgoing_type = self.get_types()[self.outgoing_field]
+        print(outgoing_type)
+        return outgoing_type
+    
+    def incoming_type(self):
+        incoming_type = self.get_types()[self.incoming_field]
+        print(incoming_type)
+        return incoming_type
 
     def clean(self):
+        """
+        Provides necessary clean-up on model for field management and validation. Must be called on creation and modification.
+        """
+
         if self.person1:
             self.outgoing_field = 'person1'
         elif self.organization1:
             self.outgoing_field = 'organization1'
-        # Handle error here
+        else:
+            # Handle error here
+            print('No outgoing?')
 
         if self.person2:
-            self.outgoing_field = 'person2'
+            self.incoming_field = 'person2'
         elif self.organization2:
-            self.outgoing_field = 'organization2'
-        # Handle error here
-
+            self.incoming_field = 'organization2'
+        else:
+            # Handle error here
+            print('No incoming?')
         
