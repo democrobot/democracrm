@@ -11,7 +11,9 @@ support with that.
 !!! note
 
     The following instructions are designed and tested to work on Ubuntu Linux, with current development running on
-    **Ubuntu Server 22.04 LTE**. Other configurations may work, but are not officially supported at this time.
+    **Ubuntu Server 22.04 LTS**. Other configurations may work, but are not officially supported at this time.
+
+sudo apt-get install gdal-bin
 
 When you have your Ubuntu Linux server(s) up and running, the next step is [installing and configuring the database
 server](postgresql_database.md).
