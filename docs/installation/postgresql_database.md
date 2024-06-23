@@ -2,7 +2,7 @@
 
 !!! info
 
-    DemocraCRM requires **PostgreSQL 15 or later**. MySQL or other databases are not supported.
+    DemocraCRM requires **PostgreSQL 16 or later**. MySQL or other databases are not supported.
 
 ## PostgreSQL Server Installation and Configuration
 
@@ -10,10 +10,9 @@ Instead of using the default Ubuntu installation of PostgreSQL, we will be using
 repository. Copy the following commands and paste them into a terminal shell on the Ubuntu server that will serve as the
 database server:
 
-    sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
-    wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
-    sudo apt-get update
-    sudo apt-get -y install postgresql postgis
+    sudo apt install -y postgresql-common
+    sudo /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh
+    sudo apt-get -y install postgresql-16 postgis
 
 This will configure Ubuntu to allow it to install and update packages from the PostgreSQL repository, and then perform
 the installation of the PostgreSQL server.
@@ -39,12 +38,13 @@ that database. Start by switching to the `postgres` user and enter the PostgreSQ
 Copy and paste the following command to create the `democracrm` user. Be sure to change the password within the
 quotes before submitting!
 
-    CREATE USER democracrm WITH PASSWORD 'thisisinsecure-pleasechange!';
+    CREATE USER democracrm SUPERUSER WITH PASSWORD 'thisisinsecure-pleasechange!';
 
 !!! danger "Create your own secure password"
 
     **Do not use the password from the above example!** Choose a strong, random password to ensure secure database
     authentication for your DemocraCRM installation, and store a copy of it somewhere safe and secure for reference.
+    Keep in mind that this user has superuser privileges in the database, and access must be protected.
 
 Next, copy and paste the following commands below to create the `democracrm` database, and assign both ownership and
 all administrative privileges to the `democracrm` user:
@@ -78,7 +78,7 @@ First, execute the `psql` command to enter the PostgreSQL CLI with the username 
 using a remote database, or testing from the application server (which is a good idea to test), replace `localhost`
 with your database server's address after the `--host` flag.
 
-    $ psql --username democracrm --password --host localhost democracrm
+    psql --username democracrm --password --host localhost democracrm
 
 You'll be prompted for a password next with a prompt like the one below. Type in the one you personally selected when
 creating the `democracrm` user above.
