@@ -1,7 +1,7 @@
-Django
+django
 psycopg2-binary
 requests
-GDAL
+gdal
 django-hosts
 django-guardian
 coverage

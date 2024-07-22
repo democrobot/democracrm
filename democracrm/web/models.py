@@ -38,6 +38,7 @@ class SocialMediaAccount(CRMBase):
         return f'@{self.handle}'
 
     def url(self):
+        # FIXME
         if self.platform == 'twitter':
             url_text = f'https://www.twitter.com/{self.handle}'
             return format_html('<a href="{url}">{url}</a>', url=url_text)

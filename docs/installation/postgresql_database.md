@@ -6,19 +6,21 @@
 
 ## PostgreSQL Server Installation and Configuration
 
-Instead of using the default Ubuntu installation of PostgreSQL, we will be using the packages from the PostgreSQL
-repository. Copy the following commands and paste them into a terminal shell on the Ubuntu server that will serve as the
-database server:
+Instead of using the default Debian installation of PostgreSQL, we will be using the official packages
+from the PostgreSQL repository. Copy the following commands and paste them into a terminal shell on the
+Debian server that will serve as the database server:
 
     sudo apt install -y postgresql-common
     sudo /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh
+
+This will configure Debian to allow it to install and update packages from the
+[official PostgreSQL repository](https://www.postgresql.org/download/linux/Debian/). Next, perform the
+installation of the PostgreSQL server with PostGIS support.
+
     sudo apt-get -y install postgresql-16 postgis
 
-This will configure Ubuntu to allow it to install and update packages from the PostgreSQL repository, and then perform
-the installation of the PostgreSQL server.
-
-Before moving on, copy and paste the below command into a terminal shell to perform a quick verification that
-PostgreSQL has been installed successfully:
+Before moving on, copy and paste the below command into a terminal shell to perform a quick verification
+that PostgreSQL has been installed successfully:
     
     psql -V
 
@@ -30,39 +32,42 @@ Now that PostgreSQL has been installed, we may need to perform a few configurati
 
 ## DemocraCRM Database Creation and Configuration
 
-The data for the DemocraCRM application will be stored in a PostgreSQL database, but we must first create and configure
-that database. Start by switching to the `postgres` user and enter the PostgreSQL CLI:
+The data for the DemocraCRM application will be stored in a PostgreSQL database, but we must first
+create and configure that database. Start by switching to the `postgres` user and enter the PostgreSQL
+CLI:
 
     sudo -u postgres psql
 
-Copy and paste the following command to create the `democracrm` user. Be sure to change the password within the
-quotes before submitting!
+Copy and paste the following command to create the `democracrm` user. Be sure to change the password
+within the quotes before submitting!
 
     CREATE USER democracrm SUPERUSER WITH PASSWORD 'thisisinsecure-pleasechange!';
 
 !!! danger "Create your own secure password"
 
-    **Do not use the password from the above example!** Choose a strong, random password to ensure secure database
-    authentication for your DemocraCRM installation, and store a copy of it somewhere safe and secure for reference.
-    Keep in mind that this user has superuser privileges in the database, and access must be protected.
+    **Do not use the password from the above example!** Choose a strong, random password to ensure
+    secure database authentication for your DemocraCRM installation, and store a copy of it somewhere
+    safe and secure for reference. Keep in mind that this user has superuser privileges in the database,
+    and access must be protected.
 
-Next, copy and paste the following commands below to create the `democracrm` database, and assign both ownership and
-all administrative privileges to the `democracrm` user:
+Next, copy and paste the following commands below to create the `democracrm` database, and assign both
+ownership and all administrative privileges to the `democracrm` user:
 
     CREATE DATABASE democracrm WITH OWNER democracrm TEMPLATE template0 ENCODING UTF8;
     GRANT ALL PRIVILEGES ON DATABASE democracrm TO democracrm;
 
 !!! note
 
-    The `democracrm` database user is only used by the server for management of the database. All user accounts will
-    be created and managed within the DemocraCRM application.
+    The `democracrm` database user is only used by the server for management of the database. All user
+    accounts will be created and managed within the DemocraCRM application.
 
-For the final configuration step, connect to the `democracrm` database by copying and pasting the following command:
+For the final configuration step, connect to the `democracrm` database by copying and pasting the
+following command:
 
     \c democracrm
 
-and enable the PostGIS database extension on the `democracrm` database by copying and pasting the following
-command:
+and enable the PostGIS database extension on the `democracrm` database by copying and pasting the
+following command:
 
     CREATE EXTENSION postgis;
 
@@ -74,21 +79,21 @@ If everything went well, you can now disconnect from the database:
 
 You can verify that the configuration was successful by running the following commands.
 
-First, execute the `psql` command to enter the PostgreSQL CLI with the username you created above. If 
-using a remote database, or testing from the application server (which is a good idea to test), replace `localhost`
-with your database server's address after the `--host` flag.
+First, execute the `psql` command to enter the PostgreSQL CLI with the username you created above. If
+using a remote database, or testing from the application server (which is a good idea to test), replace
+`localhost` with your database server's address after the `--host` flag.
 
     psql --username democracrm --password --host localhost democracrm
 
-You'll be prompted for a password next with a prompt like the one below. Type in the one you personally selected when
-creating the `democracrm` user above.
+You'll be prompted for a password next with a prompt like the one below. Type in the one you personally
+selected when creating the `democracrm` user above.
 
     Password for user democracrm:
 
-If successful, you'll be greeted by the PostgreSQL CLI and a `democracrm` prompt, as shown below. This means you are
-now in the DemocraCRM database.
+If successful, you'll be greeted by the PostgreSQL CLI and a `democracrm` prompt, as shown below. This
+means you are now in the DemocraCRM database.
 
-    psql (15.1 (Ubuntu 15.1-1.pgdg22.04+1))
+    psql (15.1 (Debian 15.1-1.pgdg22.04+1))
     SSL connection (protocol: TLSv1.3, cipher: TLS_AES_256_GCM_SHA384, compression: off)
     Type "help" for help.
     
@@ -98,11 +103,11 @@ To verify the connection details, type the following command:
 
     \conninfo
 
-If successful, you'll see output similar to the following shown below. Remember that the address could be different
-depending on your database server.
+If successful, you'll see output similar to the following shown below. Remember that the address could
+be different depending on your database server.
 
-    You are connected to database "democracrm" as user "democracrm" on host "localhost" (address "127.0.0.1") at
-    port "5432".
+    You are connected to database "democracrm" as user "democracrm" on host "localhost" (address
+    "127.0.0.1") at port "5432".
     SSL connection (protocol: TLSv1.3, cipher: TLS_AES_256_GCM_SHA384, compression: off)
 
 Lastly, verify that PostGIS was successfully installed by running:
