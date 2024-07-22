@@ -4,7 +4,7 @@ from accounts.models import OrganizationAccount
 
 
 def index(request):
-    return redirect('/mohpa/', {})
+    return render(request, 'core/index.html', {})
 
 
 def organization_root(request, slug):
