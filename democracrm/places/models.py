@@ -5,9 +5,8 @@ from core.models import CRMBase, CRMTreeBase
 
 class Boundary(CRMTreeBase):
     """
-    A boundary is an official political boundary, represented by a
-    polygon-based geospatial record that can be associated
-    with a variety of other spatial overlays, such as governing bodies and
+    A boundary is an official political boundary, represented by a polygon-based geospatial record
+    that can be associated with a variety of other spatial overlays, such as governing bodies and
     political subdivisions.
     """
 

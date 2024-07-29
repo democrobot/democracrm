@@ -33,7 +33,7 @@ nav:
     - Introduction: 'index.md'
     - Installation:
       - Installation Overview: 'installation/installation_overview.md'
-      - Ubuntu Linux: 'installation/ubuntu_linux.md'
+      - Debian Linux: 'installation/debian_linux.md'
       - PostgreSQL Database: 'installation/postgresql_database.md'
       - DemocraCRM Application: 'installation/democracrm_app.md'
       - Gunicorn: 'installation/gunicorn.md'

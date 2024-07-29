@@ -317,26 +317,41 @@ class GoverningBody(CRMBase):
         return self.name
 
 
-class PublicOffice(CRMBase):
+class PublicOffice(CRMTreeBase):
     """
     Represents the office that public officials serve within a governing body.
     """
 
-    class Type(models.TextChoices):
+    class OfficeType(models.TextChoices):
         LEGISLATIVE = 'legislative', _('Legislative')
         EXECUTIVE = 'executive', _('Executive')
         JUDICIAL = 'judicial', _('Judicial')
         OTHER = 'other', _('Other')
+    
+    class HouseType(models.TextChoices):
+        UNICAMERAL = 'unicameral', _('Unicameral')
+        BICAMERAL = 'bicameral', _('Bicameral')
+        TRICAMERAL = 'tricameral', _('Tricameral')
+        TETRACAMERAL = 'tetracameral', _('Tetracameral')
 
-    type = models.CharField(
-        default='legislative',
-        max_length=255,
-        choices=Type.choices
-    )
     governing_body = models.ForeignKey(
         GoverningBody,
         on_delete=models.PROTECT
     )
+
+    office_type = models.CharField(
+        default='legislative',
+        max_length=255,
+        choices=OfficeType.choices
+    )
+    
+    # TODO: Only display when office_type is legislative
+    house_type = models.CharField(
+        default='unicameral',
+        max_length=255,
+        choices=HouseType.choices
+    )
+
     name = models.CharField(
         max_length=255
     )
@@ -344,6 +359,7 @@ class PublicOffice(CRMBase):
         blank=True
     )
     total_seats = models.IntegerField(
+        # TODO: Can this be the total of child objects?
         default=1
     )
     seats_per_subdivision = models.IntegerField(
