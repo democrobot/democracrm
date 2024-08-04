@@ -8,14 +8,14 @@
 		<meta name="Author" content="Legislativate Data Processing Center">
 <meta name="Copyright" content="Copyright 2024">
 <meta name="language" content="English">
-<meta name="Description" content="View a list of all current Committees in the PA Sente.">
+<meta name="Description" content="View a list of all current Committees in the PA House of Representatives.">
 <meta name="Robots" content="index, follow">
 <meta name="googlebot" content="index, follow">
 <meta property="og:title" content="">
-<meta property="og:url" content="https://www.palegis.us/senate/committees/committee-list"/>
+<meta property="og:url" content="https://www.palegis.us/house/committees/committee-list"/>
 <meta property="og:image" content="https://www.palegis.us/resources/images/head-bg.jpg"/>
 <meta property="og:type" content="website">
-<meta property="og:description" content="View a list of all current Committees in the PA Sente.">
+<meta property="og:description" content="View a list of all current Committees in the PA House of Representatives.">
 
 		<link rel="apple-touch-icon" sizes="180x180" href="/resources/images/favicon/apple-touch-icon.png?t=20240411">
 		<link rel="icon" type="image/png" sizes="32x32" href="/resources/images/favicon/favicon-32x32.png?t=20240411">
@@ -69,8 +69,8 @@ _LDPCApp.servers["servertype"] = "production";
 					gtag("js", new Date());
 					gtag("config", "G-MF0TXGDX9Q");
 				</script>
-			<title>Senate Committee List - The Official Website of the Pennsylvania State Senate</title>
-<meta property="og:site_name" content="Senate Committee List - The Official Website of the Pennsylvania State Senate"/>
+			<title>House Committee List - The Official Website of the Pennsylvania House of Representatives</title>
+<meta property="og:site_name" content="House Committee List - The Official Website of the Pennsylvania House of Representatives"/>
 </head>
 	<body>
 		
@@ -87,7 +87,7 @@ _LDPCApp.servers["servertype"] = "production";
 				
 			<nav class="navbar navbar-expand-lg  d-print-none">
 				<div class="container-lg">
-					<a class="navbar-brand" href="/senate" aria-label="General Assembly Home">
+					<a class="navbar-brand" href="/house" aria-label="General Assembly Home">
 						<img src="/resources/images/logo-dome.svg" class="logo" alt="Pennsylvania Capitol Dome">
 						<div class="d-flex flex-column" aria-labelledby="logo">
 							<div class="logo-state">Pennsylvania</div>
@@ -145,14 +145,14 @@ _LDPCApp.servers["servertype"] = "production";
 				
 				<div class="container-lg z-3 d-flex justify-content-center align-items-center flex-row justify-content-between">
 					<div>
-						<h1 class="header-title text-white mb-0">Senate Committee List</h1>
+						<h1 class="header-title text-white mb-0">House Committee List</h1>
 						
 						
 			<nav aria-label="breadcrumb">
 				<ol class="breadcrumb mb-0">
-					<li class="breadcrumb-item" ><a href="/senate" title="The Official Website of the Pennsylvania State Senate">Home</a></li>
-<li class="breadcrumb-item" ><a href="/senate/committees" title="Senate Committees">Senate Committees</a></li>
-<li class="breadcrumb-item active" aria-current="page">Senate Committee List</li>
+					<li class="breadcrumb-item" ><a href="/house" title="The Official Website of the Pennsylvania House of Representatives">Home</a></li>
+<li class="breadcrumb-item" ><a href="/house/committees" title="House Committees">House Committees</a></li>
+<li class="breadcrumb-item active" aria-current="page">House Committee List</li>
 				</ol>
 			</nav>
 		
@@ -191,7 +191,7 @@ a.committee {
 
     function ReloadCommitteePage(){
 
-        window.location = '/senate/committees/committee-list'+'?SessYr=' + document.getElementById("SessYr").value;
+        window.location = '/house/committees/committee-list'+'?SessYr=' + document.getElementById("SessYr").value;
     }
 
 </script>
@@ -200,7 +200,7 @@ a.committee {
 <div class="row mt-2 d-print-none">
     <div class="col-12">
         <div class="col-12 text-end">
-            <a href="https://www.legis.state.pa.us/wu01/li/lm/sen_standing_committee.pdf?1722807539694" class="btn btn-outline-info btn-sm" target="_blank"><i class="fas fa-file-pdf me-1" aria-hidden="true"></i>PDF Print <span class="sr-only">- opens in a new tab</span></a>
+            <a href="https://www.legis.state.pa.us/wu01/li/lm/hse_standing_committee.pdf?1722807873047" class="btn btn-outline-info btn-sm" target="_blank"><i class="fas fa-file-pdf me-1" aria-hidden="true"></i>PDF Print <span class="sr-only">- opens in a new tab</span></a>
         </div>
     
         <div class="d-block d-lg-none my-2">
@@ -209,15 +209,15 @@ a.committee {
 			<label for="CommitteeMenuSelect" class="d-none">Mobile Friendly Sidebar Navigation</label>    
 			<select title="Mobile Friendly Sidebar Navigation" id="CommitteeMenuSelect" class="form-select ">
 				
-						<optgroup>Senate Committees</optgroup>
+						<optgroup>House Committees</optgroup>
 					
 							<option value="javascript:void(0);" selected>Committees</option>
 						
-							<option value="/senate/committees/member-assignments" >Committee Assignments</option>
+							<option value="/house/committees/member-assignments" >Committee Assignments</option>
 						
-							<option value="/senate/committees/meeting-schedule" >Meeting Schedule</option>
+							<option value="/house/committees/meeting-schedule" >Meeting Schedule</option>
 						
-							<option value="https://www.legis.state.pa.us/cfdocs/legis/RCC/PUBLIC/listCmt.cfm?chamber=S" >Roll Call Votes</option>
+							<option value="https://www.legis.state.pa.us/cfdocs/legis/RCC/PUBLIC/listCmt.cfm?chamber=H" >Roll Call Votes</option>
 						
 			</select>
 		</div>
@@ -238,42 +238,42 @@ a.committee {
 							<div class="accordion-item">
 								
 
-									<div class="h2 accordion-header" id="heading-Senate-Committees">
+									<div class="h2 accordion-header" id="heading-House-Committees">
 										
 											<div class="rounded-bottom-0 p-3 bg-primary-alt text-light accordion-button accordion-hide-btn" disabled
-													data-bs-target="#collapse-Senate-Committees" aria-expanded="true" aria-controls="collapse-Senate-Committees">
-												Senate Committees
+													data-bs-target="#collapse-House-Committees" aria-expanded="true" aria-controls="collapse-House-Committees">
+												House Committees
 											</div>
 										
 									</div>
 								
-									<div id="collapse-Senate-Committees" class="accordion-collapse " aria-labelledby="heading-Senate-Committees" data-bs-parent="#sidebarMenu">
+									<div id="collapse-House-Committees" class="accordion-collapse " aria-labelledby="heading-House-Committees" data-bs-parent="#sidebarMenu">
 										<div class="accordion-body p-0">
 											<div class="list-group list-group-flush p-0">
 												
 
-													<a class="list-group-item list-group-item-action active" href="javascript:void(0);" target="_self" id="committee-list-S" 
+													<a class="list-group-item list-group-item-action active" href="javascript:void(0);" target="_self" id="committee-list-H" 
 																
 													>
 														Committees
 													</a>
 												
 
-													<a class="list-group-item list-group-item-action " href="/senate/committees/member-assignments" target="_self" id="assignments-S" 
+													<a class="list-group-item list-group-item-action " href="/house/committees/member-assignments" target="_self" id="assignments-H" 
 																
 													>
 														Committee Assignments
 													</a>
 												
 
-													<a class="list-group-item list-group-item-action " href="/senate/committees/meeting-schedule" target="_self" id="meeting-schedule-S" 
+													<a class="list-group-item list-group-item-action " href="/house/committees/meeting-schedule" target="_self" id="meeting-schedule-H" 
 																
 													>
 														Meeting Schedule
 													</a>
 												
 
-													<a class="list-group-item list-group-item-action " href="https://www.legis.state.pa.us/cfdocs/legis/RCC/PUBLIC/listCmt.cfm?chamber=S" target="_blank" id="roll-calls-S" 
+													<a class="list-group-item list-group-item-action " href="https://www.legis.state.pa.us/cfdocs/legis/RCC/PUBLIC/listCmt.cfm?chamber=H" target="_blank" id="roll-calls-H" 
 																
 													>
 														Roll Call Votes<span class="sr-only"> - opens in a new tab</span>
@@ -295,11 +295,11 @@ a.committee {
 								<i class="icon-featured fa-duotone fa-users text-color-primary" aria-hidden="true"></i>
 								
 
-								<div class="h5 px-2 my-0">Looking for House Committees?</div>
+								<div class="h5 px-2 my-0">Looking for Senate Committees?</div>
 								<p class="pb-2">
-									<a href="/house/committees/committee-list"
+									<a href="/senate/committees/committee-list"
 											class="btn btn-dark btn-outline font-weight-semibold text-color-dark btn-px-5 btn-py-2 border-width-1 text-1 mt-3">
-										<span class="sr-only">Navigate to </span>Committees of the House
+										<span class="sr-only">Navigate to </span>Committees of the Senate
 									</a>
 								</p>
 
@@ -317,11 +317,11 @@ a.committee {
 
             <div class="col-12" align="center">
                 
-			<section class="call-to-action content-align-center call-to-action-info mb-2 p-2" id="call_to_action_1722807539728">
+			<section class="call-to-action content-align-center call-to-action-info mb-2 p-2" id="call_to_action_1722807873065">
 				
 						<div class="col-12 col-md-9">
 							<div class="call-to-action-content">
-								<div class="h3" id="title_1722807539728"><i class="fa-regular fa-envelope-circle-check me-2"></i>Subscribe to <span class="fw-bolder">Committee</span> Updates</div>
+								<div class="h3" id="title_1722807873065"><i class="fa-regular fa-envelope-circle-check me-2"></i>Subscribe to <span class="fw-bolder">Committee</span> Updates</div>
 								<p class="mb-0 mb-md-2 opacity-7 text-large">Receive email notifications for upcoming meetings, votes, and legislation referrals.</p>
 							</div>
 						</div>
@@ -375,10 +375,10 @@ a.committee {
                 <div class="row rounded py-3">
                     <div class="col-12 col-sm-6 col-lg-8 mt-2 mt-sm-0">
                         <div class="d-none d-sm-block">
-                            <a href='/senate/committees/1/aging-and-youth' class='committee h4'>Aging & Youth</a>
+                            <a href='/house/committees/32/aging-and-older-adult-services' class='committee h4'>Aging & Older Adult Services</a>
                         </div>
                         <div class="d-block d-sm-none">
-                            <a href='/senate/committees/1/aging-and-youth' class='committee h6'>Aging & Youth</a>
+                            <a href='/house/committees/32/aging-and-older-adult-services' class='committee h6'>Aging & Older Adult Services</a>
                         </div>
                     </div>
                     <div class="col-12 col-sm-6 col-lg-4">
@@ -389,20 +389,20 @@ a.committee {
 					
 			<div style="width:75px">
 				<div class="ratio ratio-1x1 rounded-circle overflow-hidden">
-					<img src="https://www.palegis.us/resources/images/members/300/1683.jpg?20240411" class="image-cover" alt="Photo of Senator Sen. Judy Ward">
+					<img src="https://www.palegis.us/resources/images/members/300/1753.jpg?20240411" class="image-cover" alt="Photo of Representative Rep. Maureen Madden">
 				</div>
 			</div>
 		
 				</div>
 				<div class="float-start">
 					<strong>
-						<a href='/senate/members/bio/1683/sen-judy-ward' target='_self'>Sen. Judy Ward</a>
+						<a href='/house/members/bio/1753/rep-maureen-madden' target='_self'>Rep. Maureen Madden</a>
 					</strong>
 					
 						<div>
 							
 							<div>
-								<span class="badge bg-party-R">R</span> Senate District&nbsp;30
+								<span class="badge bg-party-D">D</span> House District&nbsp;115
 							</div>
 							
 						</div>
@@ -423,10 +423,10 @@ a.committee {
                 <div class="row rounded py-3">
                     <div class="col-12 col-sm-6 col-lg-8 mt-2 mt-sm-0">
                         <div class="d-none d-sm-block">
-                            <a href='/senate/committees/27/agriculture-and-rural-affairs' class='committee h4'>Agriculture & Rural Affairs</a>
+                            <a href='/house/committees/2/agriculture-and-rural-affairs' class='committee h4'>Agriculture & Rural Affairs</a>
                         </div>
                         <div class="d-block d-sm-none">
-                            <a href='/senate/committees/27/agriculture-and-rural-affairs' class='committee h6'>Agriculture & Rural Affairs</a>
+                            <a href='/house/committees/2/agriculture-and-rural-affairs' class='committee h6'>Agriculture & Rural Affairs</a>
                         </div>
                     </div>
                     <div class="col-12 col-sm-6 col-lg-4">
@@ -437,20 +437,20 @@ a.committee {
 					
 			<div style="width:75px">
 				<div class="ratio ratio-1x1 rounded-circle overflow-hidden">
-					<img src="https://www.palegis.us/resources/images/members/300/1189.jpg?20240411" class="image-cover" alt="Photo of Senator Sen. Elder Vogel">
+					<img src="https://www.palegis.us/resources/images/members/300/1112.jpg?20240411" class="image-cover" alt="Photo of Representative Rep. Eddie Pashinski">
 				</div>
 			</div>
 		
 				</div>
 				<div class="float-start">
 					<strong>
-						<a href='/senate/members/bio/1189/sen-elder-vogel' target='_self'>Sen. Elder Vogel</a>
+						<a href='/house/members/bio/1112/rep-eddie-pashinski' target='_self'>Rep. Eddie Pashinski</a>
 					</strong>
 					
 						<div>
 							
 							<div>
-								<span class="badge bg-party-R">R</span> Senate District&nbsp;47
+								<span class="badge bg-party-D">D</span> House District&nbsp;121
 							</div>
 							
 						</div>
@@ -471,10 +471,10 @@ a.committee {
                 <div class="row rounded py-3">
                     <div class="col-12 col-sm-6 col-lg-8 mt-2 mt-sm-0">
                         <div class="d-none d-sm-block">
-                            <a href='/senate/committees/3/appropriations' class='committee h4'>Appropriations</a>
+                            <a href='/house/committees/62/appropriations' class='committee h4'>Appropriations</a>
                         </div>
                         <div class="d-block d-sm-none">
-                            <a href='/senate/committees/3/appropriations' class='committee h6'>Appropriations</a>
+                            <a href='/house/committees/62/appropriations' class='committee h6'>Appropriations</a>
                         </div>
                     </div>
                     <div class="col-12 col-sm-6 col-lg-4">
@@ -485,20 +485,20 @@ a.committee {
 					
 			<div style="width:75px">
 				<div class="ratio ratio-1x1 rounded-circle overflow-hidden">
-					<img src="https://www.palegis.us/resources/images/members/300/1763.jpg?20240411" class="image-cover" alt="Photo of Senator Sen. Scott Martin">
+					<img src="https://www.palegis.us/resources/images/members/300/1633.jpg?20240411" class="image-cover" alt="Photo of Representative Rep. Jordan Harris">
 				</div>
 			</div>
 		
 				</div>
 				<div class="float-start">
 					<strong>
-						<a href='/senate/members/bio/1763/sen-scott-martin' target='_self'>Sen. Scott Martin</a>
+						<a href='/house/members/bio/1633/rep-jordan-harris' target='_self'>Rep. Jordan Harris</a>
 					</strong>
 					
 						<div>
 							
 							<div>
-								<span class="badge bg-party-R">R</span> Senate District&nbsp;13
+								<span class="badge bg-party-D">D</span> House District&nbsp;186
 							</div>
 							
 						</div>
@@ -519,10 +519,25 @@ a.committee {
                 <div class="row rounded py-3">
                     <div class="col-12 col-sm-6 col-lg-8 mt-2 mt-sm-0">
                         <div class="d-none d-sm-block">
-                            <a href='/senate/committees/37/banking-and-insurance' class='committee h4'>Banking & Insurance</a>
+                            <a href='/house/committees/48/children-and-youth' class='committee h4'>Children & Youth</a>
                         </div>
                         <div class="d-block d-sm-none">
-                            <a href='/senate/committees/37/banking-and-insurance' class='committee h6'>Banking & Insurance</a>
+                            <a href='/house/committees/48/children-and-youth' class='committee h6'>Children & Youth</a>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-4">
+                        
+                    </div>
+                </div>
+            
+
+                <div class="row rounded py-3">
+                    <div class="col-12 col-sm-6 col-lg-8 mt-2 mt-sm-0">
+                        <div class="d-none d-sm-block">
+                            <a href='/house/committees/6/commerce' class='committee h4'>Commerce</a>
+                        </div>
+                        <div class="d-block d-sm-none">
+                            <a href='/house/committees/6/commerce' class='committee h6'>Commerce</a>
                         </div>
                     </div>
                     <div class="col-12 col-sm-6 col-lg-4">
@@ -533,20 +548,20 @@ a.committee {
 					
 			<div style="width:75px">
 				<div class="ratio ratio-1x1 rounded-circle overflow-hidden">
-					<img src="https://www.palegis.us/resources/images/members/300/1765.jpg?20240411" class="image-cover" alt="Photo of Senator Sen. John DiSanto">
+					<img src="https://www.palegis.us/resources/images/members/300/1096.jpg?20240411" class="image-cover" alt="Photo of Representative Rep. Scott Conklin">
 				</div>
 			</div>
 		
 				</div>
 				<div class="float-start">
 					<strong>
-						<a href='/senate/members/bio/1765/sen-john-disanto' target='_self'>Sen. John DiSanto</a>
+						<a href='/house/members/bio/1096/rep-scott-conklin' target='_self'>Rep. Scott Conklin</a>
 					</strong>
 					
 						<div>
 							
 							<div>
-								<span class="badge bg-party-R">R</span> Senate District&nbsp;15
+								<span class="badge bg-party-D">D</span> House District&nbsp;77
 							</div>
 							
 						</div>
@@ -567,10 +582,10 @@ a.committee {
                 <div class="row rounded py-3">
                     <div class="col-12 col-sm-6 col-lg-8 mt-2 mt-sm-0">
                         <div class="d-none d-sm-block">
-                            <a href='/senate/committees/5/communications-and-technology' class='committee h4'>Communications & Technology</a>
+                            <a href='/house/committees/50/committee-on-committees' class='committee h4'>Committee On Committees</a>
                         </div>
                         <div class="d-block d-sm-none">
-                            <a href='/senate/committees/5/communications-and-technology' class='committee h6'>Communications & Technology</a>
+                            <a href='/house/committees/50/committee-on-committees' class='committee h6'>Committee On Committees</a>
                         </div>
                     </div>
                     <div class="col-12 col-sm-6 col-lg-4">
@@ -581,20 +596,20 @@ a.committee {
 					
 			<div style="width:75px">
 				<div class="ratio ratio-1x1 rounded-circle overflow-hidden">
-					<img src="https://www.palegis.us/resources/images/members/300/1912.jpg?20240411" class="image-cover" alt="Photo of Senator Sen. Tracy Pennycuick">
+					<img src="https://www.palegis.us/resources/images/members/300/1749.jpg?20240411" class="image-cover" alt="Photo of Representative Rep. Carol Hill-Evans">
 				</div>
 			</div>
 		
 				</div>
 				<div class="float-start">
 					<strong>
-						<a href='/senate/members/bio/1912/sen-tracy-pennycuick' target='_self'>Sen. Tracy Pennycuick</a>
+						<a href='/house/members/bio/1749/rep-carol-hill-evans' target='_self'>Rep. Carol Hill-Evans</a>
 					</strong>
 					
 						<div>
 							
 							<div>
-								<span class="badge bg-party-R">R</span> Senate District&nbsp;24
+								<span class="badge bg-party-D">D</span> House District&nbsp;95
 							</div>
 							
 						</div>
@@ -615,10 +630,10 @@ a.committee {
                 <div class="row rounded py-3">
                     <div class="col-12 col-sm-6 col-lg-8 mt-2 mt-sm-0">
                         <div class="d-none d-sm-block">
-                            <a href='/senate/committees/31/community-economic-and-recreational-development' class='committee h4'>Community, Economic & Recreational Development</a>
+                            <a href='/house/committees/63/consumer-protection-technology-and-utilities' class='committee h4'>Consumer Protection, Technology & Utilities</a>
                         </div>
                         <div class="d-block d-sm-none">
-                            <a href='/senate/committees/31/community-economic-and-recreational-development' class='committee h6'>Community, Economic & Recreational Development</a>
+                            <a href='/house/committees/63/consumer-protection-technology-and-utilities' class='committee h6'>Consumer Protection, Technology & Utilities</a>
                         </div>
                     </div>
                     <div class="col-12 col-sm-6 col-lg-4">
@@ -629,20 +644,20 @@ a.committee {
 					
 			<div style="width:75px">
 				<div class="ratio ratio-1x1 rounded-circle overflow-hidden">
-					<img src="https://www.palegis.us/resources/images/members/300/1928.jpg?20240411" class="image-cover" alt="Photo of Senator Sen. Chris Gebhard">
+					<img src="https://www.palegis.us/resources/images/members/300/1173.jpg?20240411" class="image-cover" alt="Photo of Representative Rep. Robert Matzie">
 				</div>
 			</div>
 		
 				</div>
 				<div class="float-start">
 					<strong>
-						<a href='/senate/members/bio/1928/sen-chris-gebhard' target='_self'>Sen. Chris Gebhard</a>
+						<a href='/house/members/bio/1173/rep-robert-matzie' target='_self'>Rep. Robert Matzie</a>
 					</strong>
 					
 						<div>
 							
 							<div>
-								<span class="badge bg-party-R">R</span> Senate District&nbsp;48
+								<span class="badge bg-party-D">D</span> House District&nbsp;16
 							</div>
 							
 						</div>
@@ -663,10 +678,10 @@ a.committee {
                 <div class="row rounded py-3">
                     <div class="col-12 col-sm-6 col-lg-8 mt-2 mt-sm-0">
                         <div class="d-none d-sm-block">
-                            <a href='/senate/committees/7/consumer-protection-and-professional-licensure' class='committee h4'>Consumer Protection & Professional Licensure</a>
+                            <a href='/house/committees/12/education' class='committee h4'>Education</a>
                         </div>
                         <div class="d-block d-sm-none">
-                            <a href='/senate/committees/7/consumer-protection-and-professional-licensure' class='committee h6'>Consumer Protection & Professional Licensure</a>
+                            <a href='/house/committees/12/education' class='committee h6'>Education</a>
                         </div>
                     </div>
                     <div class="col-12 col-sm-6 col-lg-4">
@@ -677,20 +692,20 @@ a.committee {
 					
 			<div style="width:75px">
 				<div class="ratio ratio-1x1 rounded-circle overflow-hidden">
-					<img src="https://www.palegis.us/resources/images/members/300/1697.jpg?20240411" class="image-cover" alt="Photo of Senator Sen. Patrick Stefano">
+					<img src="https://www.palegis.us/resources/images/members/300/1706.jpg?20240411" class="image-cover" alt="Photo of Representative Rep. Peter Schweyer">
 				</div>
 			</div>
 		
 				</div>
 				<div class="float-start">
 					<strong>
-						<a href='/senate/members/bio/1697/sen-patrick-stefano' target='_self'>Sen. Patrick Stefano</a>
+						<a href='/house/members/bio/1706/rep-peter-schweyer' target='_self'>Rep. Peter Schweyer</a>
 					</strong>
 					
 						<div>
 							
 							<div>
-								<span class="badge bg-party-R">R</span> Senate District&nbsp;32
+								<span class="badge bg-party-D">D</span> House District&nbsp;134
 							</div>
 							
 						</div>
@@ -711,10 +726,10 @@ a.committee {
                 <div class="row rounded py-3">
                     <div class="col-12 col-sm-6 col-lg-8 mt-2 mt-sm-0">
                         <div class="d-none d-sm-block">
-                            <a href='/senate/committees/23/education' class='committee h4'>Education</a>
+                            <a href='/house/committees/8/environmental-resources-and-energy' class='committee h4'>Environmental Resources & Energy</a>
                         </div>
                         <div class="d-block d-sm-none">
-                            <a href='/senate/committees/23/education' class='committee h6'>Education</a>
+                            <a href='/house/committees/8/environmental-resources-and-energy' class='committee h6'>Environmental Resources & Energy</a>
                         </div>
                     </div>
                     <div class="col-12 col-sm-6 col-lg-4">
@@ -725,20 +740,20 @@ a.committee {
 					
 			<div style="width:75px">
 				<div class="ratio ratio-1x1 rounded-circle overflow-hidden">
-					<img src="https://www.palegis.us/resources/images/members/300/69.jpg?20240411" class="image-cover" alt="Photo of Senator Sen. David Argall">
+					<img src="https://www.palegis.us/resources/images/members/300/210.jpg?20240411" class="image-cover" alt="Photo of Representative Rep. Greg Vitali">
 				</div>
 			</div>
 		
 				</div>
 				<div class="float-start">
 					<strong>
-						<a href='/senate/members/bio/69/sen-david-argall' target='_self'>Sen. David Argall</a>
+						<a href='/house/members/bio/210/rep-greg-vitali' target='_self'>Rep. Greg Vitali</a>
 					</strong>
 					
 						<div>
 							
 							<div>
-								<span class="badge bg-party-R">R</span> Senate District&nbsp;29
+								<span class="badge bg-party-D">D</span> House District&nbsp;166
 							</div>
 							
 						</div>
@@ -759,10 +774,25 @@ a.committee {
                 <div class="row rounded py-3">
                     <div class="col-12 col-sm-6 col-lg-8 mt-2 mt-sm-0">
                         <div class="d-none d-sm-block">
-                            <a href='/senate/committees/9/environmental-resources-and-energy' class='committee h4'>Environmental Resources & Energy</a>
+                            <a href='/house/committees/61/ethics-committee' class='committee h4'>Ethics Committee</a>
                         </div>
                         <div class="d-block d-sm-none">
-                            <a href='/senate/committees/9/environmental-resources-and-energy' class='committee h6'>Environmental Resources & Energy</a>
+                            <a href='/house/committees/61/ethics-committee' class='committee h6'>Ethics Committee</a>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-4">
+                        
+                    </div>
+                </div>
+            
+
+                <div class="row rounded py-3">
+                    <div class="col-12 col-sm-6 col-lg-8 mt-2 mt-sm-0">
+                        <div class="d-none d-sm-block">
+                            <a href='/house/committees/16/finance' class='committee h4'>Finance</a>
+                        </div>
+                        <div class="d-block d-sm-none">
+                            <a href='/house/committees/16/finance' class='committee h6'>Finance</a>
                         </div>
                     </div>
                     <div class="col-12 col-sm-6 col-lg-4">
@@ -773,20 +803,20 @@ a.committee {
 					
 			<div style="width:75px">
 				<div class="ratio ratio-1x1 rounded-circle overflow-hidden">
-					<img src="https://www.palegis.us/resources/images/members/300/1186.jpg?20240411" class="image-cover" alt="Photo of Senator Sen. Gene Yaw">
+					<img src="https://www.palegis.us/resources/images/members/300/80.jpg?20240411" class="image-cover" alt="Photo of Representative Rep. Steve Samuelson">
 				</div>
 			</div>
 		
 				</div>
 				<div class="float-start">
 					<strong>
-						<a href='/senate/members/bio/1186/sen-gene-yaw' target='_self'>Sen. Gene Yaw</a>
+						<a href='/house/members/bio/80/rep-steve-samuelson' target='_self'>Rep. Steve Samuelson</a>
 					</strong>
 					
 						<div>
 							
 							<div>
-								<span class="badge bg-party-R">R</span> Senate District&nbsp;23
+								<span class="badge bg-party-D">D</span> House District&nbsp;135
 							</div>
 							
 						</div>
@@ -807,10 +837,10 @@ a.committee {
                 <div class="row rounded py-3">
                     <div class="col-12 col-sm-6 col-lg-8 mt-2 mt-sm-0">
                         <div class="d-none d-sm-block">
-                            <a href='/senate/committees/25/finance' class='committee h4'>Finance</a>
+                            <a href='/house/committees/18/game-and-fisheries' class='committee h4'>Game & Fisheries</a>
                         </div>
                         <div class="d-block d-sm-none">
-                            <a href='/senate/committees/25/finance' class='committee h6'>Finance</a>
+                            <a href='/house/committees/18/game-and-fisheries' class='committee h6'>Game & Fisheries</a>
                         </div>
                     </div>
                     <div class="col-12 col-sm-6 col-lg-4">
@@ -821,20 +851,20 @@ a.committee {
 					
 			<div style="width:75px">
 				<div class="ratio ratio-1x1 rounded-circle overflow-hidden">
-					<img src="https://www.palegis.us/resources/images/members/300/1629.jpg?20240411" class="image-cover" alt="Photo of Senator Sen. Scott Hutchinson">
+					<img src="https://www.palegis.us/resources/images/members/300/1744.jpg?20240411" class="image-cover" alt="Photo of Representative Rep. Anita Kulik">
 				</div>
 			</div>
 		
 				</div>
 				<div class="float-start">
 					<strong>
-						<a href='/senate/members/bio/1629/sen-scott-hutchinson' target='_self'>Sen. Scott Hutchinson</a>
+						<a href='/house/members/bio/1744/rep-anita-kulik' target='_self'>Rep. Anita Kulik</a>
 					</strong>
 					
 						<div>
 							
 							<div>
-								<span class="badge bg-party-R">R</span> Senate District&nbsp;21
+								<span class="badge bg-party-D">D</span> House District&nbsp;45
 							</div>
 							
 						</div>
@@ -855,10 +885,10 @@ a.committee {
                 <div class="row rounded py-3">
                     <div class="col-12 col-sm-6 col-lg-8 mt-2 mt-sm-0">
                         <div class="d-none d-sm-block">
-                            <a href='/senate/committees/11/game-and-fisheries' class='committee h4'>Game & Fisheries</a>
+                            <a href='/house/committees/54/gaming-oversight' class='committee h4'>Gaming Oversight</a>
                         </div>
                         <div class="d-block d-sm-none">
-                            <a href='/senate/committees/11/game-and-fisheries' class='committee h6'>Game & Fisheries</a>
+                            <a href='/house/committees/54/gaming-oversight' class='committee h6'>Gaming Oversight</a>
                         </div>
                     </div>
                     <div class="col-12 col-sm-6 col-lg-4">
@@ -869,20 +899,20 @@ a.committee {
 					
 			<div style="width:75px">
 				<div class="ratio ratio-1x1 rounded-circle overflow-hidden">
-					<img src="https://www.palegis.us/resources/images/members/300/1733.jpg?20240411" class="image-cover" alt="Photo of Senator Sen. Greg Rothman">
+					<img src="https://www.palegis.us/resources/images/members/300/1081.jpg?20240411" class="image-cover" alt="Photo of Representative Rep. Patrick Harkins">
 				</div>
 			</div>
 		
 				</div>
 				<div class="float-start">
 					<strong>
-						<a href='/senate/members/bio/1733/sen-greg-rothman' target='_self'>Sen. Greg Rothman</a>
+						<a href='/house/members/bio/1081/rep-patrick-harkins' target='_self'>Rep. Patrick Harkins</a>
 					</strong>
 					
 						<div>
 							
 							<div>
-								<span class="badge bg-party-R">R</span> Senate District&nbsp;34
+								<span class="badge bg-party-D">D</span> House District&nbsp;1
 							</div>
 							
 						</div>
@@ -903,10 +933,10 @@ a.committee {
                 <div class="row rounded py-3">
                     <div class="col-12 col-sm-6 col-lg-8 mt-2 mt-sm-0">
                         <div class="d-none d-sm-block">
-                            <a href='/senate/committees/33/health-and-human-services' class='committee h4'>Health & Human Services</a>
+                            <a href='/house/committees/66/government-oversight' class='committee h4'>Government Oversight</a>
                         </div>
                         <div class="d-block d-sm-none">
-                            <a href='/senate/committees/33/health-and-human-services' class='committee h6'>Health & Human Services</a>
+                            <a href='/house/committees/66/government-oversight' class='committee h6'>Government Oversight</a>
                         </div>
                     </div>
                     <div class="col-12 col-sm-6 col-lg-4">
@@ -917,20 +947,20 @@ a.committee {
 					
 			<div style="width:75px">
 				<div class="ratio ratio-1x1 rounded-circle overflow-hidden">
-					<img src="https://www.palegis.us/resources/images/members/300/1087.jpg?20240411" class="image-cover" alt="Photo of Senator Sen. Michele Brooks">
+					<img src="https://www.palegis.us/resources/images/members/300/1759.jpg?20240411" class="image-cover" alt="Photo of Representative Rep. Morgan Cephas">
 				</div>
 			</div>
 		
 				</div>
 				<div class="float-start">
 					<strong>
-						<a href='/senate/members/bio/1087/sen-michele-brooks' target='_self'>Sen. Michele Brooks</a>
+						<a href='/house/members/bio/1759/rep-morgan-cephas' target='_self'>Rep. Morgan Cephas</a>
 					</strong>
 					
 						<div>
 							
 							<div>
-								<span class="badge bg-party-R">R</span> Senate District&nbsp;50
+								<span class="badge bg-party-D">D</span> House District&nbsp;192
 							</div>
 							
 						</div>
@@ -951,10 +981,10 @@ a.committee {
                 <div class="row rounded py-3">
                     <div class="col-12 col-sm-6 col-lg-8 mt-2 mt-sm-0">
                         <div class="d-none d-sm-block">
-                            <a href='/senate/committees/57/intergovernmental-operations' class='committee h4'>Intergovernmental Operations</a>
+                            <a href='/house/committees/55/health' class='committee h4'>Health</a>
                         </div>
                         <div class="d-block d-sm-none">
-                            <a href='/senate/committees/57/intergovernmental-operations' class='committee h6'>Intergovernmental Operations</a>
+                            <a href='/house/committees/55/health' class='committee h6'>Health</a>
                         </div>
                     </div>
                     <div class="col-12 col-sm-6 col-lg-4">
@@ -965,20 +995,20 @@ a.committee {
 					
 			<div style="width:75px">
 				<div class="ratio ratio-1x1 rounded-circle overflow-hidden">
-					<img src="https://www.palegis.us/resources/images/members/300/2008.jpg?20240411" class="image-cover" alt="Photo of Senator Sen. Jarrett Coleman">
+					<img src="https://www.palegis.us/resources/images/members/300/84.jpg?20240411" class="image-cover" alt="Photo of Representative Rep. Dan Frankel">
 				</div>
 			</div>
 		
 				</div>
 				<div class="float-start">
 					<strong>
-						<a href='/senate/members/bio/2008/sen-jarrett-coleman' target='_self'>Sen. Jarrett Coleman</a>
+						<a href='/house/members/bio/84/rep-dan-frankel' target='_self'>Rep. Dan Frankel</a>
 					</strong>
 					
 						<div>
 							
 							<div>
-								<span class="badge bg-party-R">R</span> Senate District&nbsp;16
+								<span class="badge bg-party-D">D</span> House District&nbsp;23
 							</div>
 							
 						</div>
@@ -999,10 +1029,10 @@ a.committee {
                 <div class="row rounded py-3">
                     <div class="col-12 col-sm-6 col-lg-8 mt-2 mt-sm-0">
                         <div class="d-none d-sm-block">
-                            <a href='/senate/committees/39/judiciary' class='committee h4'>Judiciary</a>
+                            <a href='/house/committees/64/housing-and-community-development' class='committee h4'>Housing & Community Development</a>
                         </div>
                         <div class="d-block d-sm-none">
-                            <a href='/senate/committees/39/judiciary' class='committee h6'>Judiciary</a>
+                            <a href='/house/committees/64/housing-and-community-development' class='committee h6'>Housing & Community Development</a>
                         </div>
                     </div>
                     <div class="col-12 col-sm-6 col-lg-4">
@@ -1013,20 +1043,20 @@ a.committee {
 					
 			<div style="width:75px">
 				<div class="ratio ratio-1x1 rounded-circle overflow-hidden">
-					<img src="https://www.palegis.us/resources/images/members/300/1077.jpg?20240411" class="image-cover" alt="Photo of Senator Sen. Lisa Baker">
+					<img src="https://www.palegis.us/resources/images/members/300/274.jpg?20240411" class="image-cover" alt="Photo of Representative Rep. P. Sturla">
 				</div>
 			</div>
 		
 				</div>
 				<div class="float-start">
 					<strong>
-						<a href='/senate/members/bio/1077/sen-lisa-baker' target='_self'>Sen. Lisa Baker</a>
+						<a href='/house/members/bio/274/rep-p-sturla' target='_self'>Rep. P. Sturla</a>
 					</strong>
 					
 						<div>
 							
 							<div>
-								<span class="badge bg-party-R">R</span> Senate District&nbsp;20
+								<span class="badge bg-party-D">D</span> House District&nbsp;96
 							</div>
 							
 						</div>
@@ -1047,10 +1077,25 @@ a.committee {
                 <div class="row rounded py-3">
                     <div class="col-12 col-sm-6 col-lg-8 mt-2 mt-sm-0">
                         <div class="d-none d-sm-block">
-                            <a href='/senate/committees/13/labor-and-industry' class='committee h4'>Labor & Industry</a>
+                            <a href='/house/committees/56/human-services' class='committee h4'>Human Services</a>
                         </div>
                         <div class="d-block d-sm-none">
-                            <a href='/senate/committees/13/labor-and-industry' class='committee h6'>Labor & Industry</a>
+                            <a href='/house/committees/56/human-services' class='committee h6'>Human Services</a>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-4">
+                        
+                    </div>
+                </div>
+            
+
+                <div class="row rounded py-3">
+                    <div class="col-12 col-sm-6 col-lg-8 mt-2 mt-sm-0">
+                        <div class="d-none d-sm-block">
+                            <a href='/house/committees/22/insurance' class='committee h4'>Insurance</a>
+                        </div>
+                        <div class="d-block d-sm-none">
+                            <a href='/house/committees/22/insurance' class='committee h6'>Insurance</a>
                         </div>
                     </div>
                     <div class="col-12 col-sm-6 col-lg-4">
@@ -1061,20 +1106,20 @@ a.committee {
 					
 			<div style="width:75px">
 				<div class="ratio ratio-1x1 rounded-circle overflow-hidden">
-					<img src="https://www.palegis.us/resources/images/members/300/1924.jpg?20240411" class="image-cover" alt="Photo of Senator Sen. Devlin Robinson">
+					<img src="https://www.palegis.us/resources/images/members/300/1636.jpg?20240411" class="image-cover" alt="Photo of Representative Rep. Patty Kim">
 				</div>
 			</div>
 		
 				</div>
 				<div class="float-start">
 					<strong>
-						<a href='/senate/members/bio/1924/sen-devlin-robinson' target='_self'>Sen. Devlin Robinson</a>
+						<a href='/house/members/bio/1636/rep-patty-kim' target='_self'>Rep. Patty Kim</a>
 					</strong>
 					
 						<div>
 							
 							<div>
-								<span class="badge bg-party-R">R</span> Senate District&nbsp;37
+								<span class="badge bg-party-D">D</span> House District&nbsp;103
 							</div>
 							
 						</div>
@@ -1095,10 +1140,10 @@ a.committee {
                 <div class="row rounded py-3">
                     <div class="col-12 col-sm-6 col-lg-8 mt-2 mt-sm-0">
                         <div class="d-none d-sm-block">
-                            <a href='/senate/committees/29/law-and-justice' class='committee h4'>Law & Justice</a>
+                            <a href='/house/committees/60/judiciary' class='committee h4'>Judiciary</a>
                         </div>
                         <div class="d-block d-sm-none">
-                            <a href='/senate/committees/29/law-and-justice' class='committee h6'>Law & Justice</a>
+                            <a href='/house/committees/60/judiciary' class='committee h6'>Judiciary</a>
                         </div>
                     </div>
                     <div class="col-12 col-sm-6 col-lg-4">
@@ -1109,20 +1154,20 @@ a.committee {
 					
 			<div style="width:75px">
 				<div class="ratio ratio-1x1 rounded-circle overflow-hidden">
-					<img src="https://www.palegis.us/resources/images/members/300/1646.jpg?20240411" class="image-cover" alt="Photo of Senator Sen. Mike Regan">
+					<img src="https://www.palegis.us/resources/images/members/300/1159.jpg?20240411" class="image-cover" alt="Photo of Representative Rep. Tim Briggs">
 				</div>
 			</div>
 		
 				</div>
 				<div class="float-start">
 					<strong>
-						<a href='/senate/members/bio/1646/sen-mike-regan' target='_self'>Sen. Mike Regan</a>
+						<a href='/house/members/bio/1159/rep-tim-briggs' target='_self'>Rep. Tim Briggs</a>
 					</strong>
 					
 						<div>
 							
 							<div>
-								<span class="badge bg-party-R">R</span> Senate District&nbsp;31
+								<span class="badge bg-party-D">D</span> House District&nbsp;149
 							</div>
 							
 						</div>
@@ -1143,10 +1188,10 @@ a.committee {
                 <div class="row rounded py-3">
                     <div class="col-12 col-sm-6 col-lg-8 mt-2 mt-sm-0">
                         <div class="d-none d-sm-block">
-                            <a href='/senate/committees/15/local-government' class='committee h4'>Local Government</a>
+                            <a href='/house/committees/26/labor-and-industry' class='committee h4'>Labor & Industry</a>
                         </div>
                         <div class="d-block d-sm-none">
-                            <a href='/senate/committees/15/local-government' class='committee h6'>Local Government</a>
+                            <a href='/house/committees/26/labor-and-industry' class='committee h6'>Labor & Industry</a>
                         </div>
                     </div>
                     <div class="col-12 col-sm-6 col-lg-4">
@@ -1157,20 +1202,20 @@ a.committee {
 					
 			<div style="width:75px">
 				<div class="ratio ratio-1x1 rounded-circle overflow-hidden">
-					<img src="https://www.palegis.us/resources/images/members/300/1200.jpg?20240411" class="image-cover" alt="Photo of Senator Sen. Rosemary Brown">
+					<img src="https://www.palegis.us/resources/images/members/300/1685.jpg?20240411" class="image-cover" alt="Photo of Representative Rep. Jason Dawkins">
 				</div>
 			</div>
 		
 				</div>
 				<div class="float-start">
 					<strong>
-						<a href='/senate/members/bio/1200/sen-rosemary-brown' target='_self'>Sen. Rosemary Brown</a>
+						<a href='/house/members/bio/1685/rep-jason-dawkins' target='_self'>Rep. Jason Dawkins</a>
 					</strong>
 					
 						<div>
 							
 							<div>
-								<span class="badge bg-party-R">R</span> Senate District&nbsp;40
+								<span class="badge bg-party-D">D</span> House District&nbsp;179
 							</div>
 							
 						</div>
@@ -1191,10 +1236,10 @@ a.committee {
                 <div class="row rounded py-3">
                     <div class="col-12 col-sm-6 col-lg-8 mt-2 mt-sm-0">
                         <div class="d-none d-sm-block">
-                            <a href='/senate/committees/17/rules-and-executive-nominations' class='committee h4'>Rules & Executive Nominations</a>
+                            <a href='/house/committees/28/liquor-control' class='committee h4'>Liquor Control</a>
                         </div>
                         <div class="d-block d-sm-none">
-                            <a href='/senate/committees/17/rules-and-executive-nominations' class='committee h6'>Rules & Executive Nominations</a>
+                            <a href='/house/committees/28/liquor-control' class='committee h6'>Liquor Control</a>
                         </div>
                     </div>
                     <div class="col-12 col-sm-6 col-lg-4">
@@ -1205,20 +1250,20 @@ a.committee {
 					
 			<div style="width:75px">
 				<div class="ratio ratio-1x1 rounded-circle overflow-hidden">
-					<img src="https://www.palegis.us/resources/images/members/300/1870.jpg?20240411" class="image-cover" alt="Photo of Senator Sen. Joe Pittman">
+					<img src="https://www.palegis.us/resources/images/members/300/1166.jpg?20240411" class="image-cover" alt="Photo of Representative Rep. Daniel Deasy">
 				</div>
 			</div>
 		
 				</div>
 				<div class="float-start">
 					<strong>
-						<a href='/senate/members/bio/1870/sen-joe-pittman' target='_self'>Sen. Joe Pittman</a>
+						<a href='/house/members/bio/1166/rep-daniel-deasy' target='_self'>Rep. Daniel Deasy</a>
 					</strong>
 					
 						<div>
 							
 							<div>
-								<span class="badge bg-party-R">R</span> Senate District&nbsp;41
+								<span class="badge bg-party-D">D</span> House District&nbsp;27
 							</div>
 							
 						</div>
@@ -1239,10 +1284,10 @@ a.committee {
                 <div class="row rounded py-3">
                     <div class="col-12 col-sm-6 col-lg-8 mt-2 mt-sm-0">
                         <div class="d-none d-sm-block">
-                            <a href='/senate/committees/41/state-government' class='committee h4'>State Government</a>
+                            <a href='/house/committees/30/local-government' class='committee h4'>Local Government</a>
                         </div>
                         <div class="d-block d-sm-none">
-                            <a href='/senate/committees/41/state-government' class='committee h6'>State Government</a>
+                            <a href='/house/committees/30/local-government' class='committee h6'>Local Government</a>
                         </div>
                     </div>
                     <div class="col-12 col-sm-6 col-lg-4">
@@ -1253,20 +1298,20 @@ a.committee {
 					
 			<div style="width:75px">
 				<div class="ratio ratio-1x1 rounded-circle overflow-hidden">
-					<img src="https://www.palegis.us/resources/images/members/300/1687.jpg?20240411" class="image-cover" alt="Photo of Senator Sen. Cris Dush">
+					<img src="https://www.palegis.us/resources/images/members/300/136.jpg?20240411" class="image-cover" alt="Photo of Representative Rep. Robert Freeman">
 				</div>
 			</div>
 		
 				</div>
 				<div class="float-start">
 					<strong>
-						<a href='/senate/members/bio/1687/sen-cris-dush' target='_self'>Sen. Cris Dush</a>
+						<a href='/house/members/bio/136/rep-robert-freeman' target='_self'>Rep. Robert Freeman</a>
 					</strong>
 					
 						<div>
 							
 							<div>
-								<span class="badge bg-party-R">R</span> Senate District&nbsp;25
+								<span class="badge bg-party-D">D</span> House District&nbsp;136
 							</div>
 							
 						</div>
@@ -1287,10 +1332,10 @@ a.committee {
                 <div class="row rounded py-3">
                     <div class="col-12 col-sm-6 col-lg-8 mt-2 mt-sm-0">
                         <div class="d-none d-sm-block">
-                            <a href='/senate/committees/19/transportation' class='committee h4'>Transportation</a>
+                            <a href='/house/committees/34/professional-licensure' class='committee h4'>Professional Licensure</a>
                         </div>
                         <div class="d-block d-sm-none">
-                            <a href='/senate/committees/19/transportation' class='committee h6'>Transportation</a>
+                            <a href='/house/committees/34/professional-licensure' class='committee h6'>Professional Licensure</a>
                         </div>
                     </div>
                     <div class="col-12 col-sm-6 col-lg-4">
@@ -1301,20 +1346,20 @@ a.committee {
 					
 			<div style="width:75px">
 				<div class="ratio ratio-1x1 rounded-circle overflow-hidden">
-					<img src="https://www.palegis.us/resources/images/members/300/1764.jpg?20240411" class="image-cover" alt="Photo of Senator Sen. Wayne Langerholc">
+					<img src="https://www.palegis.us/resources/images/members/300/1163.jpg?20240411" class="image-cover" alt="Photo of Representative Rep. Frank Burns">
 				</div>
 			</div>
 		
 				</div>
 				<div class="float-start">
 					<strong>
-						<a href='/senate/members/bio/1764/sen-wayne-langerholc' target='_self'>Sen. Wayne Langerholc</a>
+						<a href='/house/members/bio/1163/rep-frank-burns' target='_self'>Rep. Frank Burns</a>
 					</strong>
 					
 						<div>
 							
 							<div>
-								<span class="badge bg-party-R">R</span> Senate District&nbsp;35
+								<span class="badge bg-party-D">D</span> House District&nbsp;72
 							</div>
 							
 						</div>
@@ -1335,10 +1380,10 @@ a.committee {
                 <div class="row rounded py-3">
                     <div class="col-12 col-sm-6 col-lg-8 mt-2 mt-sm-0">
                         <div class="d-none d-sm-block">
-                            <a href='/senate/committees/35/urban-affairs-and-housing' class='committee h4'>Urban Affairs & Housing</a>
+                            <a href='/house/committees/67/rules' class='committee h4'>Rules</a>
                         </div>
                         <div class="d-block d-sm-none">
-                            <a href='/senate/committees/35/urban-affairs-and-housing' class='committee h6'>Urban Affairs & Housing</a>
+                            <a href='/house/committees/67/rules' class='committee h6'>Rules</a>
                         </div>
                     </div>
                     <div class="col-12 col-sm-6 col-lg-4">
@@ -1349,20 +1394,20 @@ a.committee {
 					
 			<div style="width:75px">
 				<div class="ratio ratio-1x1 rounded-circle overflow-hidden">
-					<img src="https://www.palegis.us/resources/images/members/300/1169.jpg?20240411" class="image-cover" alt="Photo of Senator Sen. Frank Farry">
+					<img src="https://www.palegis.us/resources/images/members/300/1161.jpg?20240411" class="image-cover" alt="Photo of Representative Rep. Matthew Bradford">
 				</div>
 			</div>
 		
 				</div>
 				<div class="float-start">
 					<strong>
-						<a href='/senate/members/bio/1169/sen-frank-farry' target='_self'>Sen. Frank Farry</a>
+						<a href='/house/members/bio/1161/rep-matthew-bradford' target='_self'>Rep. Matthew Bradford</a>
 					</strong>
 					
 						<div>
 							
 							<div>
-								<span class="badge bg-party-R">R</span> Senate District&nbsp;6
+								<span class="badge bg-party-D">D</span> House District&nbsp;70
 							</div>
 							
 						</div>
@@ -1383,10 +1428,10 @@ a.committee {
                 <div class="row rounded py-3">
                     <div class="col-12 col-sm-6 col-lg-8 mt-2 mt-sm-0">
                         <div class="d-none d-sm-block">
-                            <a href='/senate/committees/21/veterans-affairs-and-emergency-preparedness' class='committee h4'>Veterans Affairs & Emergency Preparedness</a>
+                            <a href='/house/committees/36/state-government' class='committee h4'>State Government</a>
                         </div>
                         <div class="d-block d-sm-none">
-                            <a href='/senate/committees/21/veterans-affairs-and-emergency-preparedness' class='committee h6'>Veterans Affairs & Emergency Preparedness</a>
+                            <a href='/house/committees/36/state-government' class='committee h6'>State Government</a>
                         </div>
                     </div>
                     <div class="col-12 col-sm-6 col-lg-4">
@@ -1397,20 +1442,212 @@ a.committee {
 					
 			<div style="width:75px">
 				<div class="ratio ratio-1x1 rounded-circle overflow-hidden">
-					<img src="https://www.palegis.us/resources/images/members/300/1869.jpg?20240411" class="image-cover" alt="Photo of Senator Sen. Doug Mastriano">
+					<img src="https://www.palegis.us/resources/images/members/300/1749.jpg?20240411" class="image-cover" alt="Photo of Representative Rep. Carol Hill-Evans">
 				</div>
 			</div>
 		
 				</div>
 				<div class="float-start">
 					<strong>
-						<a href='/senate/members/bio/1869/sen-doug-mastriano' target='_self'>Sen. Doug Mastriano</a>
+						<a href='/house/members/bio/1749/rep-carol-hill-evans' target='_self'>Rep. Carol Hill-Evans</a>
 					</strong>
 					
 						<div>
 							
 							<div>
-								<span class="badge bg-party-R">R</span> Senate District&nbsp;33
+								<span class="badge bg-party-D">D</span> House District&nbsp;95
+							</div>
+							
+						</div>
+					
+				</div>
+			
+                            </div>
+                            <div class="text-center" style="width:75px;">
+                                <span class="badge bg-primary shadow-primary">
+                                Chair
+                                </span>
+                            </div>
+                        
+                    </div>
+                </div>
+            
+
+                <div class="row rounded py-3">
+                    <div class="col-12 col-sm-6 col-lg-8 mt-2 mt-sm-0">
+                        <div class="d-none d-sm-block">
+                            <a href='/house/committees/59/the-committee-to-provide-justice-to-otherwise-barred-victims-of-childhood-sexual-abuse' class='committee h4'>The Committee To Provide Justice To Otherwise Barred Victims Of Childhood Sexual Abuse</a>
+                        </div>
+                        <div class="d-block d-sm-none">
+                            <a href='/house/committees/59/the-committee-to-provide-justice-to-otherwise-barred-victims-of-childhood-sexual-abuse' class='committee h6'>The Committee To Provide Justice To Otherwise Barred Victims Of Childhood Sexual Abuse</a>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-4">
+                        
+                            <div>
+                                
+				<div class="float-start me-3">
+					
+			<div style="width:75px">
+				<div class="ratio ratio-1x1 rounded-circle overflow-hidden">
+					<img src="https://www.palegis.us/resources/images/members/300/1159.jpg?20240411" class="image-cover" alt="Photo of Representative Rep. Tim Briggs">
+				</div>
+			</div>
+		
+				</div>
+				<div class="float-start">
+					<strong>
+						<a href='/house/members/bio/1159/rep-tim-briggs' target='_self'>Rep. Tim Briggs</a>
+					</strong>
+					
+						<div>
+							
+							<div>
+								<span class="badge bg-party-D">D</span> House District&nbsp;149
+							</div>
+							
+						</div>
+					
+				</div>
+			
+                            </div>
+                            <div class="text-center" style="width:75px;">
+                                <span class="badge bg-primary shadow-primary">
+                                Chair
+                                </span>
+                            </div>
+                        
+                    </div>
+                </div>
+            
+
+                <div class="row rounded py-3">
+                    <div class="col-12 col-sm-6 col-lg-8 mt-2 mt-sm-0">
+                        <div class="d-none d-sm-block">
+                            <a href='/house/committees/65/tourism-and-economic-and-recreational-development' class='committee h4'>Tourism & Economic & Recreational Development</a>
+                        </div>
+                        <div class="d-block d-sm-none">
+                            <a href='/house/committees/65/tourism-and-economic-and-recreational-development' class='committee h6'>Tourism & Economic & Recreational Development</a>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-4">
+                        
+                            <div>
+                                
+				<div class="float-start me-3">
+					
+			<div style="width:75px">
+				<div class="ratio ratio-1x1 rounded-circle overflow-hidden">
+					<img src="https://www.palegis.us/resources/images/members/300/1622.jpg?20240411" class="image-cover" alt="Photo of Representative Rep. Mary Jo Daley">
+				</div>
+			</div>
+		
+				</div>
+				<div class="float-start">
+					<strong>
+						<a href='/house/members/bio/1622/rep-mary-jo-daley' target='_self'>Rep. Mary Jo Daley</a>
+					</strong>
+					
+						<div>
+							
+							<div>
+								<span class="badge bg-party-D">D</span> House District&nbsp;148
+							</div>
+							
+						</div>
+					
+				</div>
+			
+                            </div>
+                            <div class="text-center" style="width:75px;">
+                                <span class="badge bg-primary shadow-primary">
+                                Chair
+                                </span>
+                            </div>
+                        
+                    </div>
+                </div>
+            
+
+                <div class="row rounded py-3">
+                    <div class="col-12 col-sm-6 col-lg-8 mt-2 mt-sm-0">
+                        <div class="d-none d-sm-block">
+                            <a href='/house/committees/38/transportation' class='committee h4'>Transportation</a>
+                        </div>
+                        <div class="d-block d-sm-none">
+                            <a href='/house/committees/38/transportation' class='committee h6'>Transportation</a>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-4">
+                        
+                            <div>
+                                
+				<div class="float-start me-3">
+					
+			<div style="width:75px">
+				<div class="ratio ratio-1x1 rounded-circle overflow-hidden">
+					<img src="https://www.palegis.us/resources/images/members/300/1615.jpg?20240411" class="image-cover" alt="Photo of Representative Rep. Ed Neilson">
+				</div>
+			</div>
+		
+				</div>
+				<div class="float-start">
+					<strong>
+						<a href='/house/members/bio/1615/rep-ed-neilson' target='_self'>Rep. Ed Neilson</a>
+					</strong>
+					
+						<div>
+							
+							<div>
+								<span class="badge bg-party-D">D</span> House District&nbsp;174
+							</div>
+							
+						</div>
+					
+				</div>
+			
+                            </div>
+                            <div class="text-center" style="width:75px;">
+                                <span class="badge bg-primary shadow-primary">
+                                Chair
+                                </span>
+                            </div>
+                        
+                    </div>
+                </div>
+            
+
+                <div class="row rounded py-3">
+                    <div class="col-12 col-sm-6 col-lg-8 mt-2 mt-sm-0">
+                        <div class="d-none d-sm-block">
+                            <a href='/house/committees/42/veterans-affairs-and-emergency-preparedness' class='committee h4'>Veterans Affairs & Emergency Preparedness</a>
+                        </div>
+                        <div class="d-block d-sm-none">
+                            <a href='/house/committees/42/veterans-affairs-and-emergency-preparedness' class='committee h6'>Veterans Affairs & Emergency Preparedness</a>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-4">
+                        
+                            <div>
+                                
+				<div class="float-start me-3">
+					
+			<div style="width:75px">
+				<div class="ratio ratio-1x1 rounded-circle overflow-hidden">
+					<img src="https://www.palegis.us/resources/images/members/300/1761.jpg?20240411" class="image-cover" alt="Photo of Representative Rep. Jared Solomon">
+				</div>
+			</div>
+		
+				</div>
+				<div class="float-start">
+					<strong>
+						<a href='/house/members/bio/1761/rep-jared-solomon' target='_self'>Rep. Jared Solomon</a>
+					</strong>
+					
+						<div>
+							
+							<div>
+								<span class="badge bg-party-D">D</span> House District&nbsp;202
 							</div>
 							
 						</div>

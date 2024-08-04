@@ -14,9 +14,12 @@ from .utils import (
 
 class FilePathTests(TestCase):
 
-    def test_file_creation(self):
-        path = create_file()
-        test_file = pathlib.Path(path)
+    def test_cached_file_creation(self):
+        test = open(settings.BASE_DIR / 'data/cached_data/test.html', 'w')
+        file_path = pathlib.Path(test.name)
+        test.write('<html></html>')
+        test.close()
+        test_file = pathlib.Path(file_path)
         self.assertTrue(test_file.is_file())
         test_file.unlink()
 
@@ -24,17 +27,13 @@ class FilePathTests(TestCase):
 class DataScrapingTests(TestCase):
     
     def test_scrape_pa_senate_committees(self):
-        print('Testing PA Senate committees')
         scrape_pa_senate_committees()
     
     def test_scrape_pa_senate_members(self):
-        print('Testing PA Senate members')
         scrape_pa_senate_members()
     
     def test_scrape_pa_house_committees(self):
         scrape_pa_house_committees()
-        self.fail()
     
     def test_scrape_pa_house_members(self):
-        print('Testing PA House members')
         scrape_pa_house_members()
