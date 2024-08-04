@@ -8,6 +8,5 @@ __pycache__
 db.sqlite3
 geckodriver
 fixtures
-data
 media
 secrets.json

@@ -1,3 +1,4 @@
+import requests
 from django.contrib.gis.db import models
 
 from core.models import CRMBase
@@ -13,6 +14,16 @@ class Link(CRMBase):
     # Organizations that own links can mark them official
     is_official = models.BooleanField(default=False)
 
+    def url_responding(self):
+        response = requests.get(self.url)
+        try:
+            if response.status_code == 200:
+                return True
+            else:
+                return False
+        except ConnectionError:
+            return False
+
 
 class SocialMediaAccount(CRMBase):
     """
@@ -20,7 +31,7 @@ class SocialMediaAccount(CRMBase):
     """
 
     PLATFORMS = (
-        ('twitter', 'Twitter'),
+        ('twitter', 'Twitter'), ## TODO: Update to X
         ('instagram', 'Instagram'),
         ('facebook', 'Facebook'),
         ('linkedin', 'LinkedIn'),
@@ -35,6 +46,7 @@ class SocialMediaAccount(CRMBase):
         return self.handle
 
     def __str__(self):
+        # Doesn't always use the @-style handle
         return f'@{self.handle}'
 
     def url(self):

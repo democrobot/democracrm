@@ -19,3 +19,4 @@ typically report to the Governor, so they would be nested to model reporting str
 core.ContactInfo models can be attached to the office to represent key support staff associated with our targets.
 
 ## Fields
+
