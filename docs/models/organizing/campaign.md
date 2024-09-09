@@ -11,4 +11,4 @@ Object ID
 
 ### `org_account` (ForeignKey)
 
-OrganizationAccount that this object is owned by.
+The `lobbying.OrganizationAccount` that this object is owned by.

@@ -34,6 +34,10 @@ def create_file():
     return file_path
 
 
+def read_pa_senate_committees():
+    pass
+
+
 def scrape_pa_senate_committees():
 
     # Scrape committee data
@@ -56,6 +60,9 @@ def scrape_pa_senate_committees():
     
     soup = BeautifulSoup(page, 'html.parser')
     committee_list = soup.find('div', class_='committee-list')
+    pa_senate_committees_csv = open(settings.BASE_DIR / 'data/cached_data/pa_senate_committees.csv', 'w')
+    pa_senate_committees_csv.write(committee_list.text)
+    pa_senate_committees_csv.close()
     
     print(f'PA Senate Committees: found {len(committee_list) or 0} results')
 
@@ -104,6 +111,9 @@ def scrape_pa_house_committees():
     
     soup = BeautifulSoup(page, 'html.parser')
     committee_list = soup.find('div', class_='committee-list')
+    pa_house_committees_csv = open(settings.BASE_DIR / 'data/cached_data/pa_house_committees.csv', 'w')
+    pa_house_committees_csv.write(committee_list.text)
+    pa_house_committees_csv.close()
     
     print(f'PA House Committees: found {len(committee_list) or 0} results')
 

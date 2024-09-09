@@ -4,6 +4,7 @@ requests
 gdal
 django-hosts
 django-guardian
+feedparser
 beautifulsoup4
 coverage
 dateutils

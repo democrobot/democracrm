@@ -328,7 +328,7 @@ class PublicOffice(CRMTreeBase):
         JUDICIAL = 'judicial', _('Judicial')
         OTHER = 'other', _('Other')
     
-    class HouseType(models.TextChoices):
+    class ChamberType(models.TextChoices):
         UNICAMERAL = 'unicameral', _('Unicameral')
         BICAMERAL = 'bicameral', _('Bicameral')
         TRICAMERAL = 'tricameral', _('Tricameral')
@@ -346,11 +346,13 @@ class PublicOffice(CRMTreeBase):
     )
     
     # TODO: Only display when office_type is legislative
-    house_type = models.CharField(
+    chamber_type = models.CharField(
         default='unicameral',
         max_length=255,
-        choices=HouseType.choices
+        choices=ChamberType.choices
     )
+
+    # TODO: Define chamber order (i.e. Upper House, Lower House) via sort index?
 
     name = models.CharField(
         max_length=255

@@ -27,7 +27,7 @@
 <link rel="stylesheet" href="/layout/plugins/fontawesome/6.5.2/css/all.min.css">
 		<link rel="stylesheet" href="/layout/resources/css/bootstrap.custom.css?t=20231101132719">
 <link rel="stylesheet" href="/layout/resources/theme/css/theme.min.css?t=20230306074712">
-<link rel="stylesheet" href="/layout/resources/css/ldpc.css?t=20240522150405">
+<link rel="stylesheet" href="/layout/resources/css/ldpc.css?t=20240729145522">
 		<link rel="stylesheet" href="/resources/css/palegis.css?id=20240411">
 <link rel="stylesheet" href="/content/Members/app.css?id=20240411">
 
@@ -103,24 +103,31 @@ _LDPCApp.servers["servertype"] = "production";
 					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" href="#" id="navMenuItem_2" role="button" data-bs-toggle="dropdown" aria-label="Senate">Senate</a>
 						<ul class="dropdown-menu dropdown-menu-hover" aria-labelledby="navMenuItem_2">
-							<li><a class="dropdown-item " href="/senate"  aria-label="Senate Home">Senate Home</a></li><li><a class="dropdown-item " href="/senate/members"  aria-label="Members of the Senate">Members of the Senate</a></li><li><a class="dropdown-item " href="/senate/members/senate-officers"  aria-label="Senate Leadership">Senate Leadership</a></li><li><a class="dropdown-item " href="/senate/committees"  aria-label="Senate Committees">Committees</a></li><li><a class="dropdown-item " href="/find-my-legislator"  aria-label="Find My Legislator">Find My Senator</a></li><li><a class="dropdown-item " href="https://www.pasen.gov/rtkl/index.cfm"  aria-label="Right To Know (RTKL)">Right To Know (RTKL)</a></li>
+							<li><a class="dropdown-item " href="/senate"  aria-label="Senate Home">Senate Home</a></li><li><a class="dropdown-item " href="/senate/members"  aria-label="Members of the Senate">Members of the Senate</a></li><li><a class="dropdown-item " href="/senate/members/senate-officers"  aria-label="Senate Leadership">Senate Leadership</a></li><li><a class="dropdown-item " href="/senate/committees"  aria-label="Senate Committees">Committees</a></li><li><a class="dropdown-item " href="/senate/session"  aria-label="Senate Session">Senate Session</a></li><li><a class="dropdown-item " href="/find-my-legislator"  aria-label="Find My Legislator">Find My Senator</a></li><li><a class="dropdown-item " href="https://www.pasen.gov/rtkl/index.cfm"  aria-label="Right To Know (RTKL)">Right To Know (RTKL)</a></li>
 						</ul>
 					</li>
 				
 					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" href="#" id="navMenuItem_3" role="button" data-bs-toggle="dropdown" aria-label="House">House</a>
 						<ul class="dropdown-menu dropdown-menu-hover" aria-labelledby="navMenuItem_3">
-							<li><a class="dropdown-item " href="/house"  aria-label="House Home">House Home</a></li><li><a class="dropdown-item " href="/house/members"  aria-label="Members of the House">Members of the House</a></li><li><a class="dropdown-item " href="/house/members/house-officers"  aria-label="House Leadership">House Leadership</a></li><li><a class="dropdown-item " href="/house/committees"  aria-label="House Committees">Committees</a></li><li><a class="dropdown-item " href="/find-my-legislator"  aria-label="Find My Legislator">Find My Representative</a></li><li><a class="dropdown-item " href="/house/right-to-know"  aria-label="Right To Know (RTKL)">Right To Know (RTKL)</a></li>
+							<li><a class="dropdown-item " href="/house"  aria-label="House Home">House Home</a></li><li><a class="dropdown-item " href="/house/members"  aria-label="Members of the House">Members of the House</a></li><li><a class="dropdown-item " href="/house/members/house-officers"  aria-label="House Leadership">House Leadership</a></li><li><a class="dropdown-item " href="/house/committees"  aria-label="House Committees">Committees</a></li><li><a class="dropdown-item " href="/house/session"  aria-label="House Session">House Session</a></li><li><a class="dropdown-item " href="/find-my-legislator"  aria-label="Find My Legislator">Find My Representative</a></li><li><a class="dropdown-item " href="/house/right-to-know"  aria-label="Right To Know (RTKL)">Right To Know (RTKL)</a></li>
 						</ul>
 					</li>
-				<li class="nav-item"><a class="nav-link " href="https://www.legis.state.pa.us/cfdocs/legis/home/session.cfm"  aria-label="Session">Session</a></li>
+				
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navMenuItem_4" role="button" data-bs-toggle="dropdown" aria-label="Session">Session</a>
+						<ul class="dropdown-menu dropdown-menu-hover" aria-labelledby="navMenuItem_4">
+							<li><a class="dropdown-item " href="/senate/session"  aria-label="Senate Session">Senate Session</a></li><li><a class="dropdown-item " href="/house/session"  aria-label="House Session">House Session</a></li>
+						</ul>
+					</li>
+				
 					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" href="#" id="navMenuItem_5" role="button" data-bs-toggle="dropdown" aria-label="Legislation">Legislation</a>
 						<ul class="dropdown-menu dropdown-menu-hover" aria-labelledby="navMenuItem_5">
 							<li><a class="dropdown-item " href="/legislation"  aria-label="Legislation Home">Legislation Home</a></li><li><a class="dropdown-item " href="/legislation/bills"  aria-label="Bills">Bills</a></li><li><a class="dropdown-item " href="/legislation/amendments"  aria-label="Amendments">Amendments</a></li>
 						</ul>
 					</li>
-				<li class="nav-item"><a class="nav-link " href="https://www.legis.state.pa.us/cfdocs/legis/li/public/"  aria-label="Statutes">Statutes</a></li><li class="nav-item"><a class="nav-link " href="https://www.legis.state.pa.us/login/Form.cfm"  aria-label="Notifications">Notifications</a></li>
+				<li class="nav-item"><a class="nav-link " href="/legislation/amendments"  aria-label="Statutes">Statutes</a></li><li class="nav-item"><a class="nav-link " href="https://www.legis.state.pa.us/login/Form.cfm"  aria-label="Notifications">Notifications</a></li>
 						</ul>
 						
 			<a class="btn btn-info btn-sm text-uppercase ms-lg-3 nav-tool d-none d-xl-inline-flex" href="/find-my-legislator" aria-label="Find My Legislator">
@@ -305,8 +312,8 @@ _LDPCApp.servers["servertype"] = "production";
     <div class="col-12">
         <div class="col-12 text-end">
             
-                <a href=" https://www.legis.state.pa.us/wu01/li/lm/hse_member_address.pdf?1722807538756" class="btn btn-outline-info btn-sm" target="_blank"><i class="fas fa-file-pdf me-1" aria-hidden="true"></i>Address Print <span class="sr-only">- opens in a new tab</span></a>
-                <a href=" https://www.legis.state.pa.us/wu01/li/lm/hse_room_phone.pdf?1722807538756" class="btn btn-outline-info btn-sm" target="_blank"><i class="fas fa-file-pdf me-1" aria-hidden="true"></i>Office Contact Print <span class="sr-only">- opens in a new tab</span></a>
+                <a href=" https://www.legis.state.pa.us/wu01/li/lm/hse_member_address.pdf?1725746159563" class="btn btn-outline-info btn-sm" target="_blank"><i class="fas fa-file-pdf me-1" aria-hidden="true"></i>Address Print <span class="sr-only">- opens in a new tab</span></a>
+                <a href=" https://www.legis.state.pa.us/wu01/li/lm/hse_room_phone.pdf?1725746159563" class="btn btn-outline-info btn-sm" target="_blank"><i class="fas fa-file-pdf me-1" aria-hidden="true"></i>Office Contact Print <span class="sr-only">- opens in a new tab</span></a>
             
         </div>
     
@@ -432,12 +439,15 @@ _LDPCApp.servers["servertype"] = "production";
 					</div>
 				</div>
 				
-			<section class="call-to-action content-align-center featured featured-primary p-1 mb-5" id="call_to_action_1722807538778">
+			<section class="call-to-action content-align-center featured featured-primary p-1 mb-5" id="call_to_action_1725746159601">
 				
 						<div class="col-12">
 							<div class="call-to-action-content">
-								<div class="h5" id="Download-Member-Data">Download Member Data</div>
-								<p class="mb-0 mb-md-2 text-normal">Did you know we offer data in various formats you can download? <a href="https://www.legis.state.pa.us/data/" aria-labelledby="Download-Member-Data" target="_blank">Click here <span class="sr-only">- opens in a new tab</span></a> for more information</p>
+								
+									<div class="h5" id="Download-Member-Data">Download Member Data</div>
+								
+									<p class="mb-0 mb-md-2 text-normal">Did you know we offer data in various formats you can download? <a href="https://www.legis.state.pa.us/data/" aria-labelledby="Download-Member-Data" target="_blank">Click here <span class="sr-only">- opens in a new tab</span></a> for more information</p>
+								
 							</div>
 						</div>
 						
@@ -6303,18 +6313,18 @@ _LDPCApp.servers["servertype"] = "production";
 							<ul class="list-unstyled ul-tweets">
 								
 				<li>
-					<a href="https://twitter.com/search?q=%23PaHouse&lang=all" target="_twitterSearch">#PaHouse</a> Committee Meeting, REPUBLICAN POLICY COMMITTEE (H), 08/07/2024, 10:00 AM <a href="https://tinyurl.com/254992hm#08/07/2024" target="_tweetLink">https://tinyurl.com/254992hm#08/07/2024</a></br>
-					<span class="form-text">Aug 02 1:45 PM</span>
+					<a href="https://twitter.com/search?q=%23PaHouse&lang=all" target="_twitterSearch">#PaHouse</a> Committee Meeting, DEMOCRATIC POLICY COMMITTEE (H), 09/09/2024, 2:00 PM <a href="https://tinyurl.com/2dgssxrk#09/09/2024" target="_tweetLink">https://tinyurl.com/2dgssxrk#09/09/2024</a></br>
+					<span class="form-text">Sep 06 3:30 PM</span>
 				</li>
 			
 				<li>
-					<a href="https://twitter.com/search?q=%23PaHouse&lang=all" target="_twitterSearch">#PaHouse</a> Committee Meeting, VETERANS AFFAIRS AND EMERGENCY PREPAREDNESS (H) S..., 08/14/2024, 2:00 PM <a href="https://tinyurl.com/23hytpn2#08/14/2024" target="_tweetLink">https://tinyurl.com/23hytpn2#08/14/2024</a></br>
-					<span class="form-text">Aug 02 1:00 PM</span>
+					<a href="https://twitter.com/search?q=%23PaHouse&lang=all" target="_twitterSearch">#PaHouse</a> Committee Meeting, DEMOCRATIC POLICY COMMITTEE (H), 09/10/2024, 9:30 AM <a href="https://tinyurl.com/2ab2fq3y#09/10/2024" target="_tweetLink">https://tinyurl.com/2ab2fq3y#09/10/2024</a></br>
+					<span class="form-text">Sep 06 3:15 PM</span>
 				</li>
 			
 				<li>
-					<a href="https://twitter.com/search?q=%23PaHouse&lang=all" target="_twitterSearch">#PaHouse</a> Committee Meeting, VETERANS AFFAIRS AND EMERGENCY PREPAREDNESS (H) S..., 08/13/2024, 10:30 AM <a href="https://tinyurl.com/29vonvth#08/13/2024" target="_tweetLink">https://tinyurl.com/29vonvth#08/13/2024</a></br>
-					<span class="form-text">Aug 02 1:00 PM</span>
+					<a href="https://twitter.com/search?q=%23PaHouse&lang=all" target="_twitterSearch">#PaHouse</a> TRANSPORTATION meets today, 9/06/2024 at 10:00 AM <a href="https://tinyurl.com/yyfeb8pv" target="_tweetLink">https://tinyurl.com/yyfeb8pv</a></br>
+					<span class="form-text">Sep 06 6:15 AM</span>
 				</li>
 			
 							</ul>

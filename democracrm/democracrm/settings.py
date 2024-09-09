@@ -75,6 +75,7 @@ INSTALLED_APPS = [
     'places',
     'social',
     'web',
+    'data',
 ]
 
 MIDDLEWARE = [
