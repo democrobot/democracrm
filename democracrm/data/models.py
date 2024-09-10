@@ -1,3 +1,5 @@
+from pathlib import Path
+from django.conf import settings
 from django.contrib import admin
 from django.contrib.gis.db import models
 from django.utils.translation import gettext_lazy as _
@@ -18,7 +20,12 @@ class ImportDataSource(CRMBase):
         default='api',
         choices=DataSourceType.choices
     )
-    #path = models.FilePathField()
+    path = models.FilePathField(
+        path=f'{settings.BASE_DIR}/data/imports',
+        allow_folders=True,
+        allow_files=False,
+        recursive=True,
+    )
     size = models.IntegerField()
 
     class Meta:
