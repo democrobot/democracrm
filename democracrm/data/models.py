@@ -20,13 +20,18 @@ class ImportDataSource(CRMBase):
         default='api',
         choices=DataSourceType.choices
     )
-    path = models.FilePathField(
+    local_path = models.FilePathField(
         path=f'{settings.BASE_DIR}/data/imports',
         allow_folders=True,
         allow_files=False,
         recursive=True,
     )
-    size = models.IntegerField()
+    remote_url = models.URLField(
+
+    )
+    update_available = models.BooleanField(
+        default=False
+    )
 
     class Meta:
         verbose_name_plural = 'Import Data Sources'

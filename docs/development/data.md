@@ -12,12 +12,18 @@ This includes:
 
 ### Phase One
 
-The initial focus is exclusively on Pennsylvania, and the data sources for the first phase of development will be sourced
+The initial focus is exclusively on Pennsylvania, and the data for the first phase of development will be sourced
 from:
-- [PA General Assembly website](https://www.palegis.us) for governing body and legislative session records. The site is
-under redevelopment and provides new RSS feeds of some of this information. The initial scrapers are functional as well.
+- [PA General Assembly website](https://www.palegis.us) for governing body data. The site is under redevelopment and
+provides new RSS feeds of some of this information. The initial scrapers are functional as well.
+- [Plural (formerly Open States)] for legislative session (and possibly also governing body) data.
 - [PA Department of State website](https://www.pavoterservices.pa.gov/Pages/PurchasePAFullVoterExport.aspx) for full exports
 of voter registration data. This data appears to be published weekly, and will likely be refreshed in the platform
 quarterly.
+- [PA Department of State website](https://www.pa.gov/en/agencies/dos/resources/voting-and-elections-resources/campaign-finance-data.html)
+for political campaign finance reports.
+- [PA Department of State website](https://www.pa.gov/en/services/dos/search-lobbying-disclosure-reports.html)
+for lobbying registration and expense report exports. Searchable online database
+[available here](https://www.palobbyingservices.pa.gov/Public/wfSearch.aspx).
 - [Pennsylvania Spatial Data Access website] for state boundaries (using recent redistricting maps), and Mapbox for base map
 details.
