@@ -6,6 +6,8 @@ This includes:
 - Governing body records (legislative and executive; possibly judicial at some point)
 - Legislative session records (committees, bills, votes)
 - Voter records (ideally the entire state)
+- Campaign finance records
+- Lobbying registration and activity records
 - Geographic boundaries (initially state legislative districts, as well as state borders and other base map details)
 
 ## Data Integration Roadmap
