@@ -63,6 +63,7 @@ nav:
       - Organizing:
         - 'models/organizing/campaign.md'
     - Development:
+      - Data: 'development/data.md'
       - URL Scheme: 'development/url_scheme.md'
       - Documentation: 'development/documentation.md'
     - Release Notes

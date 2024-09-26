@@ -1,5 +1,5 @@
 django
-psycopg2-binary
+psycopg
 requests
 gdal
 django-hosts
@@ -12,3 +12,4 @@ mkdocs-material
 pygeocodio
 sentry-sdk
 django-tree-queries
+scrapy
