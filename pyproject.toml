@@ -1,0 +1,11 @@
+[project]
+name = "democracrm"
+version = "0.0.1"
+description = "An open source, purpose-built public affairs and advocacy platform designed for supporting grassroot
+efforts to pass pro-democracy, anti-corruption laws everywhere, for everyone."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = []
+
+[tool.uv]
+python-preference = "managed"

@@ -1,5 +1,6 @@
 .idea
 .coverage
+.venv
 *.log
 *.pot
 *.py[cod]
