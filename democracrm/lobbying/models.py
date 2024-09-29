@@ -21,11 +21,11 @@ class PoliticalParty(CRMBase):
     )
     abbreviation = models.CharField(
         blank=True,
-        max_length=10
+        max_length=10,
     )
     initial = models.CharField(
         blank=True,
-        max_length=1
+        max_length=1,
     )
     notes = models.TextField(
         blank=True
@@ -55,11 +55,11 @@ class Voter(CRMBase):
 
     id = models.CharField(
         max_length=100,
-        primary_key=True
+        primary_key=True,
     )
     political_party = models.ForeignKey(
         PoliticalParty,
-        on_delete=models.RESTRICT
+        on_delete=models.RESTRICT,
     )
     # Store original party code to ensure all party mappings can be made
     political_party_code = models.CharField(
@@ -68,104 +68,104 @@ class Voter(CRMBase):
     prefix_name = models.CharField(
         'Prefix Name',
         blank=True,
-        max_length=255
+        max_length=255,
     )
     first_name = models.CharField(
         'First Name',
         blank=True,
-        max_length=255
+        max_length=255,
     )
     middle_name = models.CharField(
         'Middle Name',
         blank=True,
-        max_length=255
+        max_length=255,
     )
     last_name = models.CharField(
         'Last Name',
         blank=True,
-        max_length=255
+        max_length=255,
     )
     suffix_name = models.CharField(
         'Suffix Name',
         blank=True,
-        max_length=255
+        max_length=255,
     )
     sex = models.CharField(
         'Sex',
         blank=True,
-        max_length=10
+        max_length=10,
     )
     birth_date = models.DateField(
         'Birth Date',
         null=True,
-        blank=True
+        blank=True,
     )
     initial_registration_date = models.DateField(
         'Initial Registration',
         null=True,
-        blank=True
+        blank=True,
     )
     last_registration_date = models.DateField(
         'Current Registration',
         null=True,
-        blank=True
+        blank=True,
     )
     last_election_date = models.DateField(
         null=True,
-        blank=True
+        blank=True,
     )
     last_voting_date = models.DateField(
         null=True,
-        blank=True
+        blank=True,
     )
     voter_precinct = models.CharField(
         max_length=100,
-        blank=True
+        blank=True,
     )
     voter_polling_place = models.CharField(
         max_length=100,
-        blank=True
+        blank=True,
     )
     status = models.CharField(
         max_length=20,
         choices=Status.choices,
-        default=Status.ACTIVE
+        default=Status.ACTIVE,
     )
     physical_address_street_number = models.CharField(
         'Address Number',
         blank=True,
-        max_length=100
+        max_length=100,
     )
     physical_address_street_number_suffix = models.CharField(
         blank=True,
-        max_length=10
+        max_length=10,
     )
     physical_address_street_name = models.CharField(
         'Address Street Name',
         blank=True,
-        max_length=100
+        max_length=100,
     )
     physical_address_unit = models.CharField(
         'Address Unit',
         blank=True,
-        max_length=100
+        max_length=100,
     )
     physical_address_supplemental = models.CharField(
         'Address Supplement',
         blank=True,
-        max_length=100
+        max_length=100,
     )
     physical_address_city = models.CharField(
         'City',
         blank=True,
-        max_length=100
+        max_length=100,
     )
     municipality = models.ForeignKey(
         Boundary,
         blank=True,
         null=True,
         related_name='municipal_voters',
-        on_delete=models.SET_NULL
+        on_delete=models.SET_NULL,
     )
     # Store original municipality code to ensure all municipality mappings can be made
     municipality_code = models.CharField(
@@ -176,54 +176,54 @@ class Voter(CRMBase):
         blank=True,
         null=True,
         related_name='county_voters',
-        on_delete=models.SET_NULL
+        on_delete=models.SET_NULL,
     )
     state = models.ForeignKey(
         Boundary,
         blank=True,
         null=True,
         related_name='state_voters',
-        on_delete=models.SET_NULL
+        on_delete=models.SET_NULL,
     )
     physical_address_zip_code = models.CharField(
         'ZIP Code',
         blank=True,
-        max_length=100
+        max_length=100,
     )
     mailing_address = models.CharField(
         'Mailing Address',
         blank=True,
-        max_length=100
+        max_length=100,
     )
     mailing_address_supplemental = models.CharField(
         'Mailing Address Supplement',
         blank=True,
-        max_length=100
+        max_length=100,
     )
     mailing_address_city = models.CharField(
         'Mailing City',
         blank=True,
-        max_length=100
+        max_length=100,
     )
     mailing_address_state = models.CharField(
         'Mailing State',
         blank=True,
-        max_length=100
+        max_length=100,
     )
     mailing_address_zip_code = models.CharField(
         'Mailing ZIP Code',
         blank=True,
-        max_length=100
+        max_length=100,
     )
     phone_number = models.CharField(
         'Phone Number',
         blank=True,
-        max_length=11
+        max_length=11,
     )
     email_address = models.CharField(
         'Email',
         blank=True,
-        max_length=254
+        max_length=254,
     )
     data_export_date = models.DateField(
     )
@@ -297,11 +297,11 @@ class GoverningBody(CRMBase):
     )
     level = models.CharField(
         max_length=255,
-        choices=Level.choices
+        choices=Level.choices,
     )
     boundary = models.ForeignKey(
         'places.Boundary',
-        on_delete=models.RESTRICT
+        on_delete=models.RESTRICT,
     )
     notes = models.TextField(
         blank=True
@@ -336,20 +336,20 @@ class PublicOffice(CRMTreeBase):
 
     governing_body = models.ForeignKey(
         GoverningBody,
-        on_delete=models.PROTECT
+        on_delete=models.PROTECT,
     )
 
     office_type = models.CharField(
         default='legislative',
         max_length=255,
-        choices=OfficeType.choices
+        choices=OfficeType.choices,
     )
     
     # TODO: Only display when office_type is legislative
     chamber_type = models.CharField(
         default='unicameral',
         max_length=255,
-        choices=ChamberType.choices
+        choices=ChamberType.choices,
     )
 
     # TODO: Define chamber order (i.e. Upper House, Lower House) via sort index?
@@ -391,11 +391,11 @@ class PoliticalSubdivision(CRMBase):
 
     boundary = models.ForeignKey(
         'places.Boundary',
-        on_delete=models.RESTRICT
+        on_delete=models.RESTRICT,
     )
     public_office = models.ForeignKey(
         PublicOffice,
-        on_delete=models.PROTECT
+        on_delete=models.PROTECT,
     )
     name = models.CharField(
         max_length=255
@@ -405,7 +405,7 @@ class PoliticalSubdivision(CRMBase):
     )
     district = models.IntegerField(
         null=True,
-        blank=True
+        blank=True,
     )
     seats = models.IntegerField(
         default=1
@@ -444,42 +444,42 @@ class PublicOfficial(CRMBase):
 
     prefix_name = models.CharField(
         blank=True,
-        max_length=50
+        max_length=50,
     )
     first_name = models.CharField(
         max_length=100
     )
     middle_name = models.CharField(
         blank=True,
-        max_length=100
+        max_length=100,
     )
     last_name = models.CharField(
         max_length=100
     )
     suffix_name = models.CharField(
         blank=True,
-        max_length=50
+        max_length=50,
     )
     role = models.CharField(
         max_length=100,
         choices=Role.choices,
-        default=Role.LEGISLATIVE
+        default=Role.LEGISLATIVE,
     )
     public_office = models.ForeignKey(
         PublicOffice,
         blank=True,
         null=True,
-        on_delete=models.RESTRICT
+        on_delete=models.RESTRICT,
     )
     political_subdivision = models.ForeignKey(
         PoliticalSubdivision,
         blank=True,
         null=True,
-        on_delete=models.RESTRICT
+        on_delete=models.RESTRICT,
     )
     title = models.CharField(
         default='Legislator',
-        max_length=255
+        max_length=255,
     )
     description = models.TextField(
         blank=True
@@ -489,7 +489,7 @@ class PublicOfficial(CRMBase):
     )
     leadership_title = models.CharField(
         blank=True,
-        max_length=255
+        max_length=255,
     )
     is_elected = models.BooleanField(
         default=True
@@ -501,16 +501,16 @@ class PublicOfficial(CRMBase):
         PoliticalParty,
         blank=True,
         null=True,
-        on_delete=models.PROTECT
+        on_delete=models.PROTECT,
     )
     # TODO: Create term field as range? Might not work for appointed officials.
     service_start = models.DateField(
         null=True,
-        blank=True
+        blank=True,
     )
     service_end = models.DateField(
         null=True,
-        blank=True
+        blank=True,
     )
     official_profile_url = models.URLField(
         blank=True
@@ -571,37 +571,36 @@ class PublicOfficialPosition(CRMBase):
     )
     leadership_title = models.CharField(
         blank=True,
-        max_length=255
+        max_length=255,
     )
     public_office = models.ForeignKey(
         PublicOffice,
-        on_delete=models.PROTECT
+        on_delete=models.PROTECT,
     )
     political_subdivision = models.ForeignKey(
         PoliticalSubdivision,
         blank=True,
         null=True,
-        on_delete=models.PROTECT
     )
     type = models.CharField(
         max_length=100,
         choices=Type.choices,
-        default=Type.LEGISLATIVE
+        default=Type.LEGISLATIVE,
     )
     public_official = models.ForeignKey(
         PublicOfficial,
         blank=True,
         null=True,
-        on_delete=models.PROTECT
+        on_delete=models.PROTECT,
     )
     # TODO: Create term field as range? Might not work for appointed officials.
     start_date = models.DateField(
         null=True,
-        blank=True
+        blank=True,
     )
     end_date = models.DateField(
         null=True,
-        blank=True
+        blank=True,
     )
     official_profile_url = models.URLField(
         blank=True
@@ -636,7 +635,7 @@ class PublicOfficialGroup(CRMTreeBase):
     )
     public_officials = models.ManyToManyField(
         PublicOfficial,
-        blank=True
+        blank=True,
     )
 
     class Meta:
@@ -666,11 +665,11 @@ class Committee(CRMTreeBase):
     governing_body = models.ForeignKey(
         GoverningBody,
         blank=True,
-        on_delete=models.RESTRICT
+        on_delete=models.RESTRICT,
     )
     public_office = models.ForeignKey(
         PublicOffice,
-        on_delete=models.RESTRICT
+        on_delete=models.RESTRICT,
     )
     notes = models.TextField(
         blank=True
@@ -702,27 +701,27 @@ class CommitteeRole(CRMBase):
     )
     leadership_title = models.CharField(
         blank=True,
-        max_length=255
+        max_length=255,
     )
     type = models.CharField(
         max_length=100,
         choices=Type.choices,
-        default=Type.MEMBER
+        default=Type.MEMBER,
     )
     public_official = models.ForeignKey(
         PublicOfficial,
         blank=True,
         null=True,
-        on_delete=models.PROTECT
+        on_delete=models.PROTECT,
     )
     # TODO: Create term field as range? Might not work for appointed officials.
     service_start = models.DateField(
         null=True,
-        blank=True
+        blank=True,
     )
     service_end = models.DateField(
         null=True,
-        blank=True
+        blank=True,
     )
     notes = models.TextField(
         blank=True
@@ -746,11 +745,11 @@ class LegislativeSession(CRMBase):
 
     governing_body = models.ForeignKey(
         GoverningBody,
-        on_delete=models.RESTRICT
+        on_delete=models.RESTRICT,
     )
     name = models.CharField(
         blank=True,
-        max_length=255
+        max_length=255,
     )
     description = models.TextField(
         blank=True
@@ -806,21 +805,21 @@ class Legislation(CRMBase):
     )
     governing_body = models.ForeignKey(
         GoverningBody,
-        on_delete=models.RESTRICT
+        on_delete=models.RESTRICT,
     )
     committee = models.ForeignKey(
         Committee,
         blank=True,
-        on_delete=models.RESTRICT
+        on_delete=models.RESTRICT,
     )
     legislative_session = models.ForeignKey(
         LegislativeSession,
         blank=True,
-        on_delete=models.RESTRICT
+        on_delete=models.RESTRICT,
     )
     number = models.CharField(
         blank=True,
-        max_length=255
+        max_length=255,
     )
     url = models.URLField(
         blank=True
@@ -828,7 +827,7 @@ class Legislation(CRMBase):
     status = models.CharField(
         blank=True,
         max_length=255,
-        choices=Status.choices
+        choices=Status.choices,
     )
     notes = models.TextField(
         blank=True
@@ -884,25 +883,25 @@ class SupportLevel(CRMBase):
 
     public_official = models.ForeignKey(
         PublicOfficial,
-        on_delete=models.PROTECT
+        on_delete=models.PROTECT,
     )
     campaign = models.ForeignKey(
         Campaign,
-        on_delete=models.PROTECT
+        on_delete=models.PROTECT,
     )
     campaign_support = models.CharField(
         max_length=255,
-        choices=Status.choices
+        choices=Status.choices,
     )
     legislation = models.ForeignKey(
         LegislationGroup,
         null=True,
         blank=True,
-        on_delete=models.PROTECT
+        on_delete=models.PROTECT,
     )
     legislation_support = models.CharField(
         max_length=255,
-        choices=Status.choices
+        choices=Status.choices,
     )
     notes = models.TextField(
         blank=True
@@ -940,22 +939,22 @@ class InterpersonalTie(CRMBase):
     public_official1 = models.ForeignKey(
         'PublicOfficial',
         related_name='ties_from',
-        on_delete=models.PROTECT
+        on_delete=models.PROTECT,
     )
     public_official2 = models.ForeignKey(
         'PublicOfficial',
         related_name='ties_to',
-        on_delete=models.PROTECT
+        on_delete=models.PROTECT,
     )
     tie_strength = models.CharField(
         default='unknown',
         max_length=10,
-        choices=TieStrength.choices
+        choices=TieStrength.choices,
     )
     tie_affinity = models.CharField(
         default='neutral',
         max_length=10,
-        choices=TieAffinity.choices
+        choices=TieAffinity.choices,
     )
     notes = models.TextField(
         blank=True

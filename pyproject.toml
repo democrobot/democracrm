@@ -1,11 +1,19 @@
 [project]
 name = "democracrm"
 version = "0.0.1"
-description = "An open source, purpose-built public affairs and advocacy platform designed for supporting grassroot
-efforts to pass pro-democracy, anti-corruption laws everywhere, for everyone."
+description = "An open source, purpose-built public affairs and advocacy platform designed for supporting grassroot efforts to pass pro-democracy, anti-corruption laws everywhere, for everyone."
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = []
 
 [tool.uv]
 python-preference = "managed"
+
+[tool.ruff.lint.flake8-quotes]
+inline-quotes = "single"
+multiline-quotes = "single"
+
+[tool.ruff.format]
+# Prefer single quotes over double quotes.
+quote-style = "single"
+

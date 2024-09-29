@@ -14,12 +14,12 @@ This includes:
 
 ### Phase One
 
-The initial focus is exclusively on Pennsylvania, and the data for the first phase of development will be sourced
-from:
+The initial focus is exclusively on (1) the development and launch of the platform and (2) field testing of the
+platform in Pennsylvania, and the data for the first phase of development will be sourced from:
 
 - [PA General Assembly website](https://www.palegis.us) for governing body data. The site is under redevelopment and
 provides new RSS feeds of some of this information. The initial scrapers are functional as well.
-- [Plural (formerly Open States)](https://pluralpolicy.com/) for legislative session (and possibly also governing body) data.
+- [Plural Policy (formerly Open States)](https://pluralpolicy.com/) for legislative session (and possibly also governing body) data.
 - [PA Department of State website](https://www.pavoterservices.pa.gov/Pages/PurchasePAFullVoterExport.aspx) for full exports
 of voter registration data. This data appears to be published weekly, and will likely be refreshed in the platform
 quarterly.
@@ -32,4 +32,6 @@ for lobbying registration and expense report exports. Searchable online database
 - [Pennsylvania Spatial Data Access website](https://www.pasda.psu.edu/) for state boundaries (using recent redistricting maps),
 and possibly [Mapbox](https://www.mapbox.com) for base map details.
 
-PP    51d2eaa8-ca66-4ade-976f-e32379b95ac1
+### Phase Two
+
+The next steps after Pennsylvania will be developed in coordination with partners in other states in 2025.
