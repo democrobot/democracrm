@@ -1,6 +1,7 @@
 .idea
 .coverage
 .venv
+.ruff_cache
 *.log
 *.pot
 *.py[cod]
@@ -11,3 +12,4 @@ geckodriver
 fixtures
 media
 secrets.json
+democracrm/data/cached_data/

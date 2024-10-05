@@ -458,6 +458,7 @@ class PublicOfficialPosition(CRMBase):
         PoliticalSubdivision,
         blank=True,
         null=True,
+        on_delete=models.PROTECT,
     )
     type = models.CharField(
         choices=Type.choices,
