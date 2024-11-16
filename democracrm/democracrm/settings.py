@@ -55,7 +55,7 @@ DEBUG = True
 
 # TODO: Modify appropriately for upcoming external testing
 ALLOWED_HOSTS = ['*']
-CSRF_TRUSTED_ORIGINS = ['https://*.ngrok.io']
+#CSRF_TRUSTED_ORIGINS = ['https://*.ngrok.io']
 
 # Application definition
 
@@ -113,13 +113,14 @@ WSGI_APPLICATION = 'democracrm.wsgi.application'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 DATABASES = {
+    # TODO: Expand for redundancy
     'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'ENGINE': SECRETS['DB_ENGINE'],
         'HOST': SECRETS['DB_HOST'],
-        'PORT': '5432',
-        'NAME': 'democracrm',
-        'USER': 'democracrm',
-        'PASSWORD': SECRETS['POSTGRESQL']
+        'PORT': SECRETS['DB_PORT'],
+        'NAME': SECRETS['DB_NAME'],
+        'USER': SECRETS['DB_USER'],
+        'PASSWORD': SECRETS['DB_PASSWORD']
     }
 }
 
@@ -147,13 +148,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'America/New_York'
-
 USE_I18N = True
-
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
