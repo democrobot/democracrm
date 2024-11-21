@@ -13,9 +13,7 @@ class Boundary(CRMTreeBase):
     # For now, boundaries can only have one parent, which is almost always true
 
     # Name should be the official name of the jurisdiction
-    name = models.CharField(
-        max_length=255
-    )
+    name = models.CharField()
     description = models.TextField(blank=True)
     # Defined areas based off of this: https://www2.census.gov/geo/pdfs/reference/geodiagram.pdf
     # The focus is on areas with jurisdiction over legislation and elections
@@ -27,7 +25,6 @@ class Boundary(CRMTreeBase):
         ('municipality', 'Municipality'),
     )
     level = models.CharField(
-        max_length=255,
         choices=LEVEL_CHOICES,
     )
 
@@ -46,7 +43,7 @@ class RegionGroup(CRMTreeBase):
     A hierarchical group of Region objects in a one-to-many topology.
     """
 
-    name = models.CharField(max_length=255)
+    name = models.CharField()
     description = models.TextField(blank=True)
     overlapping_enabled = models.BooleanField(default=False)
 
@@ -62,7 +59,7 @@ class Region(CRMBase):
     User-defined regions for use in organizations.
     """
 
-    name = models.CharField(max_length=255)
+    name = models.CharField()
     description = models.TextField(blank=True)
     boundaries = models.ManyToManyField(Boundary, blank=True)
     group = models.ForeignKey(RegionGroup, null=True, blank=True, on_delete=models.PROTECT)
@@ -79,7 +76,7 @@ class SiteGroup(CRMTreeBase):
     A hierarchical group of Site objects in a one-to-many topology.
     """
 
-    name = models.CharField(max_length=255)
+    name = models.CharField()
     description = models.TextField(blank=True)
 
     class Meta:
@@ -94,44 +91,34 @@ class Site(CRMBase):
     A Site is a point-based geospatial record.
     """
 
-    name = models.CharField(max_length=255)
+    name = models.CharField()
     description = models.TextField(blank=True)
     group = models.ForeignKey(SiteGroup, blank=True, null=True,
                               on_delete=models.PROTECT)
     # TODO: Add mailing address
-    has_physical_address = models.BooleanField(
-        default=False
-    )
-    physical_street_number = models.CharField(
-        blank=True,
-        max_length=10
-    )
-    physical_street_direction = models.CharField(blank=True, max_length=10)
-    physical_street_name = models.CharField(blank=True, max_length=255)
-    physical_street_suffix = models.CharField(blank=True, max_length=100)
-    physical_unit_number = models.CharField(blank=True, max_length=50)
-    physical_city = models.CharField(blank=True, max_length=255)
-    physical_state = models.CharField(blank=True, max_length=255)
-    physical_zip_code = models.CharField(blank=True, max_length=10)
-    physical_county = models.CharField(blank=True, max_length=255)
+    has_physical_address = models.BooleanField(default=False)
+    physical_street_number = models.CharField(blank=True)
+    physical_street_direction = models.CharField(blank=True)
+    physical_street_name = models.CharField(blank=True)
+    physical_street_suffix = models.CharField(blank=True)
+    physical_unit_number = models.CharField(blank=True)
+    physical_city = models.CharField(blank=True)
+    physical_state = models.CharField(blank=True)
+    physical_zip_code = models.CharField(blank=True)
+    physical_county = models.CharField(blank=True)
     physical_latitude = models.FloatField(null=True, blank=True)
     physical_longitude = models.FloatField(null=True, blank=True)
-    has_mailing_address = models.BooleanField(
-        default=False
-    )
-    mailing_street_number = models.CharField(
-        blank=True,
-        max_length=10
-    )
-    mailing_street_direction = models.CharField(blank=True, max_length=10)
-    mailing_street_name = models.CharField(blank=True, max_length=255)
-    mailing_street_suffix = models.CharField(blank=True, max_length=100)
-    mailing_unit_number = models.CharField(blank=True, max_length=50)
-    mailing_po_box = models.CharField(blank=True, max_length=255)
-    mailing_city = models.CharField(blank=True, max_length=255)
-    mailing_state = models.CharField(blank=True, max_length=255)
-    mailing_zip_code = models.CharField(blank=True, max_length=10)
-    mailing_county = models.CharField(blank=True, max_length=255)
+    has_mailing_address = models.BooleanField(default=False)
+    mailing_street_number = models.CharField(blank=True,)
+    mailing_street_direction = models.CharField(blank=True)
+    mailing_street_name = models.CharField(blank=True)
+    mailing_street_suffix = models.CharField(blank=True)
+    mailing_unit_number = models.CharField(blank=True)
+    mailing_po_box = models.CharField(blank=True)
+    mailing_city = models.CharField(blank=True)
+    mailing_state = models.CharField(blank=True)
+    mailing_zip_code = models.CharField(blank=True)
+    mailing_county = models.CharField(blank=True)
     mailing_latitude = models.FloatField(null=True, blank=True)
     mailing_longitude = models.FloatField(null=True, blank=True)
     notes = models.TextField(blank=True)

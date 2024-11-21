@@ -9,8 +9,7 @@ from places.models import Boundary
 
 class PoliticalParty(CRMBase):
     """
-    A formal political party active with candidates and/or elected officials
-    being represented.
+    A formal political party active with candidates and/or elected officials being represented.
     """
 
     name = models.CharField()
@@ -338,8 +337,6 @@ class PoliticalSubdivision(CRMBase):
     seats = models.IntegerField(default=1)
     notes = models.TextField(blank=True)
 
-    # TODO: Add boundary field
-
     class Meta:
         ordering = ['name']
         verbose_name_plural = 'Political Subdivisions'
@@ -359,6 +356,7 @@ class PublicOfficial(CRMBase):
     Represents elected or appointed public officials that are lobbying targets.
     """
 
+    # This should be in the PublicOfficialPosition
     class Role(models.TextChoices):
         LEGISLATIVE = 'legislative', _('Legislative')
         EXECUTIVE = 'executive', _('Executive')
@@ -399,7 +397,7 @@ class PublicOfficial(CRMBase):
         null=True,
         on_delete=models.PROTECT,
     )
-    # TODO: Create term field as range? Might not work for appointed officials.
+    # TODO: Create term field as range? Might not work for appointed officials. What about gaps in terms?
     service_start = models.DateField(
         null=True,
         blank=True,
@@ -412,7 +410,7 @@ class PublicOfficial(CRMBase):
     official_profile_thumbnail_url = models.URLField(blank=True)
     official_profile_photo_url = models.URLField(blank=True)
     contacts = models.ManyToManyField(
-        'contacts.Contact',
+        'people.Contact',
         blank=True,
     )
     notes = models.TextField(blank=True)
@@ -435,7 +433,7 @@ class PublicOfficialPosition(CRMBase):
     """
     Defined governmental positions, attached to public offices (and political subdivisions, where applicable), held by
     specific public officials. These are the positions sought after when people are elected or appointed as public
-    officials, and the same public official can hold multiple position or shift between them in their career.
+    officials, and the same public official can hold multiple positions or shift between them in their career.
     """
 
     class Type(models.TextChoices):

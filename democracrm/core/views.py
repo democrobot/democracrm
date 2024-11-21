@@ -1,10 +1,12 @@
 from django.shortcuts import render, redirect
 
 from accounts.models import OrganizationAccount
+from places.models import Boundary
 
 
 def index(request):
-    return render(request, 'core/index.html', {})
+    nations = Boundary.objects.filter(level='nation')
+    return render(request, 'core/index.html', {'nations': nations})
 
 def us_index(request):
     return render(request, 'core/us_index.html', {})

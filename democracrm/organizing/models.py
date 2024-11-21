@@ -3,7 +3,7 @@ from django.contrib.gis.db.models import Q
 from django.utils.translation import gettext_lazy as _
 
 from accounts.models import UserAccount, OrganizationAccount
-from contacts.models import Contact
+from people.models import Contact
 from core.models import CRMBase, CRMTreeBase, OrgAccountMixin
 # from lobbying.models import Voter, PublicOffice  # FIXME: Circular reference issue
 from places.models import Region, Site

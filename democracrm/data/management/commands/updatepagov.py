@@ -5,33 +5,34 @@ from lobbying.models import (
     PublicOffice,
     PoliticalSubdivision,
     PublicOfficial,
-    PublicOfficialRole
+    PublicOfficialPosition
 )
 from places.models import Boundary
 
 
 class Command(BaseCommand):
-    help = 'Loads public official data into PublicOfficial records'
+    help = 'Loads initial PA boundaries, gov. bodies, public official data into PublicOfficial records'
 
     def add_arguments(self, parser):
         pass
 
     @staticmethod
-    def create_subdivisions_roles(public_office):
+    def create_subdivisions_roles(public_office, boundary):
 
         if public_office.total_seats == 1:
             political_subdivision, created = PoliticalSubdivision.objects.get_or_create(
+                boundary=boundary,
                 public_office=public_office,
                 name=public_office.name,
                 seats=public_office.total_seats
             )
-            public_official_role, created = PublicOfficialRole.objects.get_or_create(
-                type=PublicOfficialRole.Type.EXECUTIVE,
+            public_official_position, created = PublicOfficialPosition.objects.get_or_create(
+                office_type=PublicOfficialPosition.Type.EXECUTIVE,
                 public_office=public_office,
                 name=public_office.name,
                 political_subdivision=political_subdivision
             )
-            print(f'{political_subdivision} and {public_official_role} created or updated')
+            print(f'{political_subdivision} and {public_official_position} created or updated')
         else:
             if 'House' in public_office.name:
                 chamber_role = 'State Representative'
@@ -46,61 +47,74 @@ class Command(BaseCommand):
                     district=seat,
                     seats=public_office.seats_per_subdivision
                 )
-                public_official_role, created = PublicOfficialRole.objects.get_or_create(
+                public_official_position, created = PublicOfficialPosition.objects.get_or_create(
+                    office_type=PublicOfficialPosition.Type.LEGISLATIVE,
                     public_office=public_office,
                     name=f'District {seat} {chamber_role}',
                     political_subdivision=political_subdivision
                 )
-                print(f'{political_subdivision} and {public_official_role} created or updated')
+                print(f'{political_subdivision} and {public_official_position} created or updated')
 
     def handle(self, *args, **options):
-        print('Creating Pennsylvania data')
+        print('Updating Pennsylvania state data')
+
+        nation_boundary, created = Boundary.objects.get_or_create(
+            name='United States',
+            level='nation'
+        )
 
         state_boundary, created = Boundary.objects.get_or_create(
             name='Pennsylvania',
-            level='state'
+            level='state',
+            parent=nation_boundary
         )
 
         governing_body, created = GoverningBody.objects.get_or_create(
-            name='PA State Government',
+            name='Pennsylvania State Government',
             level='state',
+            description='Test???',
             boundary=state_boundary
         )
 
         state_governor, created = PublicOffice.objects.get_or_create(
             governing_body=governing_body,
-            type='executive',
+            office_type='executive',
             name='PA Governor',
             total_seats=1,
             seats_per_subdivision=1
         )
-        self.create_subdivisions_roles(state_governor)
+        if created:
+            self.create_subdivisions_roles(state_governor, state_boundary)
+        else:
+            print('Exists')
 
         state_lt_governor, created = PublicOffice.objects.get_or_create(
             governing_body=governing_body,
-            type='executive',
+            office_type='executive',
             name='PA Lieutenant Governor',
             total_seats=1,
             seats_per_subdivision=1
         )
-        self.create_subdivisions_roles(state_lt_governor)
+        self.create_subdivisions_roles(state_lt_governor, state_boundary)
 
-        state_senate, created = PublicOffice.objects.get_or_create(
-            governing_body=governing_body,
-            type='legislative',
-            name='PA State Senate',
-            total_seats=50,
-            seats_per_subdivision=1
-        )
-        self.create_subdivisions_roles(state_senate)
+        # # TODO: Other cabinet officers
 
-        state_house, created = PublicOffice.objects.get_or_create(
-            governing_body=governing_body,
-            type='legislative',
-            name='PA State House',
-            total_seats=203,
-            seats_per_subdivision=1
-        )
-        self.create_subdivisions_roles(state_house)
+        # state_senate, created = PublicOffice.objects.get_or_create(
+        #     governing_body=governing_body,
+        #     office_type='legislative',
+        #     name='PA State Senate',
+        #     total_seats=50,
+        #     seats_per_subdivision=1
+        # )
+        # self.create_subdivisions_roles(state_senate)
+
+        # state_house, created = PublicOffice.objects.get_or_create(
+        #     governing_body=governing_body,
+        #     office_type='legislative',
+        #     name='PA State House',
+        #     total_seats=203,
+        #     seats_per_subdivision=1
+        # )
+        # self.create_subdivisions_roles(state_house)
 
         self.stdout.write(self.style.SUCCESS('PA Created'))

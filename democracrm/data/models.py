@@ -25,9 +25,10 @@ class ImportDataSource(CRMBase):
         allow_folders=True,
         allow_files=False,
         recursive=True,
+        blank=True,
     )
     remote_url = models.URLField(
-
+        blank=True,
     )
     update_available = models.BooleanField(
         default=False

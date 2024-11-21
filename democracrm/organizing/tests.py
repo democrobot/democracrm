@@ -2,7 +2,7 @@ from django.test import TestCase
 
 from accounts.models import OrganizationAccount
 from accounts.tests import init_user_account
-from contacts.models import Contact
+from people.models import Contact
 from places.models import Boundary, Region
 
 

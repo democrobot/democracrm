@@ -4,7 +4,7 @@ from django.contrib.gis.db import models
 from .managers import UserManager
 from core.models import CRMBase
 from places.models import Boundary
-from contacts.models import Contact
+from people.models import Contact
 
 
 class UserAccount(AbstractUser, CRMBase):

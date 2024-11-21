@@ -1,7 +1,7 @@
 from django.test import TestCase
 
 from .models import UserAccount, OrganizationAccount
-from contacts.models import Contact
+from people.models import Contact
 from places.models import Boundary
 
 

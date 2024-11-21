@@ -46,7 +46,7 @@ class PoliticalSubdivisionTests(TestCase):
         political_subdivision = init_political_subdivision()
         political_subdivision.save()
 
-        self.assertEquals(political_subdivision.seats, 1)
+        self.assertEqual(political_subdivision.seats, 1)
 
     def test_seat_assignments(self):
         """
@@ -62,12 +62,12 @@ class PoliticalSubdivisionTests(TestCase):
         self.fail()
 
 
-class PublicOfficialTests(TestCase):
+class PublicOfficialPositionTests(TestCase):
 
-    def test_public_official_creation(self):
-        official = init_public_official()
-        official.save()
-        self.assertEquals(official.role, PublicOfficial.Role.LEGISLATIVE)
+    def test_public_official_position_creation(self):
+        official_position = init_public_official()
+        official_position.save()
+        self.assertEqual(official_position.role, PublicOfficial.Role.LEGISLATIVE)
 
     def test_subdivision_assignment(self):
         political_subdivision = init_political_subdivision()
@@ -76,7 +76,27 @@ class PublicOfficialTests(TestCase):
         official.subdivision = political_subdivision
         official.save()
 
-        self.assertEquals(official.subdivision, political_subdivision)
+        self.assertEqual(official.subdivision, political_subdivision)
+
+
+class PublicOfficialTests(TestCase):
+
+    def test_public_official_creation(self):
+        official = init_public_official()
+        official.save()
+        self.assertEqual(official.role, PublicOfficial.Role.LEGISLATIVE)
+
+    def test_subdivision_assignment(self):
+        political_subdivision = init_political_subdivision()
+        political_subdivision.save()
+        official = init_public_official()
+        official.subdivision = political_subdivision
+        official.save()
+
+        self.assertEqual(official.subdivision, political_subdivision)
+
+
+
 
 
 class SupportLevelTests(TestCase):
@@ -103,7 +123,7 @@ class InterpersonalTieTests(TestCase):
         public_official2 = init_public_official(first_name='Official', last_name='Two')
         tie = InterpersonalTie.objects.create(public_official1=public_official1, public_official2=public_official2)
         tie.save()
-        self.assertEquals(tie.relationship_summary(), 'Official One is unknown/neutral towards Official Two')
+        self.assertEqual(tie.relationship_summary(), 'Official One is unknown/neutral towards Official Two')
 
     def test_interpersonal_ties_to(self):
         public_official1 = init_public_official(first_name='Official', last_name='One')

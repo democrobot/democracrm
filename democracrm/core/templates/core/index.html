@@ -5,6 +5,8 @@
 {% endblock %}
 
 {% block content %}
-<a href="/us">United States</a>
+{% for nation in nations %}
+<li><a href="/us">United States*</a></li>
+{% endfor %}
 
 {% endblock %}
