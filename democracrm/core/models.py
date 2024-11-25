@@ -1,7 +1,8 @@
 import uuid
 from tree_queries.models import TreeNode
 
-from django.contrib.gis.db import models
+#from django.contrib.gis.db import models
+from django.db import models
 from django.utils.html import format_html
 
 # from accounts.models import OrganizationAccount
@@ -42,12 +43,12 @@ class CRMTreeBase(CRMBase, TreeNode):
         abstract = True
 
 
-class OrgAccountMixin(models.Model):
-    """
-    Links an object to an organization account.
-    """
+# class OrgAccountMixin(models.Model):
+#     """
+#     Links an object to an organization account.
+#     """
 
-    org_account = models.ForeignKey('accounts.OrganizationAccount', on_delete=models.PROTECT)
+#     org_account = models.ForeignKey('accounts.OrganizationAccount', on_delete=models.PROTECT)
 
-    class Meta:
-        abstract = True
+#     class Meta:
+#         abstract = True

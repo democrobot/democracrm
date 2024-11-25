@@ -20,7 +20,7 @@ from core import views
 
 urlpatterns = [
     path('', include('core.urls')),
-    path('test/', include('core.urls')),
+    #path('test/', include('core.urls')),
     path('admin/', admin.site.urls),
     #path('<slug:slug>/', views.organization_root),
     #path('<slug:slug>/lobbying/', include('lobbying.urls')),

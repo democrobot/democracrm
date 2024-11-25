@@ -23,7 +23,7 @@ except ImportError:
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRETS = json.load(open('democracrm/secrets.json'))
+SECRETS = json.load(open('democracrm/secrets-dev.json'))
 SECRET_KEY = SECRETS['DJANGO_KEY']
 
 # # Sentry setup (optional, but will be used for hosted service)
@@ -66,16 +66,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.gis',
-    'accounts',
-    'people',
+    #'django.contrib.gis',
+    #'accounts',
+    #'people',
     'core',
-    'lobbying',
-    'organizing',
-    'places',
-    'social',
-    'web',
-    'data',
+    # 'lobbying',
+    # 'organizing',
+    # 'places',
+    # 'social',
+    # 'web',
+    # 'data',
 ]
 
 MIDDLEWARE = [
@@ -116,11 +116,11 @@ DATABASES = {
     # TODO: Expand for redundancy
     'default': {
         'ENGINE': SECRETS['DB_ENGINE'],
-        'HOST': SECRETS['DB_HOST'],
-        'PORT': SECRETS['DB_PORT'],
+        #'HOST': SECRETS['DB_HOST'],
+        #'PORT': SECRETS['DB_PORT'],
         'NAME': SECRETS['DB_NAME'],
-        'USER': SECRETS['DB_USER'],
-        'PASSWORD': SECRETS['DB_PASSWORD']
+        #'USER': SECRETS['DB_USER'],
+        #'PASSWORD': SECRETS['DB_PASSWORD']
     }
 }
 
@@ -161,4 +161,5 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-AUTH_USER_MODEL = 'accounts.UserAccount'
+# 
+# çAUTH_USER_MODEL = 'accounts.UserAccount'

@@ -11,5 +11,5 @@ db.sqlite3
 geckodriver
 fixtures
 media
-secrets.json
+secrets*.json
 democracrm/data/cached_data/
