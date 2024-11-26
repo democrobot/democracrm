@@ -1,7 +1,7 @@
 from geocodio import GeocodioClient
 
 
-from democracrm.settings import SECRETS
+from appserver.settings import SECRETS
 
 geocoder = GeocodioClient(SECRETS['GEOCODIO_KEY'])
 

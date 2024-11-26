@@ -23,7 +23,7 @@ except ImportError:
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRETS = json.load(open('democracrm/secrets-dev.json'))
+SECRETS = json.load(open('appserver/secrets-dev.json'))
 SECRET_KEY = SECRETS['DJANGO_KEY']
 
 # # Sentry setup (optional, but will be used for hosted service)
@@ -88,7 +88,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'democracrm.urls'
+ROOT_URLCONF = 'appserver.urls'
 
 TEMPLATES = [
     {
@@ -106,7 +106,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'democracrm.wsgi.application'
+WSGI_APPLICATION = 'appserver.wsgi.application'
 
 
 # Database
