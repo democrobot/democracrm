@@ -23,7 +23,7 @@ except ImportError:
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRETS = json.load(open('appserver/secrets-dev.json'))
+SECRETS = json.load(open('appserver/secrets.json'))
 SECRET_KEY = SECRETS['DJANGO_KEY']
 
 # # Sentry setup (optional, but will be used for hosted service)
@@ -116,11 +116,11 @@ DATABASES = {
     # TODO: Expand for redundancy
     'default': {
         'ENGINE': SECRETS['DB_ENGINE'],
-        #'HOST': SECRETS['DB_HOST'],
-        #'PORT': SECRETS['DB_PORT'],
+        'HOST': SECRETS['DB_HOST'],
+        'PORT': SECRETS['DB_PORT'],
         'NAME': SECRETS['DB_NAME'],
-        #'USER': SECRETS['DB_USER'],
-        #'PASSWORD': SECRETS['DB_PASSWORD']
+        'USER': SECRETS['DB_USER'],
+        'PASSWORD': SECRETS['DB_PASSWORD']
     }
 }
 

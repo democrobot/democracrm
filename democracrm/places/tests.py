@@ -36,7 +36,7 @@ class SiteTests(TestCase):
         )
         site.save()
         address = '501 N 3rd St Harrisburg PA 17120'
-        self.assertEquals(site.full_physical_address(), address)
+        self.assertEqual(site.full_physical_address(), address)
 
     def test_site_mailing_address(self):
         site = Site.objects.create(
@@ -48,7 +48,7 @@ class SiteTests(TestCase):
         )
         site.save()
         address = 'P.O. Box 1837 Harrisburg PA 17105-1837'
-        self.assertEquals(site.full_mailing_address(), address)
+        self.assertEqual(site.full_mailing_address(), address)
 
     def test_site_coordinates(self):
         # Coordinates for PA Capitol based on Wikipedia
@@ -60,7 +60,7 @@ class SiteTests(TestCase):
         )
         site.save()
         coordinates = (40.264444, -76.883611)
-        self.assertEquals(site.physical_coordinates(), coordinates)
+        self.assertEqual(site.physical_coordinates(), coordinates)
 
 
 class LocationTests(TestCase):
@@ -84,7 +84,7 @@ class UtilsTests(TestCase):
     def test_geocoder(self):
         input_address = '10 N 2nd St, Harrisburg, PA 17101'
         output_address = geocode_address(input_address)
-        self.assertEquals(output_address['results'][0]['formatted_address'], input_address)
+        self.assertEqual(output_address['results'][0]['formatted_address'], input_address)
 
 
 def init_boundary():
