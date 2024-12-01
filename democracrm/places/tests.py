@@ -1,7 +1,26 @@
+from pathlib import Path
 from django.test import TestCase
+from django.contrib.gis.gdal import DataSource
 
 from .models import Boundary, Region, Site, Location
 from .utils import geocode_address
+
+
+class DataImportTests(TestCase):
+
+    def test_geodb_load(self):
+        db = Path('data/imports/tlgpkg_2024_a_us_legislative.gpkg')
+        ds = DataSource(db)
+        state_senate_layer = ds[1]
+        
+        pa_senate_districts = [f for f in state_senate_layer if str(f['GEOIDFQ']).startswith('610U900US42')]
+        self.assertEqual(len(pa_senate_districts), 50)
+    
+    def test_geodb_import(self):
+        db = Path('data/imports/tlgpkg_2024_a_us_legislative.gpkg')
+        ds = DataSource(db)
+
+        self.fail()
 
 
 class BoundaryTests(TestCase):
@@ -84,6 +103,7 @@ class UtilsTests(TestCase):
     def test_geocoder(self):
         input_address = '10 N 2nd St, Harrisburg, PA 17101'
         output_address = geocode_address(input_address)
+        print(output_address)
         self.assertEqual(output_address['results'][0]['formatted_address'], input_address)
 
 

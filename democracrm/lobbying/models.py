@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 
 from core.models import CRMBase, CRMTreeBase
 from organizing.models import Campaign
-#from places.models import Boundary
+from places.models import Boundary
 
 
 class PoliticalParty(CRMBase):
@@ -317,7 +317,7 @@ class PoliticalSubdivision(CRMBase):
     A political subdivision is a defined subset of a public office, again with a
     defined geographic area coterminous or as a subset of the public office.
     It is generally used to represent specific political districts and the
-    seats included in that district.
+    seat(s) included in that district.
     """
 
     boundary = models.ForeignKey(

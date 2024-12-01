@@ -23,7 +23,7 @@ except ImportError:
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRETS = json.load(open('appserver/secrets.json'))
+SECRETS = json.load(open('appserver/secrets-dev.json'))
 SECRET_KEY = SECRETS['DJANGO_KEY']
 
 # # Sentry setup (optional, but will be used for hosted service)
@@ -66,7 +66,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #'django.contrib.gis',
+    'django.contrib.gis',
     #'accounts',
     #'people',
     'core',
@@ -116,11 +116,11 @@ DATABASES = {
     # TODO: Expand for redundancy
     'default': {
         'ENGINE': SECRETS['DB_ENGINE'],
-        'HOST': SECRETS['DB_HOST'],
-        'PORT': SECRETS['DB_PORT'],
+        #'HOST': SECRETS['DB_HOST'],
+        #'PORT': SECRETS['DB_PORT'],
         'NAME': SECRETS['DB_NAME'],
-        'USER': SECRETS['DB_USER'],
-        'PASSWORD': SECRETS['DB_PASSWORD']
+        #'USER': SECRETS['DB_USER'],
+        #'PASSWORD': SECRETS['DB_PASSWORD']
     }
 }
 
@@ -163,3 +163,6 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # 
 # çAUTH_USER_MODEL = 'accounts.UserAccount'
+
+
+SPATIALITE_LIBRARY_PATH = '/usr/lib/x86_64-linux-gnu/mod_spatialite.so'
