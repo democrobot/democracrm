@@ -5,7 +5,7 @@ from .models import Boundary, Region, RegionGroup, Site, SiteGroup, Location
 
 @admin.register(Boundary)
 class BoundaryAdmin(admin.ModelAdmin):
-    list_display = ['name', 'parent', 'level']
+    list_display = ['geoid', 'geoidfq', 'namelsad', 'lsy', 'aland', 'awater', 'level']
 
 
 @admin.register(RegionGroup)

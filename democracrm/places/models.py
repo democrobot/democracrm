@@ -33,11 +33,12 @@ class Boundary(CRMTreeBase):
     geoid = models.CharField(max_length=5, blank=True, null=True)
     geoidfq = models.CharField(max_length=14, blank=True, null=True)
     namelsad = models.CharField(max_length=100, blank=True, null=True)
+    cdsessn = models.CharField(max_length=41, blank=True, null=True)
     lsy = models.IntegerField(blank=True, null=True)
     aland = models.IntegerField(14, blank=True, null=True)
     awater = models.IntegerField(14, blank=True, null=True)
-    intpntlat = models.FloatField(blank=True, null=True)
-    intpntlon = models.FloatField(blank=True, null=True)
+    intptlat = models.CharField(max_length=20, blank=True, null=True)
+    intptlon = models.CharField(max_length=20, blank=True, null=True)
     geom = models.MultiPolygonField(srid=4326, blank=True, null=True)
 
     class Meta:
