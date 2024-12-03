@@ -5,7 +5,11 @@
 {% endblock %}
 
 {% block content %}
-{% comment %}{% for nation in nations %}{% endcomment %}
-<li><a href="/us">United States*</a></li>
-
+<ul>
+{% for boundary in boundaries %}
+<li><a href="/{{ boundary.id }}">{{ boundary.namelsad }}
+    {% if boundary.parent %}({{ boundary.parent }}){% endif %}:
+</a></li>
+{% endfor %}
+</ul>
 {% endblock %}

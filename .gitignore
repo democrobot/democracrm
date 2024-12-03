@@ -8,8 +8,11 @@
 *$py.class
 __pycache__
 db.sqlite3
+*.db
 geckodriver
 fixtures
 media
 secrets*.json
 democracrm/data/cached_data/
+democracrm/data/imports
+democracrm/data/exports

@@ -32,6 +32,8 @@ class Boundary(CRMTreeBase):
     )
     geoid = models.CharField(max_length=5, blank=True, null=True)
     geoidfq = models.CharField(max_length=14, blank=True, null=True)
+    statens = models.CharField(max_length=8, blank=True, null=True)
+    stusps = models.CharField(max_length=2, blank=True, null=True)
     namelsad = models.CharField(max_length=100, blank=True, null=True)
     cdsessn = models.CharField(max_length=41, blank=True, null=True)
     lsy = models.IntegerField(blank=True, null=True)

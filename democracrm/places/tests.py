@@ -19,6 +19,11 @@ class DataImportTests(TestCase):
     def test_geodb_import(self):
         db = Path('data/imports/tlgpkg_2024_a_us_legislative.gpkg')
         ds = DataSource(db)
+        pa_senate = Boundary.objects.filter(geoidfq__startswith='610U900US42')
+        pa_house = Boundary.objects.filter(geoidfq__startswith='620L900US42')
+        pa = Boundary.objects.filter(name='Pennsylvania').first()
+        pa_senate.update(parent=pa)
+        pa_senate.update(level='legislative')
 
         self.fail()
 
