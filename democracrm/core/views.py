@@ -6,28 +6,29 @@ from django.http import JsonResponse
 # from accounts.models import OrganizationAccount
 from places.models import Boundary
 
-
 def index(request):
-    pa_state = Boundary.objects.filter(name='Pennsylvania').first()
-    boundaries = Boundary.objects.filter(parent=pa_state)
-    return render(request, 'core/index.html', {'boundaries': boundaries})
+    return render(request, 'core/index.html', {})
+
+def us_index(request):
+    states = Boundary.objects.filter(level='state')
+    return render(request, 'core/us_index.html', {'states': states})
+
+def us_us_geojson(request):
+    geojson = serialize('geojson', Boundary.objects.filter(level='state'))
+    return JsonResponse(json.loads(geojson), safe=False)
 
 def us_pa_index(request):
     pa_state = Boundary.objects.filter(name='Pennsylvania').first()
-    boundaries = Boundary.objects.filter(parent=pa_state)
-    pa_senate = boundaries.filter(geoidfq__startswith='610U900US42')
-    pa_house = boundaries.filter(geoidfq__startswith='620L900US42')
+    pa_boundaries = Boundary.objects.filter(parent=pa_state)
+    pa_senate = pa_boundaries.filter(geoidfq__startswith='610U900US42')
+    pa_house = pa_boundaries.filter(geoidfq__startswith='620L900US42')
     centroid = pa_state.geom.centroid.coords
     return render(request, 'core/us_pa_index.html', {'pa_senate': pa_senate, 'pa_house': pa_house,
                                                      'pa_geojson': pa_state.geom.geojson,
                                                      'centroid': centroid})
 
-def us_pa_map(request):
-    return render(request, 'core/us_pa_map.html', {})
-
 def us_pa_geojson(request):
     geojson = serialize('geojson', Boundary.objects.filter(name='Pennsylvania'))
-    #geojson = json.load(open('data/exports/pa-qgis.geojson'))
     return JsonResponse(json.loads(geojson), safe=False)
 
 # def organization_root(request, slug):

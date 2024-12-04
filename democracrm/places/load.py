@@ -66,8 +66,26 @@ def load_lower_chambers(verbose=True):
     lm = LayerMapping(Boundary, data_source, boundary_mapping, layer='State_Legislative_Districts_Lower', transform=False)
     lm.save(strict=True, verbose=verbose)
 
+def classify_boundaries():
+    # Classify states
+    states = Boundary.objects.filter(geoidfq__startswith='0400000US')
+    states.update(level='state')
+
+    # Classify upper and lower chambers
+    upper_chambers = Boundary.objects.filter(geoidfq__startswith='610U900US')
+    upper_chambers.update(level='upper_legislative')
+    lower_chambers = Boundary.objects.filter(geoidfq__startswith='620L900US')
+    lower_chambers.update(level='lower_legislative')
+    
+    # Classify chamber states
+    
 
 def run(verbose=True):
+    print('Loading states...')
     load_states()
+
+    print('Loading state upper chambers...')
     load_upper_chambers()
+
+    print('Loading state lower chambers...')
     load_lower_chambers()

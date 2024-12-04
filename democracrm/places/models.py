@@ -23,7 +23,8 @@ class Boundary(CRMTreeBase):
         ('state', 'State'),
         ('county', 'County'),
         ('municipality', 'Municipality'),
-        ('legislative', 'Legislative'),
+        ('upper_legislative', 'Upper Legislative'),
+        ('lower_legislative', 'Lower Legislative'),
         ('organizational', 'Organizational'),
     )
     level = models.CharField(
@@ -37,8 +38,8 @@ class Boundary(CRMTreeBase):
     namelsad = models.CharField(max_length=100, blank=True, null=True)
     cdsessn = models.CharField(max_length=41, blank=True, null=True)
     lsy = models.IntegerField(blank=True, null=True)
-    aland = models.IntegerField(14, blank=True, null=True)
-    awater = models.IntegerField(14, blank=True, null=True)
+    aland = models.IntegerField(blank=True, null=True)
+    awater = models.IntegerField(blank=True, null=True)
     intptlat = models.CharField(max_length=20, blank=True, null=True)
     intptlon = models.CharField(max_length=20, blank=True, null=True)
     geom = models.MultiPolygonField(srid=4326, blank=True, null=True)

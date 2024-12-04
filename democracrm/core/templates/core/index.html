@@ -5,11 +5,5 @@
 {% endblock %}
 
 {% block content %}
-<ul>
-{% for boundary in boundaries %}
-<li><a href="/{{ boundary.id }}">{{ boundary.namelsad }}
-    {% if boundary.parent %}({{ boundary.parent }}){% endif %}:
-</a></li>
-{% endfor %}
-</ul>
+<a href="/us">United States</a>
 {% endblock %}
