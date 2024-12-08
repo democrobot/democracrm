@@ -5,7 +5,7 @@
 
 {% block content %}
 <h2>Pennsylvania</h2>
-...
+
 <div id='map' style='width: 100%; height: 500px;'></div>
 <script>
 var map = new maplibregl.Map({
@@ -30,8 +30,8 @@ map.on('load', () => {
             }
         });
 });
-map.setCenter({{ centroid }});
-map.setZoom(9);
+map.setCenter(97, 0);
+//map.setZoom(5);
 </script>
 
 <h3>State Senate ({{ pa_senate.count }} Districts)</h3>

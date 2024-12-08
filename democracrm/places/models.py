@@ -31,21 +31,32 @@ class Boundary(CRMTreeBase):
         choices=LEVEL_CHOICES,
         max_length=100,
     )
+    # Use these to focus map in general views, since capital is where most of our work happens
+    # TODO: Ensure singleton assignment for each boundary level in hierarchy
+    is_national_capital = models.BooleanField(null=True)
+    is_state_capital = models.BooleanField(null=True)
+    is_county_capital = models.BooleanField(null=True)
+    # Census fields
     geoid = models.CharField(max_length=5, blank=True, null=True)
     geoidfq = models.CharField(max_length=14, blank=True, null=True)
     statens = models.CharField(max_length=8, blank=True, null=True)
     stusps = models.CharField(max_length=2, blank=True, null=True)
     namelsad = models.CharField(max_length=100, blank=True, null=True)
     cdsessn = models.CharField(max_length=41, blank=True, null=True)
-    lsy = models.IntegerField(blank=True, null=True)
-    aland = models.IntegerField(blank=True, null=True)
-    awater = models.IntegerField(blank=True, null=True)
+    lsy = models.CharField(max_length=4, blank=True, null=True)
+    aland = models.BigIntegerField(blank=True, null=True)
+    awater = models.BigIntegerField(blank=True, null=True)
     intptlat = models.CharField(max_length=20, blank=True, null=True)
     intptlon = models.CharField(max_length=20, blank=True, null=True)
     geom = models.MultiPolygonField(srid=4326, blank=True, null=True)
 
     class Meta:
         verbose_name_plural = "Boundaries"
+        # indexes = [
+        #     models.Index(fields=["geoid", "geoidfq"]),
+        #     models.Index(fields=['geom']),
+        #     models.Index(fields=["name", 'level']),
+        # ]
 
     def __repr__(self):
         return self.name
