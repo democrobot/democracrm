@@ -89,8 +89,8 @@ class LegislationGroupAdmin(admin.ModelAdmin):
 
 @admin.register(SupportLevel)
 class SupportLevelAdmin(admin.ModelAdmin):
-    list_display = ['public_official', 'campaign', 'campaign_support', 'legislation_support']
-    list_filter = ['public_official', 'campaign', 'campaign_support', 'legislation_support', 'public_official__is_leadership', 'public_official__public_office', 'public_official__political_party']
+    list_display = ['public_official', 'campaign_support', 'legislation_support']
+    list_filter = ['public_official', 'campaign_support', 'legislation_support', 'public_official__is_leadership', 'public_official__public_office', 'public_official__political_party']
     # ordering = ['last_name', 'first_name']
     # search_help_text = 'Search on last name, district, leadership title, and notes'
     search_fields = ['public_official__first_name', 'public_official__last_name', 'notes']

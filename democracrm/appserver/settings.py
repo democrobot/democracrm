@@ -68,9 +68,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.gis',
     #'accounts',
-    #'people',
+    'people',
     'core',
-    #'lobbying',
+    'lobbying',
     # 'organizing',
     'places',
     # 'social',
@@ -161,8 +161,3 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-# 
-# çAUTH_USER_MODEL = 'accounts.UserAccount'
-
-
-SPATIALITE_LIBRARY_PATH = '/usr/lib/x86_64-linux-gnu/mod_spatialite.so'

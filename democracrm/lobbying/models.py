@@ -1,9 +1,8 @@
-from django.contrib import admin
 from django.contrib.gis.db import models
 from django.utils.translation import gettext_lazy as _
 
 from core.models import CRMBase, CRMTreeBase
-from organizing.models import Campaign
+#from organizing.models import Campaign
 from places.models import Boundary
 
 
@@ -682,6 +681,27 @@ class LegislationGroup(CRMBase):
         return self.name
 
 
+# Should we have a base tracker for legislation, regulations, and budgets?
+class LegislationTracker(CRMBase):
+    """
+    Used to track legislation, including bills and resolutions.
+    """
+
+    name = models.CharField()
+    description = models.TextField(blank=True)
+    legislation = models.ManyToManyField(
+        Legislation,
+        blank=True,
+    )
+    notes = models.TextField(blank=True)
+
+    class Meta:
+        verbose_name_plural = 'Legislation Tracker'
+
+    def __str__(self):
+        return self.name
+
+
 class SupportLevel(CRMBase):
     """
     lobbying.SupportLevel models the level of support of an individual public
@@ -701,10 +721,7 @@ class SupportLevel(CRMBase):
         PublicOfficial,
         on_delete=models.PROTECT,
     )
-    campaign = models.ForeignKey(
-        Campaign,
-        on_delete=models.PROTECT,
-    )
+    # campaign = models.ForeignKey(Campaign, on_delete=models.PROTECT,)
     campaign_support = models.CharField(choices=Status.choices)
     legislation = models.ForeignKey(
         LegislationGroup,

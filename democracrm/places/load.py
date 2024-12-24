@@ -3,11 +3,7 @@ from django.contrib.gis.gdal import DataSource
 from django.contrib.gis.utils import LayerMapping
 from .models import Boundary
 
-def init_us(verbose):
-    us_nation = Boundary.objects.create(name='United States', level='nation')
-    us_nation.save()
-
-def load_states(verbose):
+def load_states(verbose=True):
     boundary_mapping = {
         'geoid': 'GEOID',
         'geoidfq': 'GEOIDFQ',
@@ -28,12 +24,7 @@ def load_states(verbose):
     lm = LayerMapping(Boundary, data_source, boundary_mapping, layer='State', transform=False)
     lm.save(strict=True, verbose=verbose)
 
-    us_nation = Boundary.objects.filter(name='United States', level='nation').first()
-    states = Boundary.objects.filter(geoidfq__startswith='0400000US')
-    states.update(level='state')
-    states.update(parent=us_nation)
-
-def load_upper_chambers(verbose):
+def load_upper_chambers(verbose=True):
     boundary_mapping = {
         'geoid': 'GEOID',
         'geoidfq': 'GEOIDFQ',
@@ -54,7 +45,7 @@ def load_upper_chambers(verbose):
     lm = LayerMapping(Boundary, data_source, boundary_mapping, layer='State_Legislative_Districts_Upper', transform=False)
     lm.save(strict=True, verbose=verbose)
 
-def load_lower_chambers(verbose):
+def load_lower_chambers(verbose=True):
     boundary_mapping = {
         'geoid': 'GEOID',
         'geoidfq': 'GEOIDFQ',
@@ -75,9 +66,10 @@ def load_lower_chambers(verbose):
     lm = LayerMapping(Boundary, data_source, boundary_mapping, layer='State_Legislative_Districts_Lower', transform=False)
     lm.save(strict=True, verbose=verbose)
 
-def classify_boundaries(verbose):
+def classify_boundaries():
     # Classify states
-    
+    states = Boundary.objects.filter(geoidfq__startswith='0400000US')
+    states.update(level='state')
 
     # Classify upper and lower chambers
     upper_chambers = Boundary.objects.filter(geoidfq__startswith='610U900US')
@@ -86,9 +78,6 @@ def classify_boundaries(verbose):
     lower_chambers.update(level='lower_legislative')
     
     # Classify chamber states
-    states = Boundary.objects.filter(geoidfq__startswith='0400000US')
-    upper_chambers = Boundary.objects.filter(geoidfq__startswith='610U900US')
-    lower_chambers = Boundary.objects.filter(geoidfq__startswith='620L900US')
     for state in states:
         state_geoid = state.geoid
         state_upper_chambers = upper_chambers.filter(geoid__startswith=state_geoid)
@@ -98,15 +87,12 @@ def classify_boundaries(verbose):
             
 
 
-def run():
+def run(verbose=True):
     print('Loading states...')
-    load_states(True)
+    load_states()
 
-    # print('Loading state upper chambers...')
-    # load_upper_chambers()
+    print('Loading state upper chambers...')
+    load_upper_chambers()
 
-    # print('Loading state lower chambers...')
-    # load_lower_chambers()
-
-    # print('Classifying boundaries...')
-    # classify_boundaries()
+    print('Loading state lower chambers...')
+    load_lower_chambers()

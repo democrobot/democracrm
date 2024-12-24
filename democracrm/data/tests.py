@@ -1,4 +1,6 @@
 import pathlib
+import requests
+
 
 from django.test import TestCase
 from django.conf import settings
@@ -10,6 +12,12 @@ from .utils import (
     scrape_pa_house_committees,
     scrape_pa_house_members,
 )
+
+
+class OpenStatesTests(TestCase):
+
+    def test_get_pa_bulk_legislators(self):
+        pass
 
 
 class FilePathTests(TestCase):
